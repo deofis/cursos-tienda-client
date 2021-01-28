@@ -106,6 +106,36 @@ url:string=API_BASE_URL+"/api";
     }))
   };
 
+  //Métodos de edición de productos
+
+  actualizarDatosProducto(producto: Producto){
+    return this.http.put(`${this.url}/productos/${producto.id}`, producto).pipe(map((resp:any) => {
+      return resp
+    }))
+  }
+
+  actualizarDisponibilidadProducto(idProducto: number, disponibilidad: any){
+    let parametros = new HttpParams();
+    parametros = parametros.append("disponibilidad", disponibilidad);
+    return this.http.put(`${this.url}/productos/${idProducto}/disponibilidad`, null, {params: parametros}).pipe(map((resp:any) => {
+      return resp
+    }))
+  }
+
+  actualizarPrecioBaseProducto(idProducto: number, precio: any){
+    let parametros = new HttpParams();
+    parametros = parametros.append("precio", precio)
+    return this.http.put(`${this.url}/productos/${idProducto}/precios/base`, null, {params: parametros}).pipe(map((resp:any) => {
+      return resp
+    }))
+  }
+
+  actualizarDatosSku(sku: Sku){
+    return this.http.put(`${this.url}/productos/skus/${sku.id}`, sku).pipe(map((resp:any) => {
+      return resp;
+    }))
+  }
+
  
 
 
