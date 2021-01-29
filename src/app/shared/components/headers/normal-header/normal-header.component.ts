@@ -52,7 +52,6 @@ export class NormalHeaderComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.subscripcionInfoCompra=this.enviarInfoCompra.enviarCantidadProductosCarrito$.subscribe(totalProductos=> {
         this.totalItemsCarrito=totalProductos;
-        console.log(this.totalItemsCarrito)
       })
   
     }, 300);
@@ -94,7 +93,6 @@ export class NormalHeaderComponent implements OnInit, AfterViewInit {
     if (this.authService.isLoggedIn()) {
       this.carritoService.getCarrito().subscribe((response: any) => {
         this.totalItemsCarrito = response.carrito.items.length;
-        console.log(this.totalItemsCarrito);
       });
     }else{
       const getlocal = localStorage.getItem("miCarrito");

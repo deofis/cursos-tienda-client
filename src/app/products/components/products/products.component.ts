@@ -26,10 +26,7 @@ cantidadPaginas= Math.ceil(this.tarjeta.length /5);
 
   }
   ngOnInit(): void {
-    setTimeout(() => {
-      console.log(this.categorias)
-    }, 4000);
-   
+     
     /// ****  *** CARUSEL PRODUCTOS DESTACADOS *** ****  ///
     const fila=document.getElementById("contenedor-carouselDestacados");
     const flecha1= document.getElementById("flecha-izquierda-fila1");
@@ -143,8 +140,6 @@ showCategoriesEffect() {
     getListaCategorias():void{
       this.catalogoService.getListaCategorias().subscribe( response =>{
        this.categorias=response;
-  
-      console.log(this.categorias)
       })
     }
 

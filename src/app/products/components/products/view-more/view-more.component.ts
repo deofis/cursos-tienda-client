@@ -148,11 +148,9 @@ export class ViewMoreComponent implements OnInit {
       });
     });
     if (skus.length===0) {
-      console.log("tengo mi defaukt sku")
      let idDefaultSku=this.infoProducto.defaultSku.id;
      this.productoService.getSku(this.infoProducto.id, idDefaultSku).subscribe( response => {
-      this.skuAEnviar=response;  
-      console.log(this.skuAEnviar)  
+      this.skuAEnviar=response;   
     })
 
     }
@@ -407,7 +405,6 @@ restarUnidad(){
       let carrito:Carrito;
       if(getlocal != null ){ /* osea si existe*/
         carrito = JSON.parse(getlocal); 
-        console.log(carrito);
       
         this.carritoService.agregarItemLocal(sku,carrito)
          /// actualizo la cantidad acorde a la cantidad elegida , si ya tiene le sumo en vez de editar 
@@ -418,7 +415,6 @@ restarUnidad(){
         // envio la cantidad que tengo para la notif del header
         this.totalItemsCarrito = carrito.items.length;
         setTimeout(() => {
-          console.log(this.totalItemsCarrito)
           this.enviarInfoCompra.enviarCantidadProductosCarrito$.emit(this.totalItemsCarrito); 
         }, 100);
       }else{ /* si no existe, lo creo con el sku q estoy enviando como contenido*/
@@ -478,6 +474,24 @@ restarUnidad(){
     }
    
    }
+   /// link copiado
+   openSnackBarLink(){
+    if ($(window).scrollTop() >= 30) {
+      let snackBarRef= this.snackBar.open('Link copiado en el portapapeles.', null, {
+        duration:1300 ,
+        horizontalPosition : this .horizontalPosition,
+        verticalPosition : this .verticalPosition,
+        
+     });
+    }else{
+      let snackBarRef= this.snackBar.open('Link copiado en el portapapeles.', null, {
+        duration:1300 ,
+        horizontalPosition : this .horizontalPosition,
+        verticalPosition : this .verticalPosition,
+        
+     });
+    }
+   }
 ////////////////////////
    mostrarPrecioOferta(){
      if (this.skuAEnviar.promocion) {
@@ -506,30 +520,19 @@ restarUnidad(){
    cartel.style.color="#2779cd"
    let contenedor=document.getElementById("contenedorCartel");
 
-
-  
-   
-
-
  }
-/////
-  /*
-///// CANTIDAD////
-public  removeOne(item:ItemCarrito){
-  this._cartService.removeOneElementCart(item)
-}
-public addOne(item:ItemCarrito){
-  this._cartService.addOneElementCart(item)
-}
-*/
+ /// metodo para copiar el link de la pagina en el portapapeles
+ getlink(){
+  let aux = document.createElement("input");
+  aux.setAttribute("value",window.location.href);
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
+  this.openSnackBarLink();
 
-///////// Agregar al carrito /////////
-//   addCart(producto:Producto){
-//     let item:ItemCarrito=new ItemCarrito();
-//     item.cantidad=1;
-//     item.producto=producto;
-//     console.log(item.producto);
-//     this._cartService.changeCart(item);
-//  }
-
+  let url = window.location.href;
+	window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(url));
+ }
+ ///
 }

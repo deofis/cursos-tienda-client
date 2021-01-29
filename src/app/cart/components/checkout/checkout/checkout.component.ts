@@ -42,7 +42,6 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   ciudades:Ciudad[];
   paisSeleccionado:Pais;
   mediosDePago:MedioPago[];
-  // direccionEnvio:Direccion;
   clienteDireccion:any;
   entrega:any;
   direccionUsuario:Direccion;

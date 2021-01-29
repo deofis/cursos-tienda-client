@@ -154,7 +154,9 @@ $color-ppal:#fff;
                         }
                     }
                 }
-                
+                &:hover{
+                    cursor: pointer;
+                }
             }
         }
      
@@ -222,7 +224,9 @@ $color-ppal:#fff;
                         color: $color-sec;
                         width: 100%;
                     }
-                
+                    &:hover{
+                        cursor: default;
+                    }
                 }
                 #caja-precio{
                     display: flex;    
@@ -276,9 +280,9 @@ $color-ppal:#fff;
                         font-size:2em;
                          transform:rotate(170deg);
                         }
-                   
-                   
-                    
+                    &:hover{
+                        cursor: default;
+                    }
                 }
                 #caja-carrito{
                     margin-top: 7px;
@@ -429,7 +433,9 @@ $color-ppal:#fff;
                     color: $color-ter;
                 }
             }
-
+            &:hover{
+                cursor: default;
+            }
         }
         .contenedor-tres{
             font-family: $fte-ppal;

@@ -52,7 +52,6 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.getPerfilCliente(); 
       this.getCarrito(); 
-      console.log("alfo")
       setTimeout(() => {
         console.log(this.clienteDireccion)
       }, 1000); 
@@ -65,7 +64,6 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
 
      
   ngOnDestroy():void{
-    console.log("cerradocomp3")
   }
   
   /// traigo la info del cliente loggeado (nombre,mail,telefono,direccion...)
