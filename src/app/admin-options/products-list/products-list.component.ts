@@ -141,6 +141,11 @@ hideDetail1() {
 
   getProperty = (obj, path) => (
     path.split('.').reduce((o, p) => o && o[p], obj).toLocaleLowerCase()
-  )
+  );
+
+
+  //Logica edición de producto ---->>>>>
+
+  
 
 }

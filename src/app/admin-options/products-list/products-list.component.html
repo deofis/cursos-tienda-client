@@ -182,7 +182,7 @@
     
                       <ng-container matColumnDef="tools">
                         <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header>  </th>
-                        <td mat-cell *matCellDef="let element"> <i class="far fa-edit point"></i> </td>
+                        <td mat-cell *matCellDef="let element"> <i class="far fa-edit point" (click)="open(content)"></i> </td>
                       </ng-container>
       
                       <ng-container matColumnDef="expandedDetail">
@@ -271,11 +271,26 @@
             
 
         </div>
-        <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-danger" (click)="modal.close()"> Cancelar</button>
-        </div> -->
+
     </ng-template>
 </div>
 
 
+
+
+<!-- Modal Editar Producto -->
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+      <h4 class="modal-title">Modal title</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <p>One fine body&hellip;</p>
+    </div>
+
+</ng-template>
 
