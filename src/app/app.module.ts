@@ -79,6 +79,9 @@ import { DetalleCompraDesktopComponent } from './user-options/mis-compras/detall
 import { ResumenCarritoComponent } from './cart/components/checkout/resumen-carrito/resumen-carrito.component';
 import { FmEfectivoComponent } from './cart/components/final-message/efectivo/fm-efectivo.component';
 import { PaypalCancelComponent } from './cart/components/final-message/paypal-cancel/paypal-cancel.component';
+import { ProductEditComponent } from './admin-options/products-list/product-edit/product-edit.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 
 
 
@@ -140,6 +143,7 @@ import { PaypalCancelComponent } from './cart/components/final-message/paypal-ca
     ResumenCarritoComponent,
     FmEfectivoComponent,
     PaypalCancelComponent,
+    ProductEditComponent
   ],
   imports: [
     BrowserModule,
@@ -163,7 +167,8 @@ import { PaypalCancelComponent } from './cart/components/final-message/paypal-ca
     MatStepperModule,
     MatIconModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true

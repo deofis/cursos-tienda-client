@@ -182,7 +182,7 @@
     
                       <ng-container matColumnDef="tools">
                         <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header>  </th>
-                        <td mat-cell *matCellDef="let element"> <i class="far fa-edit point" (click)="open(content)"></i> </td>
+                        <td mat-cell *matCellDef="let element"> <i class="far fa-edit point" (click)="productoAEditar = element; open(content)"></i> </td>
                       </ng-container>
       
                       <ng-container matColumnDef="expandedDetail">
@@ -289,7 +289,10 @@
     </div>
 
     <div class="modal-body">
-      <p>One fine body&hellip;</p>
+      
+
+        <app-product-edit [producto]="productoAEditar"></app-product-edit>
+
     </div>
 
 </ng-template>

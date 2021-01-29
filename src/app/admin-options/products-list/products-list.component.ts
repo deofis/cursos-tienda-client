@@ -49,6 +49,8 @@ export class ProductsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  productoAEditar: Producto;
+
 
   constructor( private router:Router,
                private authService: AuthService,

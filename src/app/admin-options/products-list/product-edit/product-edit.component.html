@@ -1,0 +1,98 @@
+
+
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Producto</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sku</a>
+    </li>
+
+</ul>
+<div class="tab-content" id="myTabContent">
+
+    <!-- Pestaña producto -->
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+        <div class="container-fluid">
+            <div class="row mt-3 align-middle">
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-10">
+                            <label class="ml-1"> Nombre</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="ml-1">Activo</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-slide-toggle>No</mat-slide-toggle>
+                                </div>                                
+                            </div>
+                            
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="ml-1">Producto destacado</label>
+                                </div>                                
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-slide-toggle checked>Si</mat-slide-toggle>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="ml-1">Descripción</label>
+                                </div>                                
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-12 col-md-4 offset-md-2">
+                            <div class="card" style="width: 18rem;">
+                                <img src="../../../../assets/imagenes/noimage.png" class="card-img-top align-content-lg-center" style="width: 250px; height: auto;">
+                                <div class="card-body">
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        
+
+    </div>
+
+    <!-- Pestaña sku -->
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+        
+
+    </div>
+
+</div>
