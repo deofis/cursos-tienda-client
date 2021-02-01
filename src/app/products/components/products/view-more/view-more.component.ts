@@ -529,10 +529,13 @@ restarUnidad(){
   aux.select();
   document.execCommand("copy");
   document.body.removeChild(aux);
-  this.openSnackBarLink();
-
+  this.openSnackBarLink()
+ }
+ ///
+ //// compartir por whatsapp
+ compartirWhatsapp(){
   let url = window.location.href;
 	window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(url));
  }
- ///
+ ////
 }
