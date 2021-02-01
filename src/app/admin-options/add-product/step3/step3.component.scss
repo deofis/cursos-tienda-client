@@ -104,25 +104,7 @@ $color-ppal:#fff;
                 }
 
                 }  
-                .btn-add-property{
-                    border: none;
-                    #add{
-                        position: absolute;
-                        font-size: 14px;
-                        right: 60px;
-                        top: 75px;
-                        font-family: $fte-sec;
-                        cursor: pointer;
-                        .fa-plus-square{
-                            color: $color-wf3;
-                            margin-right: 4px;
-                            font-size: 17px;
-                        }
-                        &:hover > i{
-                            transform: scale(1.1);
-                        }
-                    }
-                }     
+                  
                 
                 .properties{
                     display: grid;

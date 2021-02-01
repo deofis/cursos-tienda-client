@@ -1,0 +1,54 @@
+.form-img{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    .row{
+        display: flex;
+        margin-bottom: 45px;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 85%;
+        margin-top: -13px;
+        .add-img{
+         
+            outline: none;
+            p{
+            font-size: 15px;
+            margin-bottom: 25px;
+            span{
+                color: grey;
+                font-size: 13px;
+            }
+            }
+            #add-files{
+                font-size: 13px;
+                display: block;
+                margin-top: -10px;
+                outline: none;
+                width: 350px;
+                overflow: hidden;
+            }
+            
+        }
+        .images{
+            margin-top:-10px;
+            #img-ppal{
+               width: 100px;
+               height: 100px; 
+               display: none;
+            }
+        }
+    }
+    .check-sku{
+        display: flex;
+        margin-bottom: 45px;
+        align-items: baseline;
+        #combinations{
+            margin-right: 10px;
+            margin-top: -5px;
+            margin-bottom: -20px;
+           
+        }
+    }
+}

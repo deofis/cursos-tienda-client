@@ -267,10 +267,7 @@ export class Step3Component implements OnInit, OnDestroy {
 
  
 
-  ///// MODAL ////
-  openCentrado(contenido){
-    this.modal.open(contenido,{size: 'lg', centered:true})
-  }
+
 
   //// BOTONES
   /** Boton guardar sku  */

@@ -4,11 +4,12 @@
         <mat-icon>done</mat-icon>
     </ng-template>
 
-    <mat-step label="Agregar Producto" >
+    <mat-step label="Agregar Producto"[completed]="productoCreado" >
         <app-step1></app-step1>
     </mat-step>
 
-    <mat-step label="Imagen y Oferta"  [completed]="step2Completo">
+    <mat-step label="Imagen y Oferta"  [completed]="false">
+        <app-step2 [newProduct]="newProduct" *ngIf="productoCreado"></app-step2>
     </mat-step>
 
     <mat-step label="Generar Combinaciones"  >

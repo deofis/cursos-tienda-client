@@ -12,6 +12,7 @@ export class AddProductComponent implements OnInit {
 step2:boolean=false;
 subscripcionProducto : Subscription;
 newProduct:Producto;
+productoCreado:boolean=false
   constructor( private enviarProducto:EnviarProductoService) { }
 
   ngOnInit(): void {
@@ -20,8 +21,7 @@ newProduct:Producto;
      console.log(producto)
       this.newProduct=new Producto();
       this.newProduct=producto;
-       this.step2=true;
-
+      this.productoCreado=true
     })
   }
 
