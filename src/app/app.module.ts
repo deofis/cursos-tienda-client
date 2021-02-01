@@ -67,7 +67,6 @@ import { AdminPropiedadesComponent } from './admin-options/admin-propiedades/adm
 import { PropiedadSubcategoriaComponent } from './admin-options/admin-propiedades/propiedad-subcategoria/propiedad-subcategoria.component';
 import { FormPropiedadesComponent } from './admin-options/admin-propiedades/form-propiedades/form-propiedades.component';
 import { TablaPromoSubComponent } from './admin-options/admin-propiedades/tabla-promo-sub/tabla-promo-sub.component';
-import { ContenedorFormComponent } from './admin-options/add-product/contenedor-form/contenedor-form.component';
 import { StepperCartComponent } from './cart/components/stepper-cart/stepper-cart.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatSnackBarModule} from  '@angular/material/snack-bar';
@@ -80,6 +79,7 @@ import { DetalleCompraDesktopComponent } from './user-options/mis-compras/detall
 import { ResumenCarritoComponent } from './cart/components/checkout/resumen-carrito/resumen-carrito.component';
 import { FmEfectivoComponent } from './cart/components/final-message/efectivo/fm-efectivo.component';
 import { PaypalCancelComponent } from './cart/components/final-message/paypal-cancel/paypal-cancel.component';
+import { Step3Component } from './admin-options/add-product/step3/step3.component';
 
 
 
@@ -132,7 +132,6 @@ import { PaypalCancelComponent } from './cart/components/final-message/paypal-ca
     PropiedadSubcategoriaComponent,
     FormPropiedadesComponent,
     TablaPromoSubComponent,
-    ContenedorFormComponent,
     StepperCartComponent,
     ConvertFechaPipe,
     ConvertEstadoOpPipe,
@@ -141,6 +140,7 @@ import { PaypalCancelComponent } from './cart/components/final-message/paypal-ca
     ResumenCarritoComponent,
     FmEfectivoComponent,
     PaypalCancelComponent,
+    Step3Component,
   ],
   imports: [
     BrowserModule,
