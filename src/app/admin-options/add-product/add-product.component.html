@@ -8,11 +8,13 @@
         <app-step1></app-step1>
     </mat-step>
 
-    <mat-step label="Imagen y Oferta"  [completed]="false">
+    <mat-step label="Imagen y Oferta"  [completed]="mostrarStep3">
         <app-step2 [newProduct]="newProduct" *ngIf="productoCreado"></app-step2>
     </mat-step>
 
-    <mat-step label="Generar Combinaciones"  >
+    <mat-step label="Generar Combinaciones"  *ngIf="mostrarStep3">
+        <app-step3 [newProduct]="newProduct" ></app-step3 >
+
     </mat-step>
 </mat-horizontal-stepper>
 

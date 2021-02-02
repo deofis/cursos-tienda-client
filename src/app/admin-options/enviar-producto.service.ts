@@ -6,5 +6,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class EnviarProductoService {
   enviarProducto$ = new EventEmitter();
+  mostrarStep3=new EventEmitter();
   constructor() { }
 }

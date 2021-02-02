@@ -17,6 +17,13 @@ $color-ppal:#fff;
 #nombre-producto{
     text-transform: capitalize;
 } 
+.texto{
+    font-family: $fte-sec;
+    font-size: 15px;
+}
+.campos{
+    margin-top: 10px ;
+}
 .text-rojo{
     font-family: $fte-sec;
     color: red;
@@ -35,14 +42,13 @@ $color-ppal:#fff;
                 padding-bottom: 30px;
                 position: relative;
                 .container-white{
-                width: 100%;
+                width: 95%;
                 background-color: white;
-                padding: 30px 60px 15px 60px;
-                box-shadow: 1px 2px 3px $color-sec;
-            
-                .row{
+                margin-left: auto;
+                margin-right: auto;
+                .fila{
                     display: flex;
-                    margin-bottom: 50px;
+                    
                     align-items: baseline;
                     
                     .property{
@@ -52,6 +58,8 @@ $color-ppal:#fff;
                         width: 110px;
                         margin-right: 50px;
                         padding-left: 5px;
+                        margin-bottom: 35px;
+                        margin-top: 10px;
                         border-bottom: 1px solid grey;
                         &:focus{
                             border-bottom: 2px solid $color-wf3;
@@ -126,6 +134,7 @@ $color-ppal:#fff;
                     border-radius: 10px;                        
                     &:hover{
                         transform: scale(1.03);
+                        background-color: $color-wf2;
                     }
                 }
                 .leyenda{
@@ -137,12 +146,14 @@ $color-ppal:#fff;
                     background-color: $color-wf1;
                     color: white;
                     font-family: $fte-sec;
-                    font-size: 17px;
+                    font-size: 15px;
                     border: 0px ;
+                    border-radius: 15px;
                     box-sizing: border-box;
                     width: 15%;
-                    margin-left: 40%;
-                    margin-top: -50px;
+                    padding-top: 3px;
+                    padding-bottom: 4px;
+                    margin-left: 53%;
                     margin-bottom: 30px;  
                     &:hover{
                         transform: scale(1.03);
@@ -151,35 +162,33 @@ $color-ppal:#fff;
                 .container-skus{
                     padding-bottom: 20px;
                     margin-top: 20px;
+                    width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
                     .titulo{
                         display: flex;
                         justify-content: space-between;
+                        border-bottom: 1px solid  rgba(128, 128, 128, 0.295);
+                        padding-bottom: 0px;
                         h3{
                             font-family: $fte-sec;
+                            display: block;
+                            margin-bottom: -3px;
                         }
                         .generar{
                             color: $color-wf3;
                             font-family: $fte-sec;
-                            font-size: 12px;
-                            text-decoration: underline;
+                            font-size: 13px;
                             display: block;
+                            margin-top: 3px;
                             margin-bottom: -15px;
                             &:hover{
                                 cursor: pointer;
-                                color: $color-wf4;
                             }
                         }
                     }
                    
-                    .line{
-                        display: block;
-                        height: 1px;
-                        margin-left: -20px;
-                        margin-top: -10px;
-                        width: 104%;
-                        margin-bottom: 5px;
-                        background-color: rgba(128, 128, 128, 0.295);
-                    }
+                    
                     .new-products{
                         width: 100%;
                         .product{
@@ -190,7 +199,9 @@ $color-ppal:#fff;
                             padding-top: 5px;
                             font-size: 15px;
                             margin-bottom: -8px;
-                        
+                            &:hover> .description{
+                                color: $color-wf3;
+                            }
                             .description{
                                 cursor: default;
                                 font-size: 14px;

@@ -16,6 +16,7 @@ import { AuthService } from '../../../log-in/services/auth.service';
 import { Router } from '@angular/router';
 import { DataService } from '../../admin-promos/data.service';
 import { Collection } from 'typescript';
+import { CatalogoService } from 'src/app/products/services/catalogo.service';
 @Component({
   selector: 'app-step3',
   templateUrl: './step3.component.html',
@@ -46,6 +47,7 @@ export class Step3Component implements OnInit, OnDestroy {
   constructor(private productoService:ProductoService,
               private fb:FormBuilder,
               private Router:Router,
+              private catalogoservice:CatalogoService,
                private authService: AuthService,
               private activatedroute:ActivatedRoute,
               public modal: NgbModal,
@@ -57,7 +59,6 @@ export class Step3Component implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
-     console.log(this.newProduct)
     setTimeout(() => {
       this.getPropertiesOfNewProduct();
     }, 1500); 

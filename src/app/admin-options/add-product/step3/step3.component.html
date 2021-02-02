@@ -2,18 +2,12 @@
     (ngSubmit)="crearSku(); myForm.reset();  getPropertiesOfNewProduct()">
     <div class="container-white">
         <div class="col-10 offset-1">
-            <div class="row">
-                <p>Elaboramos una lista de propiedades en base a la categoría y subcategoría elegida, puedes
-                    combinarlas para generar productos o añadir nuevas. </p>
+            <div class="row fila">
+                <p class="texto">Combina las  propiedades anteriormente elegidas para crear combinaciones de tu producto de manera manual o automáticamente. </p>
             </div>
 
 
-            <button type="button" class="btn-add-property "
-                (click)="openCentrado(agregarprop); addProperty(newProduct)">
-                <p id="add"><i class="far fa-plus-square "></i> Agregar propiedades</p>
-
-            </button>
-            <div class="row properties">
+            <div class="row fila properties">
                 <select [attr.id]="i" class="property" *ngFor="let property of properties ; let i=index" (change)="mostrarBotonGuardar()">
                     <option hidden selected [ngValue]="property.nombre">-{{property.nombre}} -</option>
 
@@ -22,7 +16,7 @@
                 </select>
 
             </div>
-            <div class="row">
+            <div class="row fila campos">
                 <div class="availability-container">
                     <label for="availabilitySku"> Disponibles:</label>
                     <input type="number" min="0"  pattern="^[0-9]+"  [class.is-invalid]="disponibilidadInvalida" id="availabilitySku"
@@ -36,7 +30,7 @@
             </div>
             <span *ngIf="precioInvalido || disponibilidadInvalida" class="text-rojo">Todos los campos son obligatorios.</span>
 
-            <button mat-button class="btn-end" id="btn-two" *ngIf="mostrarBoton" (click)="guardarValores()">Guardar </button>
+            <button class="btn-end" id="btn-two" *ngIf="mostrarBoton" (click)="guardarValores()">Guardar </button>
 
 
             <div class="container-skus">
@@ -45,7 +39,7 @@
                     <span class="generar" (click)="generateAutomaticsSkus()"> Generar combinaciones automáticas</span>
                 </div>
 
-                <span class="line"></span>
+             
 
                 <div class="new-products">
                     <div class="product">
@@ -55,7 +49,7 @@
                     </div>
                     <div class="product" *ngFor= "let sku of skus">
                         <p class="description" style="text-transform: capitalize;"> {{newProduct.nombre}} -
-                            {{sku.valoresData}} - {{sku.disponibilidad}}u. - €{{sku.precio}} </p>
+                            {{sku.valoresData}} - {{sku.disponibilidad}}u. <span id="preciosku"> - €{{sku.precio}} </span><span class="oferta" style="color: red;" *ngIf="sku?.promocion!==null">-€{{sku.promocion.precioOferta}} </span></p>
                         <div class="iconos-editar">
                             <i class="fas fa-tags" (click)="openCentrado(promosku); promoSku(sku)"></i>
                             <i class="far fa-edit" (click)="openCentrado(editar);skuSeleccionado(sku.id)"></i>
