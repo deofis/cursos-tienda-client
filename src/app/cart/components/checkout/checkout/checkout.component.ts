@@ -154,7 +154,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       this.formEntrega.get('direccionFacturacion.estado').updateValueAndValidity();
     }
    
-
+    //// seteo la opcion de pago en Paypal y oculto la opcion de efectivo 
      let paypal = document.getElementById("2") as HTMLInputElement;
         
         this.formEntrega.get("formaDePago").setValue(2)
@@ -163,19 +163,18 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         }, 100);
      let efvo= document.getElementById("1") as HTMLInputElement;
       this.mostrarEfvo=false;
-      
       efvo.style.display="none"
       this.formValido=false
 
-
+    
     let inputEnvio=document.getElementById("deliver") as HTMLInputElement;
-    let inputEntrega=document.getElementById("entrega") as HTMLInputElement;
     if(inputEnvio.checked){
       if (!this.formEntrega.invalid){
         this.msjCamposIncompletos=true;
         this.formValido=false
        }
     }
+    /// si no tiene direccion activo los validadores de los form de direccion
     if (this.tieneDireccion== false) {
       this.formEntrega.get('direccionFacturacion.calle').setValidators(Validators.required);
       this.formEntrega.get('direccionFacturacion.nro').setValidators(Validators.required);
@@ -206,6 +205,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   
     }
   }
+
+
+  //// metodo q se activa cuando hay un change en el input de repetir direccion
   ocultarFormDireccion(){
     let inputOcultar = document.getElementById("repetir") as HTMLInputElement
     if (inputOcultar.checked) {
@@ -269,20 +271,12 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   /// muestro la direccion del local cuando eligen la opcion de retiro personalmente
   showAdress(){
     //cambio los validadores  de los campos de direccion de envio para q no sean obligatorios
-  
- 
     this.envioADomicilio=false;
     this.nuevaDireccion=false; //para q se oculte el form de nueva direccion
-    this.costoDeEnvio=0;
-
-    let paypal = document.getElementById("2") as HTMLInputElement;
-    let efvo = document.getElementById("1") as HTMLInputElement;
-    efvo.style.display="initial"
-      // paypal.checked=false;
-      // efvo.disabled=false;
-      // efvo.style.display="block";
-      // efvo.checked=true
     
+    let efvo = document.getElementById("1") as HTMLInputElement;
+    efvo.style.display="initial";
+    efvo.checked=true;
     this.mostrarEfvo=true;
         
   }
@@ -291,6 +285,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   getMediosDePago(){
     this.carritoService.getMediosDePago().subscribe((response: any) => {
       this.mediosDePago=response.mediosPago;
+      console.log(this.mediosDePago)
     });
     
   }
