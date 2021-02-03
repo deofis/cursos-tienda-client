@@ -320,9 +320,12 @@
                                 <label for="{{medioPago?.nombre}}">
                                     <img class="cash" *ngIf="imgEfvo(i)&& mostrarEfvo"
                                         src="../../../../../assets/imagenes/cash.png" alt="">
-                                    <img class="paypal" *ngIf="imgPayPal(i)"
+                                   
+                                    <img class="paypal" *ngIf="imgMercadoPago(i)"
+                                        src="../../../../../assets/imagenes/descarga.jpg" alt="">
+                                     <img class="paypal" *ngIf="imgPayPal(i)"
                                         src="../../../../../assets/imagenes/paypal.png" alt="">
-                                </label>
+                                    </label>
                             </div>
                             <!-- <div class="paypal-box row">
                                 <input type="radio"  value="Paypal" id="paypal"  formControlName="formaDePago">
@@ -347,7 +350,7 @@
             <app-resumen-carrito  *ngIf="mostrarResumen"></app-resumen-carrito>
             <div class="cont-botones">
                 <button mat-button matStepperPrevious class="btn" (click)="cerrarComponente()">Atrás</button>
-                <button mat-button matStepperNext (click)="guardarDatos()" class="btn" id="btn-continuar"
+                <button mat-button matStepperNext  class="btn" id="btn-continuar"
                     *ngIf="llegoCarrito" [disabled]="!formValido">Continuar</button>
             </div>
         </div>
