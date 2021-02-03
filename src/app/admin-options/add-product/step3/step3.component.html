@@ -43,14 +43,12 @@
 
                 <div class="new-products">
                     <div class="product">
-                        <!-- <p> {{newProduct.nombre}}
-                            <span *ngFor= "let seleccionado of seleccionados"> {{seleccionado.valor}} -</span>
-                           </p> -->
+                        <p *ngIf="!skus" style="text-align: center; color: grey; font-size: 14px;">No hay combinaciones creadas.</p>
                     </div>
                     <div class="product" *ngFor= "let sku of skus">
-                        <p class="description" style="text-transform: capitalize;"> {{newProduct.nombre}} -
-                            {{sku.valoresData}} - {{sku.disponibilidad}}u. <span id="preciosku"> - €{{sku.precio}} </span><span class="oferta" style="color: red;" *ngIf="sku?.promocion!==null">-€{{sku.promocion.precioOferta}} </span></p>
-                        <div class="iconos-editar">
+                        <p *ngIf="skus"  class="description" style="text-transform: capitalize;"> {{newProduct.nombre}} -
+                            {{sku.valoresData}} - {{sku.disponibilidad}}u. <span id="preciosku" *ngIf="sku?.promocion==null"> - €{{sku.precio}} </span><span class="oferta" style="color: #2779cd;" *ngIf="sku?.promocion!==null">-€{{sku.promocion?.precioOferta}} </span></p>
+                        <div *ngIf="skus"  class="iconos-editar">
                             <i class="fas fa-tags" (click)="openCentrado(promosku); promoSku(sku)"></i>
                             <i class="far fa-edit" (click)="openCentrado(editar);skuSeleccionado(sku.id)"></i>
                             <i class="fas fa-times" (click)="deleteSku(sku.id)"></i>
@@ -94,7 +92,7 @@
                         <div class="modal-header">
                             <h4 class="modalTitle">
                                 Editar combinación</h4>
-                            <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+                            <button class="close" aria-label="close" type="button" (click)="modal.dismiss();getskus()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -113,7 +111,8 @@
 
     </div>
 </form>
-<div class="botones-final" *ngIf="mostrarBoton">
-    <button mat-button class="btn-final" (click)=" eliminarTodosLosSkus()">Cancelar </button>
-    <button mat-button class="btn-final" (click)="VerificarCantidades()">Guardar y Finalizar </button>
+<div class="botones-final" >
+    <button mat-button matStepperPrevious class="btn-final" >Atrás</button>
+    <button mat-button *ngIf="mostrarBoton" class="btn-final medio" (click)=" eliminarTodosLosSkus()">Cancelar </button>
+    <button mat-button *ngIf="mostrarBoton" class="btn-final" (click)="VerificarCantidades()">Guardar y Finalizar </button>
 </div>

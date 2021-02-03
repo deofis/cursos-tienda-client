@@ -111,5 +111,9 @@ enviarMostrarStep3(){
   this.mostrarStep3=true;
   this.enviarNewProduct.mostrarStep3.emit(this.mostrarStep3);
 }
+getProduct(){
+  this.catalogoService.getInfoProducto(this.newProduct.id).subscribe(resp =>
+    this.newProduct=resp)
+}
 
 }

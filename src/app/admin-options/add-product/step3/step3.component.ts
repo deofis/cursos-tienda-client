@@ -84,40 +84,7 @@ export class Step3Component implements OnInit, OnDestroy {
     this.cerrarModalPropiedad.unsubscribe();
   }
  
-  showLateralMenu(){
-    if (screen.width>650) {
-    let lateralmenu=document.getElementById("lateralMenu");
-    lateralmenu.style.width="200px";
-    let menu = document.getElementById("lateral-container");
-    menu.style.display="block";
-    let arrow= document.getElementById("botonMenu");
-    arrow.style.display="none"
-    } else{
-     let lateralmenu=document.getElementById("lateralMenu");
-     lateralmenu.style.opacity="0.9"
-     lateralmenu.style.width="100%"
-      let menu = document.getElementById("lateral-container");
-       menu.style.display="block";
-      let close = document.getElementById("close-menu");
-      close.style.display="block";
-      close.style.marginLeft="15px";
-      close.style.fontSize="0.8em";
-      let arrow = document.getElementById("open-menu");
-      arrow.style.display="none"
-    }
-  }
-  hiddeLateralMenu(){
-    let lateralmenu=document.getElementById("lateralMenu");
-    lateralmenu.style.width="30px";
-    let menu = document.getElementById("lateral-container");
-    menu.style.display="none";
-    let boton = document.getElementById("botonMenu");
-    boton.style.display="block";
-    let close = document.getElementById("close-menu");
-    close.style.display="none";
-    let arrow = document.getElementById("open-menu");
-    arrow.style.display="block";
-  }
+
   /**
    * Cerrar sesión y eliminar datos de la misma.
    */
@@ -182,6 +149,11 @@ export class Step3Component implements OnInit, OnDestroy {
   skuSeleccionado(id:number){
     this.idSkuSeleccionado=id
     this.productoService.getSku(this.newProduct.id, this.idSkuSeleccionado).subscribe( response => { this.skuEditado=response})
+    
+  }
+  getskus(){
+      this.productoService.getAllTheSkus(this.newProduct.id).subscribe( response => 
+        this.skus=response)    
   }
   editarSku(){
    
@@ -209,7 +181,6 @@ export class Step3Component implements OnInit, OnDestroy {
       return this.formSkus.markAllAsTouched();
     }
       this.newSku.precio=this.formSkus.controls.precio.value;
-      //this.newSku.precioOferta=this.formSkus.controls.precioOferta.value;
        this.newSku.disponibilidad=this.formSkus.controls.disponibilidad.value;
        this.newSku.producto= this.newProduct;
         this.newSku.valores=this.seleccionados;
@@ -267,9 +238,6 @@ export class Step3Component implements OnInit, OnDestroy {
   }
 
  
-
-
-
   //// BOTONES
   /** Boton guardar sku  */
   mostrarBotonGuardar(){
@@ -300,7 +268,6 @@ export class Step3Component implements OnInit, OnDestroy {
   /**Botones finales  */
  
   VerificarCantidades(){
-    console.log(this.newProduct)
     if(this.skus !== null && this.skus !== undefined){
       // recorro los skus y me fijo si la disponibilidad es 0 
       for (let i = 0; i < this.skus.length; i++) {
@@ -337,5 +304,8 @@ export class Step3Component implements OnInit, OnDestroy {
       }
     }
   }
-
+   ///// MODAL ////
+   openCentrado(contenido){
+    this.modal.open(contenido,{size: 'lg', centered:true})
+  }
 }

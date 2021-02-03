@@ -29,7 +29,8 @@ $color-ppal:#fff;
     color: red;
     font-size: 12px;
     display: block;
-    margin-top: -30px;
+    margin-top: 10px;
+    margin-left: -10px;
    }   
         .form2{
                 width: 100%;
@@ -46,6 +47,7 @@ $color-ppal:#fff;
                 background-color: white;
                 margin-left: auto;
                 margin-right: auto;
+                margin-top: 15px;
                 .fila{
                     display: flex;
                     
@@ -239,22 +241,29 @@ $color-ppal:#fff;
             align-items: center;
             margin-left: auto;
             margin-right: auto;
-            justify-content: space-between;
-            width: 50%;
-            margin-bottom: 55px;
+            justify-content: center;
+            width: 100%;
             .btn-final{
                 background-color: $color-wf1;
                 color: white;
                 font-family: $fte-sec;
-                font-size: 18px;
+                font-size: 16px;
                 border: 0px ;
-                padding: 4px 8px;
                 box-sizing: border-box;
-                width: 35%;   
+                width: 20%;   
                 &:hover{
-                    transform: scale(1.03);
+                    background-color: $color-wf2;
+                    cursor: pointer;
+                }
+                &:focus{
+                    outline: none;
                 }
                 }
+            .medio{
+                margin-left: 30px;
+                margin-right: 30px;
+            }
+
         }
             
   // modal-editar
