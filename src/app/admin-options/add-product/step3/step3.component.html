@@ -47,7 +47,7 @@
                     </div>
                     <div class="product" *ngFor= "let sku of skus">
                         <p *ngIf="skus"  class="description" style="text-transform: capitalize;"> {{newProduct.nombre}} -
-                            {{sku.valoresData}} - {{sku.disponibilidad}}u. <span id="preciosku" *ngIf="sku?.promocion==null"> - €{{sku.precio}} </span><span class="oferta" style="color: #2779cd;" *ngIf="sku?.promocion!==null">-€{{sku.promocion?.precioOferta}} </span></p>
+                            {{sku.valoresData}} - {{sku.disponibilidad}}u. <span id="preciosku" *ngIf="sku?.promocion==null"> - €{{sku.precio}} </span><span class="oferta" style="color: #2779cd;font-weight: bold;" *ngIf="sku?.promocion!==null">-€{{sku.promocion?.precioOferta}} </span></p>
                         <div *ngIf="skus"  class="iconos-editar">
                             <i class="fas fa-tags" (click)="openCentrado(promosku); promoSku(sku)"></i>
                             <i class="far fa-edit" (click)="openCentrado(editar);skuSeleccionado(sku.id)"></i>

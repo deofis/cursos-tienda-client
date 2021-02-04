@@ -418,6 +418,9 @@ $color-ppal:#fff;
         background-color: $color-wf2;
         cursor: pointer;
     }
+    &:focus{
+        outline: none;
+    }
 }            
             
 

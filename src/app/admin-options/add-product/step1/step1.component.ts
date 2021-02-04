@@ -21,6 +21,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Output,EventEmitter } from '@angular/core';
 import { EnviarProductoService } from '../../enviar-producto.service';
+import { DataPromoSubService } from '../../admin-propiedades/data-promo-sub.service';
 
 @Component({
   selector: 'app-step1',
@@ -34,6 +35,7 @@ export class Step1Component implements OnInit, OnDestroy {
   categorias:Categoria[];
   subcategorias: Subcategoria[];
   categoriaSeleccionada: Categoria;
+  subcategoriaElegida:Subcategoria;
   unidadSeleccionada:UnidadMedida;
   form:FormGroup;
   oferta:boolean=false;
@@ -55,7 +57,7 @@ export class Step1Component implements OnInit, OnDestroy {
 
   // propiedades
   formPropiedades: FormGroup;
-  propiedadesProducto:PropiedadProducto[];  
+  propiedadesSubcategoria:PropiedadProducto[];  
   estaSubcatSeleccionada: boolean;
   propiedadSeleccionada: PropiedadProducto;
   propiedadesSeleccionadas: any[];
@@ -66,6 +68,7 @@ export class Step1Component implements OnInit, OnDestroy {
               private catalogoservice:CatalogoService,
               private fb:FormBuilder,
               public modal: NgbModal,
+              private dataPropiedad:DataPromoSubService,
               private productoService:ProductoService,
               private validadores: ValidadoresService,
               private dataService:DataService,
@@ -237,13 +240,20 @@ crearForm(){
     }
 
     showProperties(): void {
-      let subcategoria: Subcategoria;
-      subcategoria = this.form.controls.subcategoria.value;
+      this.subcategoriaElegida = this.form.controls.subcategoria.value;
       this.estaSubcatSeleccionada = true;
 
-      this.propiedadesProducto = subcategoria.propiedades;
+      this.propiedadesSubcategoria = this.subcategoriaElegida.propiedades;
       this.propiedadesSeleccionadas = [];
       this.formPropiedades.reset();
+    }
+    actualizarPropiedades(){
+      // llamar a las propiedades de la subcategoria llamandoal del servicio x su id 
+      // para q cuando agregue una propiedad me traiga las propiedades de la subcategoria actualizada
+      this.catalogoservice.getSubcategoriasPorId(this.subcategoriaElegida.id).subscribe(response => {
+        console.log(response.subcategoria.propiedades);
+        this.propiedadesSubcategoria=response.subcategoria.propiedades
+      });
     }
 
     guardarPropiedades(propiedad: PropiedadProducto) {
@@ -294,6 +304,11 @@ crearForm(){
       ///// MODAL  NUEVA MARCA////
   openModal(marca){
     this.modal.open(marca,{centered:true})
+  }
+  addProperty(subcategoria:Subcategoria){
+    setTimeout(() => {
+      this.dataPropiedad.subSelect$.emit(this.subcategoriaElegida)
+    }, 100);
   }
   addBrand(){
    let input = document.getElementById("marca")as HTMLInputElement;

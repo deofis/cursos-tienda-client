@@ -226,11 +226,7 @@ export class Step3Component implements OnInit, OnDestroy {
     return this.formSkus.get('disponibilidad').invalid && this.formSkus.get('disponibilidad').touched;
   }
  
-  addProperty(newProduct:Producto){
-    setTimeout(() => {
-      this.dataPropiedad.prodSelect$.emit(newProduct)
-    }, 100);
-  }
+  
   getPropertiesOfNewProduct(){
     this.productoService.getPropertiesOfAProduct(this.newProduct?.id).subscribe((response: any) => {
       this.properties=response;

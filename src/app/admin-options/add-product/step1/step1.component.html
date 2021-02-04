@@ -84,7 +84,7 @@
                         <div class="row ">
                             <p class="leyenda">De las siguientes propiedades, seleccione las que son aplicables a su producto.</p>
                             
-                            <button type="button" id="add-p-b" class="btn-add-property " (click)="openCentrado(agregarprop); addProperty(newProduct)">
+                            <button type="button" id="add-p-b" class="btn-add-property " (click)="openCentrado(agregarprop); addProperty()">
                             	 <p id="add">Agregar propiedades<i class="far fa-plus-square "></i></p>
                             </button>
                         </div>
@@ -92,7 +92,7 @@
                             <span class="aclaracion">-La elección es opcional y te permitirá generar combinaciones luego.-</span>
                         </div>
                         <div class="row ">
-                            <div *ngFor="let propiedad of propiedadesProducto; let i = index" class="propiedad-check">
+                            <div *ngFor="let propiedad of propiedadesSubcategoria; let i = index" class="propiedad-check">
                                 <input class="checkbox-prop" formControlName="propiedad" (change)="guardarPropiedades(propiedad)" type="checkbox" id="{{propiedad.nombre}}" style="margin-right: 7px;">
                                 <label for="{{propiedad.nombre}}">{{propiedad.nombre}}</label>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="modal-header">
                                 <h4 class="modalTitle">
                                     Agregar nueva propiedad</h4>
-                                <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+                                <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss();actualizarPropiedades()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
