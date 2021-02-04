@@ -43,7 +43,7 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
               private enviarInfoCompra:EnviarInfoCompraService,
               private carritoService: CarritoService,
               private router: Router,
-              private registrarNuevaOperacion:RegistrarOperacionService) {
+              private registrarOperacionService:RegistrarOperacionService) {
                 this.item = new DetalleOperacion();
                 this.items = new Array<DetalleOperacion>();
                 this.operacion = new Operacion();
@@ -139,26 +139,24 @@ irAPagar(){
     console.log(this.operacion)
 
  /// registro la operacion
-  this.registrarNuevaOperacion.crearNuevaPropiedadProducto(this.operacion).subscribe( response => {
+  this.registrarOperacionService.registrarNuevaOperacion(this.operacion).subscribe( response => {
     console.log(response);
-       /// evaluo si el metodo de pago es paypal, abro el fm paypal
-        if(this.operacion.medioPago.id == 2){
-        window.open(response.compra.approveUrl);
-        }else{/// si no lo es, abro el de efvo
-          const url = this.router.serializeUrl( this.router.createUrlTree([`cash/approved`]));
-          window.open(url);
-        }
+    /// evaluo si el metodo de pago es paypal, abro el fm paypal
+    if(this.operacion.medioPago.id == 2){
+      window.open(response.compra.approveUrl, "_self");
+    } else { /// si no lo es, abro el de efvo
+      const url = this.router.serializeUrl( this.router.createUrlTree([`cash/approved`]));
+      window.open(url, "_self");
+    }
    }, err => {
+     alert(err.error.error);
     console.log(err);
     });
-
     //// deshabilito los botones para q no puedan volver a realizar la misma compra o editarla
     let btnConfirm= document.getElementById("btn-confirm") as HTMLButtonElement;
     btnConfirm.disabled=true;
     let btnEdit= document.getElementById("btn-edit") as HTMLButtonElement;
     btnEdit.disabled=true;
-    }
-  
-  
+  }
 }
 

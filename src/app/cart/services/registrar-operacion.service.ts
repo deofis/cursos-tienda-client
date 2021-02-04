@@ -13,8 +13,7 @@ export class RegistrarOperacionService {
     this.url = `${API_BASE_URL}/api`
    }
 
-  crearNuevaPropiedadProducto(operacion:Operacion):Observable<any>{
-
+  registrarNuevaOperacion(operacion:Operacion):Observable<any>{
     return this.http.post(`${this.url}/operaciones/nueva`, operacion);
 
   };

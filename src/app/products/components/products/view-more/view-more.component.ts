@@ -74,6 +74,7 @@ export class ViewMoreComponent implements OnInit {
     this.infoProducto=new Producto();
     this.skusCarritoLS= new Array();
     this.skusCombobox = new Array();
+    this.totalItemsCarrito = 0;
   }
 
   ngOnInit(): void {
@@ -428,6 +429,11 @@ restarUnidad(){
         this.carritoService.actualizarCantidadLocal( this.cantidadSeleccionada,sku?.id,carrito)
         nuevoCarrito.items.push(detalle);
         localStorage.setItem("miCarrito",JSON.stringify(nuevoCarrito) );
+        this.totalItemsCarrito = nuevoCarrito.items.length;
+        setTimeout(() => {
+          console.log(this.totalItemsCarrito)
+          this.enviarInfoCompra.enviarCantidadProductosCarrito$.emit(this.totalItemsCarrito); 
+        }, 100);
       }
     
     }
