@@ -80,6 +80,8 @@ import { DetalleCompraDesktopComponent } from './user-options/mis-compras/detall
 import { ResumenCarritoComponent } from './cart/components/checkout/resumen-carrito/resumen-carrito.component';
 import { FmEfectivoComponent } from './cart/components/checkout/checkout-redirect/efectivo/fm-efectivo.component';
 import { CheckoutCancelComponent } from './cart/components/checkout/checkout-redirect/otros/cancel/checkout-cancel.component';
+import { WebConfigurationComponent } from './admin-options/web-configuration/web-configuration/web-configuration.component';
+import { BannersComponent } from './admin-options/web-configuration/banners/banners.component';
 
 
 
@@ -141,6 +143,8 @@ import { CheckoutCancelComponent } from './cart/components/checkout/checkout-red
     ResumenCarritoComponent,
     FmEfectivoComponent,
     CheckoutCancelComponent,
+    WebConfigurationComponent,
+    BannersComponent,
   ],
   imports: [
     BrowserModule,
