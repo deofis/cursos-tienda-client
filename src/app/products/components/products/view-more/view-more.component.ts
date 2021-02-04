@@ -17,6 +17,7 @@ import { EnviarInfoCompraService } from 'src/app/user-options/user-profile/servi
 import { MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBarRef,MatSnackBar, MatSnackBarContainer,} from  '@angular/material/snack-bar';
 import {MatSelectModule} from  '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Categoria } from 'src/app/products/clases/categoria';
 
 @Component({
   selector: 'app-view-more',
@@ -37,11 +38,9 @@ export class ViewMoreComponent implements OnInit {
   valoresSkus:ValorPropiedadProducto[]=[];
   propiedadesFiltradas: PropiedadProducto[]=[];
   mostrarActualizar:boolean=false;
-  elegido:boolean=false;
   totalItemsCarrito:number;
-  pcioNormal:boolean;
   skusCombobox:Sku[];
-  tieneMasDeUna:boolean=true
+  categoria:Categoria;
   /// cantidad seleccionada para enviar al carrito
   cantidadSeleccionada:number
 
@@ -107,11 +106,17 @@ export class ViewMoreComponent implements OnInit {
           this.getSkusDelProducto();
           this.obtenerValoresSkus();
           this.filtrarPropiedades();
+          this.getCategoria();
         }, 300);
       });
     });
   };
 
+  getCategoria(){
+    this.catalogoservice.getCategoriaPorSubcategoria(this.infoProducto?.subcategoria.id).subscribe(resp=>{
+      this.categoria=resp;
+    })
+  }
   getSkusDelProducto(){
     this.productoService.getAllTheSkus(this.infoProducto?.id).subscribe(response => {
       this.skusDelProducto=response;
@@ -541,7 +546,7 @@ restarUnidad(){
  //// compartir por whatsapp
  compartirWhatsapp(){
   let url = window.location.href;
-	window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(url));
+	window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent("¡Te invito a que veas este producto!" + "  "+ url));
  }
  ////
 }
