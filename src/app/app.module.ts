@@ -81,6 +81,7 @@ import { FmEfectivoComponent } from './cart/components/final-message/efectivo/fm
 import { PaypalCancelComponent } from './cart/components/final-message/paypal-cancel/paypal-cancel.component';
 import { ProductEditComponent } from './admin-options/products-list/product-edit/product-edit.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { SkuEditComponent } from './admin-options/products-list/product-edit/sku-edit/sku-edit.component';
 
 
 
@@ -143,7 +144,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ResumenCarritoComponent,
     FmEfectivoComponent,
     PaypalCancelComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    SkuEditComponent
   ],
   imports: [
     BrowserModule,

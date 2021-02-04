@@ -141,6 +141,24 @@ export class ProductoService {
     }))
   };
 
+  altaProducto(producto: Producto){
+    return this.http.post(`${this.url}/productos/alta/${producto.id}`, producto).pipe(map((resp:any) => {
+      return resp
+    }))
+  };
+
+  bajaProducto(producto: Producto){
+    return this.http.post(`${this.url}/productos/baja/${producto.id}`, producto).pipe(map((resp:any) => {
+      return resp
+    }))
+  };
+
+  destacarProducto(producto: Producto){
+    return this.http.post(`${this.url}/productos/destacar/${producto.id}`, producto).pipe(map((resp:any) => {
+      return resp;
+    }))
+  };
+
  
 
 
