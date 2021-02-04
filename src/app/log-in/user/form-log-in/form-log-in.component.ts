@@ -84,9 +84,9 @@ export class FormLogInComponent implements OnInit {
     this.usuario.password = this.formLogin.controls.password.value;
 
     this.authService.login(this.usuario).subscribe(response => {
-      /// si estoz iniciando sesion desde el carrito , me devuelve al carrito 
+      /// si estoy iniciando sesion desde el carrito , me devuelve al carrito 
       if (this.router.url== "/pre-checkout") {
-        this.router.navigate(['shopping-cart'])
+        this.router.navigate(['shopping-cart']).then(() => window.location.reload());
       }else{ // sino al home
         this.router.navigate(['home'])
       }
