@@ -1,6 +1,5 @@
-import { Step2Component } from './admin-options/add-product/step2/step2.component';
-import { PaypalCancelComponent } from './cart/components/final-message/paypal-cancel/paypal-cancel.component';
-import { FmEfectivoComponent } from './cart/components/final-message/efectivo/fm-efectivo.component';
+import { CheckoutCancelComponent } from './cart/components/checkout/checkout-redirect/otros/cancel/checkout-cancel.component';
+import { FmEfectivoComponent } from './cart/components/checkout/checkout-redirect/efectivo/fm-efectivo.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewMoreComponent } from './products/components/products/view-more/view-more.component';
@@ -9,12 +8,11 @@ import { UserLoginComponent } from './log-in/user/user-login/user-login.componen
 import { BuscadorComponent } from './home/components/buscador/buscador.component';
 import { UserProfileComponent } from './user-options/user-profile/user-profile.component';
 import { UserSignUpComponent } from './log-in/user/user-sign-up/user-sign-up.component';
-import { ShoppingCartComponent } from './cart/components/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './cart/components/checkout/checkout/checkout.component';
 import { StepperCartComponent } from './cart/components/stepper-cart/stepper-cart.component';
 import { PreCheckoutComponent } from './cart/components/checkout/pre-checkout/pre-checkout.component';
 import { ConfirmDataComponent } from './cart/components/confirm-data/confirm-data.component';
-import { CheckoutRedirectComponent } from './cart/components/final-message/otros/checkout-redirect.component';
+import { CheckoutRedirectComponent } from './cart/components/checkout/checkout-redirect/otros/success/checkout-redirect.component';
 import { Oauth2RedirectHandlerComponent } from './log-in/oauth2/oauth2-redirect-handler/oauth2-redirect-handler.component';
 import { AuthGuard } from './log-in/guards/auth.guard';
 import { RoleGuard } from './log-in/guards/role.guard';
@@ -59,9 +57,9 @@ const routes: Routes = [
   { path:"pre-checkout", component:PreCheckoutComponent },
   { path:"confirm-data", component:ConfirmDataComponent },
   { path:"paypal/redirect/approved" , component:CheckoutRedirectComponent }, 
-  { path:"paypal/redirect/cancel" , component:PaypalCancelComponent }, 
+  { path:"paypal/redirect/cancel" , component: CheckoutCancelComponent }, 
   { path:"mercado-pago/redirect/approved" , component:CheckoutRedirectComponent }, 
-  { path:"mercado-pago/redirect/cancel" , component:PaypalCancelComponent }, 
+  { path:"mercado-pago/redirect/cancel" , component: CheckoutCancelComponent }, 
   {path:"cash/approved" , component: FmEfectivoComponent},
   { path:"**", pathMatch:"full", redirectTo:"home" }
 ];

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CheckoutPayload } from 'src/app/cart/clases/dto/checkout-payload';
 import { EnviarInfoCompraService } from 'src/app/user-options/user-profile/services/enviar-info-compra.service';
-import { CheckoutService} from '../../../services/checkout.service';
+import { CheckoutService} from '../../../../../services/checkout.service';
 
 
 @Component({

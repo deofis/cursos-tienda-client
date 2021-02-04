@@ -36,7 +36,7 @@ import { NewPasswordComponent } from './log-in/user/new-password/new-password.co
 import { FavoritesComponent } from './user-options/favorites/favorites.component';
 import { ActivatedMssgComponent } from './log-in/user/activated-mssg/activated-mssg.component';
 import { ConfirmDataComponent } from './cart/components/confirm-data/confirm-data.component';
-import { CheckoutRedirectComponent} from './cart/components/final-message/otros/checkout-redirect.component';
+import { CheckoutRedirectComponent} from './cart/components/checkout/checkout-redirect/otros/success/checkout-redirect.component';
 import { BrandsPanelComponent } from './admin-options/brands-panel/brands-panel.component';
 import { ProductsListComponent } from './admin-options/products-list/products-list.component';
 import { AddProductComponent } from './admin-options/add-product/add-product.component';
@@ -78,8 +78,8 @@ import { ConvertEstadoOpPipe } from './pipes/convert-estado-op.pipe';
 import { DetalleDesktopComponent } from './admin-options/admin-ventas/detalle-desktop/detalle-desktop.component';
 import { DetalleCompraDesktopComponent } from './user-options/mis-compras/detalle-compra-desktop/detalle-compra-desktop.component';
 import { ResumenCarritoComponent } from './cart/components/checkout/resumen-carrito/resumen-carrito.component';
-import { FmEfectivoComponent } from './cart/components/final-message/efectivo/fm-efectivo.component';
-import { PaypalCancelComponent } from './cart/components/final-message/paypal-cancel/paypal-cancel.component';
+import { FmEfectivoComponent } from './cart/components/checkout/checkout-redirect/efectivo/fm-efectivo.component';
+import { CheckoutCancelComponent } from './cart/components/checkout/checkout-redirect/otros/cancel/checkout-cancel.component';
 
 
 
@@ -140,7 +140,7 @@ import { PaypalCancelComponent } from './cart/components/final-message/paypal-ca
     DetalleCompraDesktopComponent,
     ResumenCarritoComponent,
     FmEfectivoComponent,
-    PaypalCancelComponent,
+    CheckoutCancelComponent,
   ],
   imports: [
     BrowserModule,

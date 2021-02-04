@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaypalCancelComponent } from './paypal-cancel.component';
+import { CheckoutCancelComponent } from './checkout-cancel.component';
 
 describe('PaypalCancelComponent', () => {
-  let component: PaypalCancelComponent;
-  let fixture: ComponentFixture<PaypalCancelComponent>;
+  let component: CheckoutCancelComponent;
+  let fixture: ComponentFixture<CheckoutCancelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaypalCancelComponent ]
+      declarations: [ CheckoutCancelComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaypalCancelComponent);
+    fixture = TestBed.createComponent(CheckoutCancelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
