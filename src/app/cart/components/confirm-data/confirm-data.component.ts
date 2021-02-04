@@ -1,4 +1,4 @@
-import { RegistrarOperacionService } from './../../services/registrar-operacion.service';
+import { CheckoutService } from '../../services/checkout.service';
 import { MedioPago } from './../../../admin-options/admin-ventas/clases/MedioPago';
 import { Direccion } from './../../../log-in/clases/cliente/direccion';
 import { DetalleOperacion } from './../../../admin-options/admin-ventas/clases/DetalleOperacion';
@@ -43,7 +43,7 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
               private enviarInfoCompra:EnviarInfoCompraService,
               private carritoService: CarritoService,
               private router: Router,
-              private registrarOperacionService:RegistrarOperacionService) {
+              private checkoutService:CheckoutService) {
                 this.item = new DetalleOperacion();
                 this.items = new Array<DetalleOperacion>();
                 this.operacion = new Operacion();
@@ -52,7 +52,6 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.getPerfilCliente(); 
       this.getCarrito(); 
-      console.log("alfo")
       setTimeout(() => {
         console.log(this.clienteDireccion)
       }, 1000); 
@@ -65,7 +64,6 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
 
      
   ngOnDestroy():void{
-    console.log("cerradocomp3")
   }
   
   /// traigo la info del cliente loggeado (nombre,mail,telefono,direccion...)
@@ -141,11 +139,12 @@ irAPagar(){
     console.log(this.operacion)
 
  /// registro la operacion
-  this.registrarOperacionService.registrarNuevaOperacion(this.operacion).subscribe( response => {
-    console.log(response);
+  this.checkoutService.registrarNuevaOperacion(this.operacion).subscribe( response => {
+    const infoPago= response.pago;
+    console.log(infoPago);
     /// evaluo si el metodo de pago es paypal, abro el fm paypal
-    if(this.operacion.medioPago.id == 2){
-      window.open(response.compra.approveUrl, "_self");
+    if(this.operacion.medioPago.id !==1){
+      window.open(infoPago.approveUrl, "_self");
     } else { /// si no lo es, abro el de efvo
       const url = this.router.serializeUrl( this.router.createUrlTree([`cash/approved`]));
       window.open(url, "_self");

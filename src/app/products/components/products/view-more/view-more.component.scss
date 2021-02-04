@@ -140,12 +140,12 @@ $color-ppal:#fff;
             .iconos-detalle-producto{
                 display: flex;
                 justify-content: space-between;
-                width:5vw ;
+                width:7vw ;
+                min-width: 100px;
                 align-items: center;
                 margin-right: 7px;
                 a{
                  text-decoration: none;
-                    
                     i{
                         font-size: 1.4em;
                         color: $color-sec;
@@ -153,8 +153,13 @@ $color-ppal:#fff;
                             font-size: 1.6em;
                         }
                     }
+                    .fa-whatsapp{
+                        font-style: 1.5em;
+                    }
                 }
-                
+                &:hover{
+                    cursor: pointer;
+                }
             }
         }
      
@@ -222,7 +227,9 @@ $color-ppal:#fff;
                         color: $color-sec;
                         width: 100%;
                     }
-                
+                    &:hover{
+                        cursor: default;
+                    }
                 }
                 #caja-precio{
                     display: flex;    
@@ -276,9 +283,9 @@ $color-ppal:#fff;
                         font-size:2em;
                          transform:rotate(170deg);
                         }
-                   
-                   
-                    
+                    &:hover{
+                        cursor: default;
+                    }
                 }
                 #caja-carrito{
                     margin-top: 7px;
@@ -429,7 +436,9 @@ $color-ppal:#fff;
                     color: $color-ter;
                 }
             }
-
+            &:hover{
+                cursor: default;
+            }
         }
         .contenedor-tres{
             font-family: $fte-ppal;

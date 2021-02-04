@@ -87,9 +87,7 @@ export class ShoppingCartComponent implements OnInit {
         const getlocal = localStorage.getItem("miCarrito");
         if(getlocal != null ){ /* osea si existe*/
           this.carrito = JSON.parse(getlocal); 
-          this.totalProductos=this.carrito.items.length
-          console.log(this.totalProductos)
-          console.log(this.carrito)
+          this.totalProductos=this.carrito.items.length;
         }
         let subtotal =0
         for (let x = 0; x < this.carrito.items.length; x++) {

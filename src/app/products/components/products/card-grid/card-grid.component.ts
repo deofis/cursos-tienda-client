@@ -70,7 +70,6 @@ export class CardGridComponent implements OnInit {
         }
       });
     });
-    console.log(this.valoresSkus)
      // z abtengo las propiedades del producto , para asociar cada valor del sku a uma propiedad y mostrarla
    setTimeout(() => {
     /* this.obtenerPropiedades() */
@@ -124,7 +123,6 @@ export class CardGridComponent implements OnInit {
       let props = new PropiedadProducto();
       
       props = this.copy(this.propiedades)
-      console.log(this.propiedades);
 
       for (let i = 0; i < this.propiedades.length; i++) {
 
@@ -161,69 +159,13 @@ export class CardGridComponent implements OnInit {
       }
 
       this.propiedadesYValoresUsadosEnSkus.push(props);
-      console.log(this.propiedadesYValoresUsadosEnSkus);
       
 
 
       /* for (let i = 0; i < this.propiedades.length; i++) {
         props[i].valores = []
         
-      } */
-
-      /* for (let o = 0; o < this.propiedades.length; o++) {
-        
-        for (let j = 0; j < this.valoresSkus.length; j++) {
-
-          if (props[o].valores[j].valor !== this.valoresSkus[j].valor) {
-            
-            props[o].valores.splice(j, 1)
-
-          }
-          
-          
-          
-        }
-        
-      } */
-
-      
-      
-      
-
-      /* for (let i = 0; i < this.valoresSkus.length; i++) {
-        
-        
-        
-        for (let x = 0; x < this.propiedades.length; x++) {
-
-                    
-          
-          for (let j = 0; j <  this.propiedades[x].valores.length; j++) {
-
-            
-            
-            
-            if (this.valoresSkus[i].id !== this.propiedades[x].valores[j].id) {
-
-              
-              props[x].valores.splice(j, 1);
-            
-              
-              
-              
-            }
-            
-          }
-          
-        }
-        
-      } */
-      
-      
-
-      
-      
-
+      } */    
     }
   
 saveToFav() {

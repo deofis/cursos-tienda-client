@@ -42,7 +42,6 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   ciudades:Ciudad[];
   paisSeleccionado:Pais;
   mediosDePago:MedioPago[];
-  // direccionEnvio:Direccion;
   clienteDireccion:any;
   entrega:any;
   direccionUsuario:Direccion;
@@ -155,28 +154,24 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       this.formEntrega.get('direccionFacturacion.estado').updateValueAndValidity();
     }
    
-
-     let paypal = document.getElementById("2") as HTMLInputElement;
-        
-        this.formEntrega.get("formaDePago").setValue(2)
-        setTimeout(() => {
-          paypal.checked=true;
-        }, 100);
+    //// seteo la opcion de pago en Paypal y oculto la opcion de efectivo 
+    
+      this.formEntrega.get("formaDePago").setValue("")
+       
      let efvo= document.getElementById("1") as HTMLInputElement;
       this.mostrarEfvo=false;
-      
       efvo.style.display="none"
       this.formValido=false
 
-
+    
     let inputEnvio=document.getElementById("deliver") as HTMLInputElement;
-    let inputEntrega=document.getElementById("entrega") as HTMLInputElement;
     if(inputEnvio.checked){
       if (!this.formEntrega.invalid){
         this.msjCamposIncompletos=true;
         this.formValido=false
        }
     }
+    /// si no tiene direccion activo los validadores de los form de direccion
     if (this.tieneDireccion== false) {
       this.formEntrega.get('direccionFacturacion.calle').setValidators(Validators.required);
       this.formEntrega.get('direccionFacturacion.nro').setValidators(Validators.required);
@@ -207,6 +202,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   
     }
   }
+
+
+  //// metodo q se activa cuando hay un change en el input de repetir direccion
   ocultarFormDireccion(){
     let inputOcultar = document.getElementById("repetir") as HTMLInputElement
     if (inputOcultar.checked) {
@@ -270,20 +268,11 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   /// muestro la direccion del local cuando eligen la opcion de retiro personalmente
   showAdress(){
     //cambio los validadores  de los campos de direccion de envio para q no sean obligatorios
-  
- 
     this.envioADomicilio=false;
     this.nuevaDireccion=false; //para q se oculte el form de nueva direccion
-    this.costoDeEnvio=0;
-
-    let paypal = document.getElementById("2") as HTMLInputElement;
-    let efvo = document.getElementById("1") as HTMLInputElement;
-    efvo.style.display="initial"
-      // paypal.checked=false;
-      // efvo.disabled=false;
-      // efvo.style.display="block";
-      // efvo.checked=true
     
+    let efvo = document.getElementById("1") as HTMLInputElement;
+    efvo.style.display="initial";
     this.mostrarEfvo=true;
         
   }
@@ -292,6 +281,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   getMediosDePago(){
     this.carritoService.getMediosDePago().subscribe((response: any) => {
       this.mediosDePago=response.mediosPago;
+      console.log(this.mediosDePago)
     });
     
   }
@@ -345,50 +335,76 @@ export class CheckoutComponent implements OnInit, OnDestroy{
    
   }
   guardarDatos(){
+    /// si eligio retiro personalmente y la forma de pago no se actualizo , la completo 
+    if (this.formEntrega.controls.formaDeEntrega?.value == "Retiro personalmente") {
+      this.formEntrega.get('direccion.calle').setValue("Av Calle");
+      this.formEntrega.get('direccion.numeroCalle').setValue("4678");
+      this.formEntrega.get('direccion.codigoPostal').setValue("08007");
+      this.formEntrega.get('direccion.ciudad').setValue(this.direccionTienda.ciudad);
+      this.formEntrega.get('direccion.pais').setValue("");
+      this.formEntrega.get('direccion.estado').setValue("");
+     /// si elije retiro en tienda saco lso validadores de la direccion
+      this.formEntrega.get('direccion.calle').clearValidators();
+      this.formEntrega.get('direccion.numeroCalle').clearValidators();
+      this.formEntrega.get('direccion.codigoPostal').clearValidators();
+      this.formEntrega.get('direccion.ciudad').clearValidators();
+      this.formEntrega.get('direccion.pais').clearValidators();
+      this.formEntrega.get('direccion.estado').clearValidators();
+      this.formEntrega.get('direccion.calle').updateValueAndValidity();
+      this.formEntrega.get('direccion.numeroCalle').updateValueAndValidity();
+      this.formEntrega.get('direccion.codigoPostal').updateValueAndValidity();
+      this.formEntrega.get('direccion.ciudad').updateValueAndValidity();
+      this.formEntrega.get('direccion.pais').updateValueAndValidity();
+      this.formEntrega.get('direccion.estado').updateValueAndValidity();
+      this.formEntrega.get('direccionFacturacion.calle').clearValidators();
+      this.formEntrega.get('direccionFacturacion.numeroCalle').clearValidators();
+      this.formEntrega.get('direccionFacturacion.codigoPostal').clearValidators();
+      this.formEntrega.get('direccionFacturacion.ciudad').clearValidators();
+      this.formEntrega.get('direccionFacturacion.pais').clearValidators();
+      this.formEntrega.get('direccionFacturacion.estado').clearValidators();
+      this.formEntrega.get('direccionFacturacion.calle').updateValueAndValidity();
+      this.formEntrega.get('direccionFacturacion.numeroCalle').updateValueAndValidity();
+      this.formEntrega.get('direccionFacturacion.codigoPostal').updateValueAndValidity();
+      this.formEntrega.get('direccionFacturacion.ciudad').updateValueAndValidity();
+      this.formEntrega.get('direccionFacturacion.pais').updateValueAndValidity();
+      this.formEntrega.get('direccionFacturacion.estado').updateValueAndValidity();
+       this.clienteDireccion=this.formEntrega.controls.direccion.value
+       this.entrega=this.formEntrega.controls.formaDeEntrega?.value;
+       let idPago =this.formEntrega.controls.formaDePago?.value;
+        setTimeout(() => {
+        this.getMedioDePago(idPago);
+        
+        }, 150);
+        
+        console.log(this.formEntrega);
+        this.mostrarConfirmacion=true;
+      
+        setTimeout(() => {
+          console.log("enviando")
+          this.enviarInfoAConfirmData() 
+        }, 3100);
+      /// envio la direccion de facturacion, si tiene , al perfil 
+      this.enviarDireccionPerfil()        
+    }
     /// primero em fijo si es valido el form o no 
     if (this.formEntrega.invalid){
+      console.log("es invalido")
       this.mostrarMsjeEnvio=true
       this.step2Completo=false;
       this.formValido=false;
-     if (this.calleInvalida ||this.nroInvalido
-      || this.cpInvalido || this.ciudadInvalida ||this.paisInvalido ||this.estadoInvalido ) {
-     this.mostrarMsjeEnvio=true
-     this.formValido=false
-     }
+      if (this.calleInvalida ||this.nroInvalido
+        || this.cpInvalido || this.ciudadInvalida ||this.paisInvalido ||this.estadoInvalido ) {
+      this.mostrarMsjeEnvio=true
+      this.formValido=false
+      }
       
       if(this.formEntrega.controls.formaDeEntrega?.value == "Retiro personalmente" ){
-        /// si elije retiro en tienda saco lso validadores de la direccion
-        this.formEntrega.get('direccion.calle').clearValidators();
-        this.formEntrega.get('direccion.numeroCalle').clearValidators();
-        this.formEntrega.get('direccion.codigoPostal').clearValidators();
-        this.formEntrega.get('direccion.ciudad').clearValidators();
-        this.formEntrega.get('direccion.pais').clearValidators();
-        this.formEntrega.get('direccion.estado').clearValidators();
-        this.formEntrega.get('direccion.calle').updateValueAndValidity();
-        this.formEntrega.get('direccion.numeroCalle').updateValueAndValidity();
-        this.formEntrega.get('direccion.codigoPostal').updateValueAndValidity();
-        this.formEntrega.get('direccion.ciudad').updateValueAndValidity();
-        this.formEntrega.get('direccion.pais').updateValueAndValidity();
-        this.formEntrega.get('direccion.estado').updateValueAndValidity();
-         this.clienteDireccion=this.formEntrega.controls.direccion.value
-         this.entrega=this.formEntrega.controls.formaDeEntrega?.value;
-         let idPago =this.formEntrega.controls.formaDePago?.value;
-          setTimeout(() => {
-          this.getMedioDePago(idPago);
-          
-          }, 150);
-          // this.formEntrega.disable();
-          console.log(this.formEntrega);
-          this.mostrarConfirmacion=true;
+        console.log("estoy aca ")
         
-          setTimeout(() => {
-            this.enviarInfoAConfirmData() 
-          }, 1100);
-        /// envio la direccion de facturacion, si tiene , al perfil 
-        this.enviarDireccionPerfil()
       }
       return this.formEntrega.markAllAsTouched();
     }else{
+      console.log("VALIDO")
       this.step2Completo=true;
       this.formValido=true;
       this.mostrarMsjeEnvio=false
@@ -506,8 +522,6 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       this.enviarDireccionPerfil()
 
     }
-  
-     
   }
   
   crearForm(){
@@ -646,6 +660,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     this.enviarInfoCompra.enviarEntrega$.emit(this.entrega);
     this.enviarInfoCompra.enviarPago$.emit(this.pago);
     this.enviarInfoCompra.enviarMostrarConfirmacion$.emit(this.mostrarConfirmacion);
+    this.enviarInfoCompra.enviarStep2Completo$.emit(this.step2Completo);
      
   }
 
@@ -660,6 +675,13 @@ export class CheckoutComponent implements OnInit, OnDestroy{
  }
  imgEfvo(i){
   if (i+1 == 1) {
+    return true
+  }else{
+    return false
+  }
+ }
+ imgMercadoPago(i){
+  if (i+1 == 3) {
     return true
   }else{
     return false

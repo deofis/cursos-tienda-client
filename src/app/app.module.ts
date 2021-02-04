@@ -36,7 +36,7 @@ import { NewPasswordComponent } from './log-in/user/new-password/new-password.co
 import { FavoritesComponent } from './user-options/favorites/favorites.component';
 import { ActivatedMssgComponent } from './log-in/user/activated-mssg/activated-mssg.component';
 import { ConfirmDataComponent } from './cart/components/confirm-data/confirm-data.component';
-import { FmPaypalEnvioComponent} from './cart/components/final-message/paypal/fm-paypal-envio.component';
+import { CheckoutRedirectComponent} from './cart/components/final-message/otros/checkout-redirect.component';
 import { BrandsPanelComponent } from './admin-options/brands-panel/brands-panel.component';
 import { ProductsListComponent } from './admin-options/products-list/products-list.component';
 import { AddProductComponent } from './admin-options/add-product/add-product.component';
@@ -111,7 +111,7 @@ import { Step3Component } from './admin-options/add-product/step3/step3.componen
     FavoritesComponent,
     ActivatedMssgComponent,
     ConfirmDataComponent,
-    FmPaypalEnvioComponent,
+    CheckoutRedirectComponent,
     BrandsPanelComponent,
     ProductsListComponent,
     AddProductComponent,
