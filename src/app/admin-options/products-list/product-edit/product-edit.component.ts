@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from 'src/app/products/clases/producto';
 import { ProductoService } from '../../producto.service';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -20,7 +22,8 @@ export class ProductEditComponent implements OnInit {
   imageSrc: string;
 
   constructor( private productoService: ProductoService,
-               private fb: FormBuilder ) { }
+               private fb: FormBuilder,
+               private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
 
@@ -109,6 +112,7 @@ export class ProductEditComponent implements OnInit {
     //Llamada al endpoint para editar atributos básicos del producto base
     this.productoService.actualizarDatosProducto(this.producto).subscribe(resp => {
       console.log(resp);
+      this.openSnackBar('El prducto fue actualizado con éxito', null)
       
     });
 
@@ -188,6 +192,7 @@ export class ProductEditComponent implements OnInit {
     //Llamada al endpoint para realizar la edición del precio de un producto base
     this.productoService.actualizarPrecioBaseProducto(this.producto.id, this.producto.precio).subscribe(resp => {
       console.log(resp);
+      this.openSnackBar('El precio del prodcuto fue actualizado con éxito', null)
       
     })
     
@@ -238,6 +243,7 @@ export class ProductEditComponent implements OnInit {
     //Llamada al endpoint para realiazar la edición de la disponibilidad de un producto base
     this.productoService.actualizarDisponibilidadProducto(this.producto.id, this.producto.disponibilidadGeneral).subscribe(resp => {
       console.log(resp);
+      this.openSnackBar('El stock del producto fue actualizado con éxito', null)
       
     })
 
@@ -298,8 +304,14 @@ export class ProductEditComponent implements OnInit {
     this.productoService.uploadPhoto(this.formEditarImagenPrincipal.controls.fileSource.value, this.producto.id).subscribe(resp => {
       console.log(resp);
       this.producto.foto = resp.foto;
+      this.openSnackBar('La imagen principal del producto fue actualizada con éxito', null)
       
     })
+  };
+
+  //Avisos de un correcto update
+  openSnackBar(message: string, action:string){
+    this.snackBar.open(message, action, {duration: 3500, panelClass: ['snackPerfil']})
   };
 
 

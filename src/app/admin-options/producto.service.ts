@@ -91,6 +91,18 @@ export class ProductoService {
     )
   };
 
+  uploadFotoSku(archivo: File, id:any){
+
+    let formData = new FormData();
+    formData.append("foto", archivo);
+    formData.append("id", id);
+
+    return this.http.post(`${this.url}/productos/skus/${id}/fotos`, formData).pipe(
+      map((resp:any) => resp)
+    )
+
+  }
+
   crearNewPromotionSub(promocion:Promocion, id:number){
 
     return this.http.post(`${this.url}/subcategorias/${id}/promociones`, promocion);

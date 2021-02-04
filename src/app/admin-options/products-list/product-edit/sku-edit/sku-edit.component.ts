@@ -3,6 +3,8 @@ import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from 'src/app/admin-options/producto.service';
 import { Sku } from 'src/app/products/clases/sku';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-sku-edit',
   templateUrl: './sku-edit.component.html',
@@ -19,9 +21,13 @@ export class SkuEditComponent implements OnInit {
   formEdicionSku: FormGroup;
   formEdicionPrecioSku: FormGroup;
   formEdicionDisponibilidad: FormGroup;
+  formEditarImagenSku: FormGroup;
+
+  imageSrc:string;
 
   constructor( private productoService: ProductoService,
-               private fb: FormBuilder ) { }
+               private fb: FormBuilder,
+               private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
 
@@ -40,6 +46,11 @@ export class SkuEditComponent implements OnInit {
 
     this.crearFormEditarDisponibilidadSku();
     this.cargarDisponibilidadSku();
+
+    this.crearFormImagenSku();
+    if (this.skuEditar.foto) {
+      this.imageSrc = this.skuEditar.foto.imageUrl
+    }
     
   }
 
@@ -86,6 +97,7 @@ export class SkuEditComponent implements OnInit {
 
     this.productoService.actualizarDatosSku(this.skuEditar).subscribe(resp => {
       console.log(resp);
+      this.openSnackBar('Los datos del producto fueron actualizados con éxito', null)
       
     })
 
@@ -129,6 +141,7 @@ export class SkuEditComponent implements OnInit {
 
     this.productoService.editarPrecioSku(this.skuEditar.id, this.skuEditar.precio).subscribe(resp => {
       console.log(resp);
+      this.openSnackBar('El precio del producto fue actualizado con éxito', null)
       
     })
 
@@ -170,10 +183,53 @@ export class SkuEditComponent implements OnInit {
 
     this.productoService.editarDisponibilidadSku(this.skuEditar.id, this.skuEditar.disponibilidad).subscribe(resp => {
       console.log(resp);
+      this.openSnackBar('El stock del producto fue actualizado con éxito', null)
       
     });
 
-  }
+  };
+
+  crearFormImagenSku(){
+    this.formEditarImagenSku = this.fb.group({
+      file: [''],
+      fileSource: ['']
+    })
+  };
+
+  onFileChange(event) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+
+        this.imageSrc = reader.result as string;
+
+        this.formEditarImagenSku.patchValue({
+          fileSource: event.target.files[0]
+        })
+
+      }
+    }
+
+  };
+
+  editarImagenSku(){
+    this.productoService.uploadFotoSku(this.formEditarImagenSku.controls.fileSource.value, this.skuEditar.id).subscribe(resp => {
+      console.log(resp);
+      this.skuEditar.foto = resp.foto;
+      this.openSnackBar('La imagen del producto fue actualizada con éxito', null)
+      
+    })
+  };
+
+
+  //Avisos de un correcto update
+  openSnackBar(message: string, action:string){
+    this.snackBar.open(message, action, {duration: 3500, panelClass: ['snackPerfil']})
+  };
 
   
 
