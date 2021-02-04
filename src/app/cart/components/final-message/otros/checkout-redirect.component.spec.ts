@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FmPaypalEnvioComponent } from './fm-paypal-envio.component';
+import { CheckoutRedirectComponent } from './checkout-redirect.component';
 
 describe('FinalMessageComponent', () => {
-  let component: FmPaypalEnvioComponent;
-  let fixture: ComponentFixture<FmPaypalEnvioComponent>;
+  let component: CheckoutRedirectComponent;
+  let fixture: ComponentFixture<CheckoutRedirectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FmPaypalEnvioComponent ]
+      declarations: [ CheckoutRedirectComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FmPaypalEnvioComponent);
+    fixture = TestBed.createComponent(CheckoutRedirectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

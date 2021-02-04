@@ -14,7 +14,7 @@ import { CheckoutComponent } from './cart/components/checkout/checkout/checkout.
 import { StepperCartComponent } from './cart/components/stepper-cart/stepper-cart.component';
 import { PreCheckoutComponent } from './cart/components/checkout/pre-checkout/pre-checkout.component';
 import { ConfirmDataComponent } from './cart/components/confirm-data/confirm-data.component';
-import { FmPaypalEnvioComponent } from './cart/components/final-message/paypal/fm-paypal-envio.component';
+import { CheckoutRedirectComponent } from './cart/components/final-message/otros/checkout-redirect.component';
 import { Oauth2RedirectHandlerComponent } from './log-in/oauth2/oauth2-redirect-handler/oauth2-redirect-handler.component';
 import { AuthGuard } from './log-in/guards/auth.guard';
 import { RoleGuard } from './log-in/guards/role.guard';
@@ -58,8 +58,10 @@ const routes: Routes = [
   { path:"checkout",component:CheckoutComponent },
   { path:"pre-checkout", component:PreCheckoutComponent },
   { path:"confirm-data", component:ConfirmDataComponent },
-  { path:"paypal/redirect/approved" , component:FmPaypalEnvioComponent }, 
+  { path:"paypal/redirect/approved" , component:CheckoutRedirectComponent }, 
   { path:"paypal/redirect/cancel" , component:PaypalCancelComponent }, 
+  { path:"mercado-pago/redirect/approved" , component:CheckoutRedirectComponent }, 
+  { path:"mercado-pago/redirect/cancel" , component:PaypalCancelComponent }, 
   {path:"cash/approved" , component: FmEfectivoComponent},
   { path:"**", pathMatch:"full", redirectTo:"home" }
 ];
