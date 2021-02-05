@@ -1,6 +1,5 @@
 import { NumberFormatStyle } from '@angular/common';
 import { Promocion } from 'src/app/admin-options/admin-promos/clases/promocion';
-import { Foto } from './foto';
 import { Producto } from './producto';
 import { ValorPropiedadProducto } from './valor-propiedad-producto';
 import { Foto } from './foto';
@@ -17,6 +16,5 @@ export class Sku{
     valores:ValorPropiedadProducto [];
     defaultProducto:Producto;
     producto:Producto;
-    foto: Foto;
     
 }

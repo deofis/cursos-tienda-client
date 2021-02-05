@@ -27,7 +27,7 @@
 
         <div class="col der">
             <div class="row add-img">
-                <h2 *ngIf="listaDePropiedades==null">Imágen:</h2>
+                <h2>Imágen:</h2>
                 <p>Añada una fotografía principal de su producto.
                     <br>
                     <span>- Recomentamos utilizar un tamaño cuadrado , sin fondo o con fondo blanco. -</span>
@@ -36,17 +36,18 @@
 
             </div>
             <div class="fila row" [formGroup]="formEdicionProducto">
-                
-                <div class="availability-container">
+                <h2>General:</h2>
+                <div class="availability-container" *ngIf="listaDePropiedades==null">
                     <span *ngIf="disponibilidadGeneralInvalida" class="text-rojo"><strong>(*)</strong></span>
                     <label for="availability"> Disponibilidad General:</label>
                     <input type="number" min="0" pattern="^[0-9]+" id="availability"
                         [class.is-invalid]="disponibilidadGeneralInvalida" formControlName="disponibilidadGeneral">
                     <span id="unidadElegida">{{newProduct.unidadMedida?.codigo}}</span>
                 </div>
-                <div>
-                    <p class="destacado">Producto Destacado:</p>
-                    <mat-slide-toggle formControlName="destacado">{{formEdicionProducto.get('destacado').value ? 'Si' : 'No'}}</mat-slide-toggle>
+                
+                <div class="producto-destacado">
+                    <p class="destacado">Producto Destacado</p>
+                    <mat-slide-toggle  (click)="editarDestacadoDisponibilidad()" formControlName="destacado">{{formEdicionProducto.get('destacado').value ? 'Si' : 'No'}}</mat-slide-toggle>
                 </div>
             </div>
             <div class="row add-promo" *ngIf="listaDePropiedades==null">
@@ -71,7 +72,7 @@
             <button matStepperNext id="btn-guardar" *ngIf="listaDePropiedades!==null" (click)="guardarCambios()">
                 Guardar y Continuar</button>
             <button matStepperNext *ngIf="listaDePropiedades ==null" id="btn-guardar"
-                (click)="guardarCambios();cerrarForm()"> Guardar y Finalizar</button>
+                (click)="guardarCambios()"> Guardar y Finalizar</button>
 
         </div>
 

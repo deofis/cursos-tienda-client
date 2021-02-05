@@ -8,6 +8,27 @@ $color-ppal:#fff;
  $color-wf2:#1f4e84;
  $color-wf3:#2779cd;
  $color-wf4:#70b8f3;
+ 
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #1f4e8494;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #1f4e84;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .form-img{
     width: 100%;
     .box-img{
@@ -133,10 +154,14 @@ $color-ppal:#fff;
             }
             .fila{
                 display: flex;
-                margin-bottom: 45px;
-                align-items: baseline;              
+                flex-direction: column;
+                margin-bottom: 25px;   
+                    h2{
+                        font-family: $fte-sec;
+                        color: $color-wf1;
+                    }           
                     .availability-container{
-                        margin-left: 60px;
+                        margin-left: 30px;
                         #availability{
                             border: none;
                             outline: none;
@@ -144,7 +169,7 @@ $color-ppal:#fff;
                             font-size: 14px;
                             padding-right: 3px;
                             padding-left: 3px;
-                            width: 60px;
+                            width: 30px;
                             border-bottom: 1px solid grey;
                             &:focus{
                                 border-bottom: 2px solid $color-wf3;
@@ -153,7 +178,16 @@ $color-ppal:#fff;
                                 border-bottom: 1px solid red;
                             }
                         } 
-                    }    
+                    }   
+                    .producto-destacado{
+                        display: flex;
+                        align-items: baseline;
+                        margin-top: 10px;
+                        margin-left: 30px;
+                        .destacado{
+                            margin-right: 15px;
+                        }
+                    } 
             }
             #btn-guardar{
                 background-color: $color-wf1;

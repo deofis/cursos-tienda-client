@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { Producto } from 'src/app/products/clases/producto';
 import { UnidadMedida } from 'src/app/products/clases/unidad-medida';
 import { CatalogoService } from 'src/app/products/services/catalogo.service';
+import Swal from 'sweetalert2';
 import { DataService } from '../../admin-promos/data.service';
 import { EnviarProductoService } from '../../enviar-producto.service';
 import { ProductoService } from '../../producto.service';
@@ -122,22 +123,61 @@ guardarCambios(){
       console.log(response) );
   }
 
-  console.log(this.formEdicionProducto.controls.destacado.value);
+  this.editarDestacadoDisponibilidad()
   
-  
+  setTimeout(() => {
+    this.cerrarForm()
+  }, 1500);
+ 
 }
 editarDestacadoDisponibilidad(){
-
+  setTimeout(() => {
+    if (this.newProduct.destacado!==this.formEdicionProducto.controls.destacado.value) {
+      this.productoService.destacarProducto(this.newProduct).subscribe(resp => {
+        console.log(resp);
+        this.catalogoService.getInfoProducto(this.newProduct.id).subscribe(response=>{
+          this.newProduct=response
+        })
+      })
+    }
+    this.productoService.actualizarDisponibilidadProducto(this.newProduct?.id,this.formEdicionProducto.controls.disponibilidadGeneral.value).subscribe(resp => {
+      console.log(resp);
+      this.newProduct=resp.producto
+    });
+  }, 300);
 }
 cerrarForm(){
-  //para refrescar el form 
-  setTimeout(() => {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/products-list']);
-      this.modal.dismissAll(); 
-    })
-  }, 700);
- 
+  // si usamos el default sku me fijo que cantidad cargo en disponibilidad 
+  if (this.listaDePropiedades==null) {
+    if (this.newProduct?.disponibilidadGeneral!==0) {
+      Swal.fire({
+        icon: 'success',
+        title: 'El producto ha sido creado con éxito. ',
+      });
+      this.modal.dismissAll();
+    }else{
+       
+      Swal.fire({
+        icon: 'warning',
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Continuar',
+        cancelButtonText: 'Editar',
+        title: 'La disponibilidad de su producto es 0 unidades. ',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Cambios cargados con éxito. ',
+          });
+          this.modal.dismissAll();
+        
+          }
+          })
+    }
+  }
+  
 }
 
 enviarMostrarStep3(){
