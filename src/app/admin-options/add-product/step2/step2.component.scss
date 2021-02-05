@@ -131,6 +131,30 @@ $color-ppal:#fff;
                 }
             }
             }
+            .fila{
+                display: flex;
+                margin-bottom: 45px;
+                align-items: baseline;              
+                    .availability-container{
+                        margin-left: 60px;
+                        #availability{
+                            border: none;
+                            outline: none;
+                            margin-left: 8px;
+                            font-size: 14px;
+                            padding-right: 3px;
+                            padding-left: 3px;
+                            width: 60px;
+                            border-bottom: 1px solid grey;
+                            &:focus{
+                                border-bottom: 2px solid $color-wf3;
+                            }
+                            &.is-invalid{
+                                border-bottom: 1px solid red;
+                            }
+                        } 
+                    }    
+            }
             #btn-guardar{
                 background-color: $color-wf1;
                 font-family: $fte-sec;

@@ -28,7 +28,7 @@
       <div style="font-size: 13px;">{{prop.nombre}}:</div>&nbsp;<span *ngFor="let valor of prop.valores">{{valor.valor}}</span>
     </div>
   </div>
-  <div *ngIf="!producto.skus.length > 0" class="cont-props container">
+  <div *ngIf="producto.skus.length == 0" class="cont-props container">
 
   </div>
   <div class="i-fondo d-block"><i id="fav" class=" iconos far fa-heart fav" (click)="saveToFav()"></i></div>

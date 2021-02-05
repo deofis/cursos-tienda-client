@@ -1,3 +1,4 @@
+  
 import { DataService } from './../../admin-promos/data.service';
 import { MarcasService } from './../../marcas.service';
 import { PropiedadesService } from './../../propiedades.service';
@@ -133,9 +134,9 @@ crearProducto(){
     this.newProduct.nombre=this.form.controls.nombre.value;
     this.newProduct.descripcion=this.form.controls.descripcion.value;
     this.newProduct.precio=this.form.controls.precio.value;
-    this.newProduct.disponibilidadGeneral=this.form.controls.disponibilidadGeneral.value;
     this.newProduct.destacado=this.form.controls.destacado.value;
     this.newProduct.marca=this.form.controls.marca.value;
+    this.newProduct.disponibilidadGeneral=this.form.controls.disponibilidadGeneral.value;
     this.newProduct.subcategoria=this.form.controls.subcategoria.value;
     this.newProduct.unidadMedida=this.form.controls.unidadMedida.value;
     this.newProduct.propiedades = this.propiedadesSeleccionadas;
@@ -157,7 +158,7 @@ crearForm(){
     nombre:["", Validators.required],
     descripcion:[""],
     precio:["", Validators.required],
-    disponibilidadGeneral:[null, Validators.required],
+    disponibilidadGeneral:[0],
     destacado:[false],
     marca: ["", Validators.required],
     subcategoria:["", Validators.required],
@@ -179,9 +180,7 @@ crearForm(){
     get marcaInvalida() {
       return this.form.get('marca').invalid && this.form.get('marca').touched;
     }
-    get disponibilidadGeneralInvalida() {
-      return this.form.get('disponibilidadGeneral').invalid && this.form.get('disponibilidadGeneral').touched;
-    }
+   
     get subcategoriaInvalida() {
       return this.form.get('subcategoria').touched  && (this.form.controls.subcategoria.value == this.subcategoria);
     }
@@ -274,32 +273,8 @@ crearForm(){
     
     }
 
-    showUnit(){
-       this.unidadSeleccionada = this.form.controls.unidadMedida.value;
-     
-      let unidad = document.getElementById("unidadElegida");
-      
-      if(this.unidadSeleccionada.nombre=="Unidad"){
-        unidad.innerText="unidades";
-      }
-      if(this.unidadSeleccionada.nombre=="Kilo"){
-        unidad.innerText="kilos"
-      }
-      if(this.unidadSeleccionada.nombre=="Litro"){
-        unidad.innerText="litros"
-      }
-           
-    }
-    changeUnit(){
-      let inputDisponibilidad= document.getElementById("availability") as HTMLInputElement;
-      let unidad = document.getElementById("unidadElegida");
-      this.unidadSeleccionada = this.form.controls.unidadMedida.value;
-      if(inputDisponibilidad.value== "1"){
-       unidad.innerText=this.unidadSeleccionada.nombre
-      }else{
-        this.showUnit();
-      }
-    }
+   
+    
 
       ///// MODAL  NUEVA MARCA////
   openModal(marca){

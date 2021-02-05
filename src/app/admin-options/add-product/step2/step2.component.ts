@@ -1,9 +1,11 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Producto } from 'src/app/products/clases/producto';
+import { UnidadMedida } from 'src/app/products/clases/unidad-medida';
 import { CatalogoService } from 'src/app/products/services/catalogo.service';
 import { DataService } from '../../admin-promos/data.service';
 import { EnviarProductoService } from '../../enviar-producto.service';
@@ -21,13 +23,18 @@ export class Step2Component implements OnInit, OnDestroy {
  selectedFile:File=null;
  cerrarModalPromo:Subscription;
  listaDePropiedades:string;
- mostrarStep3:boolean
+ mostrarStep3:boolean;
+ formEdicionProducto:FormGroup;
+
+ unidadSeleccionada:UnidadMedida;
+ unidadesMedida:UnidadMedida[];
+ unidad:string="-Unidad de Medida-";
   constructor(private productoService:ProductoService,
               private dataService:DataService,
               public modal: NgbModal,
               private router:Router,
               private catalogoservice:CatalogoService,
-
+              private fb:FormBuilder,
               private enviarNewProduct:EnviarProductoService,
               private catalogoService: CatalogoService,
               ) {
@@ -40,8 +47,8 @@ export class Step2Component implements OnInit, OnDestroy {
     this.cerrarModalPromo=this.dataService.cerrarModal$.subscribe(resp =>{
       console.log(resp)
      })
-    
-
+     this.crearForm();
+     this.getUnidades();
      setTimeout(() => {
       this.listarPropiedades();
      }, 1000);
@@ -50,7 +57,27 @@ export class Step2Component implements OnInit, OnDestroy {
   ngOnDestroy():void{
     this.cerrarModalPromo.unsubscribe();
   }
+  crearForm(){
+    this.formEdicionProducto=this.fb.group({
+      disponibilidadGeneral:[0],
+      destacado: [false],
+    });
+  
+  }
+  
+  get disponibilidadGeneralInvalida() {
+    return this.formEdicionProducto.get('disponibilidadGeneral').invalid && this.formEdicionProducto.get('disponibilidadGeneral').touched;
+  }
+ ///////////// inicio logica para mostrar unidades ////////////////////
 
+  getUnidades(){
+    this.catalogoservice.getUnidades().subscribe(response => {
+      this.unidadesMedida=response;
+    })
+  }
+
+
+ ///////////// fin logica para mostrar unidades ////////////////////
   listarPropiedades(){
     let propiedades=[]
     for (let x = 0; x < this.newProduct.propiedades.length; x++) {
@@ -94,7 +121,13 @@ guardarCambios(){
     this.productoService.uploadPhoto(this.selectedFile, this.newProduct?.id).subscribe(response => 
       console.log(response) );
   }
+
+  console.log(this.formEdicionProducto.controls.destacado.value);
   
+  
+}
+editarDestacadoDisponibilidad(){
+
 }
 cerrarForm(){
   //para refrescar el form 

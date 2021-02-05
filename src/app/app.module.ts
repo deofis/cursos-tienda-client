@@ -80,6 +80,7 @@ import { ResumenCarritoComponent } from './cart/components/checkout/resumen-carr
 import { FmEfectivoComponent } from './cart/components/final-message/efectivo/fm-efectivo.component';
 import { PaypalCancelComponent } from './cart/components/final-message/paypal-cancel/paypal-cancel.component';
 import { Step3Component } from './admin-options/add-product/step3/step3.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -165,7 +166,8 @@ import { Step3Component } from './admin-options/add-product/step3/step3.componen
     MatStepperModule,
     MatIconModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
