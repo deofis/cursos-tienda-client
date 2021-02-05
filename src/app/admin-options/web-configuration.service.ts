@@ -18,6 +18,19 @@ export class WebConfigurationService {
     return this.http.get(`${this.url}/banners`).pipe(map((resp:any) => {
       return resp;
     }))
+  };
+
+  crearNuevoBanner(bannerDto: string, archivo: File){
+
+    let formData = new FormData();
+    formData.append("foto", archivo);
+    formData.append("bannerDto", bannerDto);
+
+    return this.http.post(`${this.url}/banners`, formData).pipe(map((resp: any) => {
+      return resp;
+    }))
+    
+
   }
 
 

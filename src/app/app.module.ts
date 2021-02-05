@@ -82,6 +82,7 @@ import { FmEfectivoComponent } from './cart/components/checkout/checkout-redirec
 import { CheckoutCancelComponent } from './cart/components/checkout/checkout-redirect/otros/cancel/checkout-cancel.component';
 import { WebConfigurationComponent } from './admin-options/web-configuration/web-configuration/web-configuration.component';
 import { BannersComponent } from './admin-options/web-configuration/banners/banners.component';
+import { BannerIndividualComponent } from './admin-options/web-configuration/banners/banner-individual/banner-individual.component';
 
 
 
@@ -145,6 +146,7 @@ import { BannersComponent } from './admin-options/web-configuration/banners/bann
     CheckoutCancelComponent,
     WebConfigurationComponent,
     BannersComponent,
+    BannerIndividualComponent,
   ],
   imports: [
     BrowserModule,

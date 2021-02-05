@@ -2,38 +2,76 @@
 
 <div class="row mt-3">
     <div class="col text-right">
-        <button class="btn btn-primary" style="background-color: #1f4e84; border: none;">
+        <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="open(content)">
             Nuevo banner
         </button>
     </div>
 </div>
 
 <div class="row row-cols-1 row-cols-md-2 mt-4">
-    <div class="col mb-4">
-      <div class="card">
-        <img src="../../../../assets/imagenes/bannerCalzado1.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="../../../../assets/imagenes/bannerCalzado2.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="../../../../assets/imagenes/bannerCalzado3.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-        </div>
-      </div>
-    </div>
+    <app-banner-individual *ngFor="let banner of banners" [banner]="banner"></app-banner-individual>
+</div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Nuevo banner</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
+  <div class="modal-body">
+    
+    <div class="container">
+      <div class="col mb-4">
+        <div class="card">
+          <img [src]="imageSrc ? imageSrc : '../../../../assets/imagenes/noimage.png'" class="card-img-top" alt="..."[ngClass]="{'noImage': !imageSrc}">
+          <div class="card-body" [formGroup]="formNuevoBanner">
+            <div class="row">
+              <div class="col">
+
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                           formControlName="file" (change)="onFileChange($event)">
+                    <label class="custom-file-label">Elige una imagen</label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="">Orden del Banner</label>
+                  <input type="number" formControlName="orden"
+                         class="form-control" placeholder="Orden del banner">
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="">URL</label>
+                  <input type="string" formControlName="actionUrl"
+                         class="form-control" placeholder="Url">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col text-right">
+                <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="crearBanner()">
+                  Aceptar
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
+    </div>
+
+  </div>
+  
+</ng-template>
