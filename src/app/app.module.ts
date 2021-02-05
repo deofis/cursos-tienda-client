@@ -83,6 +83,9 @@ import { ProductEditComponent } from './admin-options/products-list/product-edit
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { SkuEditComponent } from './admin-options/products-list/product-edit/sku-edit/sku-edit.component';
 import { Step3Component } from './admin-options/add-product/step3/step3.component';
+import { WebConfigurationComponent } from './admin-options/web-configuration/web-configuration/web-configuration.component';
+import { BannersComponent } from './admin-options/web-configuration/banners/banners.component';
+import { BannerIndividualComponent } from './admin-options/web-configuration/banners/banner-individual/banner-individual.component';
 
 
 
@@ -146,6 +149,9 @@ import { Step3Component } from './admin-options/add-product/step3/step3.componen
     ProductEditComponent,
     SkuEditComponent,
     Step3Component,
+    WebConfigurationComponent,
+    BannersComponent,
+    BannerIndividualComponent,
   ],
   imports: [
     BrowserModule,

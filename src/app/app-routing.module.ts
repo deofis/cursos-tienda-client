@@ -27,6 +27,7 @@ import { AddProductComponent } from "./admin-options/add-product/add-product.com
 import { AdminPromosComponent } from './admin-options/admin-promos/admin-promos.component';
 import { AdminVentasComponent } from './admin-options/admin-ventas/admin-ventas.component';
 import { AdminPropiedadesComponent } from './admin-options/admin-propiedades/admin-propiedades.component';
+import { WebConfigurationComponent } from './admin-options/web-configuration/web-configuration/web-configuration.component';
 
 const admin = 'ROLE_ADMIN';
 const user  = 'ROLE_USER';
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path:"products-list" , component:ProductsListComponent, canActivate: [AuthGuard, RoleGuard], data: {role: admin} },
   { path:"admin-promo", component:AdminPromosComponent/* , canActivate: [AuthGuard, RoleGuard], data: {role: admin} */ },
   { path:"admin-propiedades", component: AdminPropiedadesComponent, canActivate: [AuthGuard, RoleGuard], data: {role: admin} },
+  { path:"web-configuration", component: WebConfigurationComponent, canActivate: [AuthGuard, RoleGuard], data: {role: admin} },
   { path:"user-sign-up",component:UserSignUpComponent },
   { path:"new-password", component:NewPasswordComponent},
   { path:"recuperar-password/:token",component:NewPasswordComponent },
