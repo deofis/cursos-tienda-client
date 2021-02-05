@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { API_BASE_URL } from '../config/config';
+import { isParameter } from 'typescript';
+import { param } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,31 @@ export class WebConfigurationService {
       return resp;
     }))
     
+
+  };
+
+  eliminarBanner(idBanner: number){
+    return this.http.delete(`${this.url}/banners/${idBanner}`).pipe(map((resp: any) => {
+      return resp;
+    }))
+  };
+
+  editarImagenBanner(idBanner: any, imagen: File){
+    let formData = new FormData();
+    formData.append("foto", imagen);
+    formData.append("id", idBanner);
+
+    return this.http.put(`${this.url}/banners/${idBanner}/imagen`, formData).pipe(map((resp:any) => {
+      return resp;
+    }))
+
+  };
+
+  editarBannerUrl(idBanner: number, url: string){
+    let parametros = new HttpParams();
+    parametros = parametros.append("actionUrl", url);
+
+    return this.http.put(`${this.url}/banners/${idBanner}/actionUrl`, null, {params: parametros});
 
   }
 

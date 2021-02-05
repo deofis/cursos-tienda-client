@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { WebConfigurationService } from '../../web-configuration.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { Banner } from '../clases/banner';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-banners',
@@ -20,7 +23,8 @@ export class BannersComponent implements OnInit {
 
   constructor( private webConfigurationService: WebConfigurationService,
                private modalService: NgbModal,
-               private fb: FormBuilder ) { }
+               private fb: FormBuilder,
+               private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
 
@@ -34,7 +38,7 @@ export class BannersComponent implements OnInit {
 
     this.webConfigurationService.getBanners().subscribe((resp:any) => {
       console.log(resp);
-      this.banners = resp;
+      this.banners = resp.banners;
       
     })
 
@@ -53,7 +57,6 @@ export class BannersComponent implements OnInit {
       file: [''],
       fileSource: [''],
       actionUrl: [''],
-      orden: ['']
       
     })
 
@@ -101,8 +104,7 @@ export class BannersComponent implements OnInit {
     };
 
     const bannerDto = {
-      actionUrl: this.formNuevoBanner.controls.actionUrl.value,
-      orden: this.formNuevoBanner.controls.orden.value
+      actionUrl: this.formNuevoBanner.controls.actionUrl.value
     }
 
     const bannerDtoStr = JSON.stringify(bannerDto);
@@ -111,6 +113,11 @@ export class BannersComponent implements OnInit {
 
     this.webConfigurationService.crearNuevoBanner(bannerDtoStr, this.formNuevoBanner.controls.fileSource.value).subscribe((resp:any) => {
       console.log(resp);
+      this.openSnackBar("Nuevo banner creado con éxito", null)
+      this.obtenerBanners();
+      this.formNuevoBanner.reset();
+      this.imageSrc = null;
+      this.modalService.dismissAll();
     }, err => {
       console.log(err);
     });
@@ -120,5 +127,9 @@ export class BannersComponent implements OnInit {
     
 
   }
+
+  openSnackBar(message: string, action:string){
+    this.snackBar.open(message, action, {duration: 2500, panelClass: ['snackPerfil']})
+  };
 
 }

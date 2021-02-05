@@ -9,14 +9,16 @@
 </div>
 
 <div class="row row-cols-1 row-cols-md-2 mt-4">
-    <app-banner-individual *ngFor="let banner of banners" [banner]="banner"></app-banner-individual>
+  <div *ngFor="let banner of banners">
+    <app-banner-individual [banner]="banner"></app-banner-individual>
+  </div>
 </div>
 
 
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Nuevo banner</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); formNuevoBanner.reset(); imageSrc = null">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -42,15 +44,15 @@
             </div>
 
             <div class="row mt-3">
-              <div class="col-12 col-md-6">
+              <!-- <div class="col-12 col-md-6">
                 <div class="form-group">
                   <label for="">Orden del Banner</label>
                   <input type="number" formControlName="orden"
                          class="form-control" placeholder="Orden del banner">
                 </div>
-              </div>
+              </div> -->
 
-              <div class="col-12 col-md-6">
+              <div class="col-12 col-md-12">
                 <div class="form-group">
                   <label for="">URL</label>
                   <input type="string" formControlName="actionUrl"
