@@ -12,411 +12,395 @@ $color-ppal:#fff;
     appearance: none;
     margin: 0;
 }
-
-     
-            .contenedor{
-                width: 100%;
-                background-color: white;
-                padding: 30px 60px 15px 60px;
-                box-shadow: 1px 2px 3px $color-sec;
-               margin-bottom: 50px;
-                .form1{
-                    width: 100%;
-                    font-family:$fte-sec;
-                    margin-bottom: 60px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-direction: column;
-                   .container-white{
-                    
-                    .row{
-                        display: flex;
-                        margin-bottom: 45px;
-                        align-items: baseline;
-                       
-                            .name{
-                                #name{
-                                    margin-left: 10px;
-                                    border: none;
-                                    outline: none;
-                                    border-bottom: 1px solid grey;
-                                    font-size: 14px;
-                                    width: 400px;
-                                    padding-right: 3px;
-                                    &:focus{
-                                        border-bottom: 2px solid $color-wf3;
-                                    }
-                                    &.is-invalid{
-                                        border-bottom: 1px solid red;
-                                      }
-                                 }
-                            }
-                            .brand{
-                                margin-left: 60px;
-                                .inputBrand{
-                                    margin-left: 10px;
-                                    padding: 0;
-                                }
-                                #brand{
-                                  
-                                    border: none;
-                                    outline: none;
-                                    font-size: 14px;
-                                    padding-right: 3px;
-                                    padding-left:0 ;
-                                    // &:focus{
-                                    //     border-bottom: 2px solid $color-wf3;
-                                    // }
-                                   
-                                }
-                                .fa-plus-square{
-                                    color: $color-wf3;
-                                    margin-left: 10px;
-                                    font-size: 17px;
-                                    cursor: pointer;
-                                    &:hover{
-                                        transform: scale(1.1);
-                                    }
-                                }
-                            }
-                            .text-rojo{
-                                font-family: $fte-sec;
-                                color: red;
-                                text-align: right;
-                                margin-bottom: 0;
-                                font-size: 12px;
-                               }
-                       
-                        .input-msj{
-                            #categories, #subcategories, #marca{
-                                font-size: 15px;
-                                border: none;
-                                outline: none;
-                                width: 140px;
-                                padding-left: 5px;
-                                border-bottom: 1px solid grey;
-                                &:focus{
-                                    border-bottom: 2px solid $color-wf3;
-                                }
-                                &.is-invalid{
-                                    border-bottom: 1px solid red;
-                                  }
-                            }
-                            #subcategories {
-                                margin-left: 90px;
-                                display: block;
-                            }
-                            #marca{
-                                
-                                margin-left: 90px;
-                            }
-                        }
-                     
-                       #unidadMedida{
-                        font-size: 15px;
+*{
+    background-color: #fff;
+}   
+.contenedor{
+    width: 100%;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    margin-bottom: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    .form1{
+        width: 100%;
+        font-family:$fte-sec;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+       .container-white{
+        .fila{
+            display: flex;
+            margin-bottom: 45px;
+            align-items: baseline;
+           
+                .name{
+                    #name{
+                        margin-left: 10px;
                         border: none;
                         outline: none;
-                        width: 160px;
-                        padding-left: 5px;
                         border-bottom: 1px solid grey;
+                        font-size: 14px;
+                        width: 400px;
+                        padding-right: 3px;
                         &:focus{
                             border-bottom: 2px solid $color-wf3;
                         }
                         &.is-invalid{
                             border-bottom: 1px solid red;
                           }
-                       }
-                        
-                        #property{
-                            font-size: 15px;
-                            border: none;
-                            outline: none;
-                            width: 110px;
-                            padding-left: 5px;
-                            border-bottom: 1px solid grey;
-                            &:focus{
-                                border-bottom: 2px solid $color-wf3;
-                            }
-                        }
-                       .price-container{
-                        display: flex;
-                        align-items: baseline;
-                        #euro{
-                            font-weight: bold;
-                            font-size: 14px;
-                            display: block;
-                            margin-left: 10px;
-                        }
-                        #price{
-                            border: none;
-                            outline: none;
-                            font-size: 14px;
-                            padding-right: 3px;
-                            padding-left: 3px;
-                            width: 90px;
-                            border-bottom: 1px solid grey;
-                            &:focus{
-                                border-bottom: 2px solid $color-wf3;
-                            } &.is-invalid{
-                                border-bottom: 1px solid red;
-                              }
-                        }
-                       }
-                       
-                        .check-oferta{
-                           margin-left: 50px;
-                           #checkbox-oferta{
-                                margin-right: 10px;
-                                margin-top: -5px;
-                                margin-bottom: -20px;
-                                }
-                        }
-                       
-                       .availability-container{
-                        margin-left: 60px;
-                        #availability{
-                            border: none;
-                            outline: none;
-                            margin-left: 8px;
-                            font-size: 14px;
-                            padding-right: 3px;
-                            padding-left: 3px;
-                            width: 60px;
-                            border-bottom: 1px solid grey;
-                            &:focus{
-                                border-bottom: 2px solid $color-wf3;
-                            }
-                            &.is-invalid{
-                                border-bottom: 1px solid red;
-                              }
-                        } 
-                       }
-                       .destacado{
-                        margin-left: 60px;
-                        #destacado{
-                            margin-right: 10px;
-                            margin-top: -5px;
-                            margin-bottom: -20px;
-                           
-                        }
-                       }
-
-                    }
-                    .text-rojo{
-                        font-family: $fte-sec;
-                        color: red;
-                        text-align:left;
-                        margin-bottom: 0;
-                        font-size: 14px;  
-                    }
-                    .subandcat{
-                        margin-top: -20px;
-                    }
-                    .elegir-props{
-                        display: flex;
-                        margin-bottom: -10px;
-                        p{
-                            font-family: $fte-sec;
-                            font-size: 14px;
-                            margin-bottom: -20px;
-                        }
-                        .propiedad-check{
-                            margin-top: -20px;
-                            font-family: $fte-sec;
-                            font-size: 13px;
-                            color: $color-wf3;
-                            margin-right: 25px;
-                            margin-bottom: 10px;
-                            #propiedad{
-                                margin-right: 5px;
-                            }
-                        }
-                        
-                    }
-                    .textarea{
-                        width: 103%;
-                        font-family: $fte-sec;
-                        margin-left: -1vw;
-                        margin-bottom: 25px;
-                        #descripcion{
-                            resize: none;
-                            outline: none;
-                            width: 100%;
-                            padding: 5px 10px;
-                        }
-                    }
-                    .form-img{
-                        flex-direction: column;
-                        align-items: flex-start;
-                        justify-content: center;
-                        width: 100%;
-                        .row{
-                            display: flex;
-                            margin-bottom: 45px;
-                            justify-content: space-between;
-                            align-items: flex-start;
-                            width: 85%;
-                            margin-top: -13px;
-                            .add-img{
-                             
-                                outline: none;
-                                p{
-                                font-size: 15px;
-                                margin-bottom: 25px;
-                                span{
-                                    color: grey;
-                                    font-size: 13px;
-                                }
-                                }
-                                #add-files{
-                                    font-size: 13px;
-                                    display: block;
-                                    margin-top: -10px;
-                                    outline: none;
-                                    width: 350px;
-                                    overflow: hidden;
-                                }
-                                
-                            }
-                            .images{
-                                margin-top:-10px;
-                                #img-ppal{
-                                   width: 100px;
-                                   height: 100px; 
-                                   display: none;
-                                }
-                            }
-                        }
-                        .check-sku{
-                            display: flex;
-                            margin-bottom: 45px;
-                            align-items: baseline;
-                            #combinations{
-                                margin-right: 10px;
-                                margin-top: -5px;
-                                margin-bottom: -20px;
-                               
-                            }
-                        }
-                    }
-                   
-                   }
+                     }
                 }
-                .form-promo{
-                    // display: none;
-                    flex-direction: column;
-                    .botones-contenedor{
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        margin-top: 25px;
-                        width: 30vw;
-                        align-self: center;
-                        
+                .brand{
+                    margin-left: 60px;
+                    .inputBrand{
+                        margin-left: 10px;
+                        padding: 0;
                     }
-                    .check-sku{
-                        #combinations{
-                            margin-right: 20px;
-                        }
+                    #brand{
+                      
+                        border: none;
+                        outline: none;
+                        font-size: 14px;
+                        padding-right: 3px;
+                        padding-left:0 ;
+                        // &:focus{
+                        //     border-bottom: 2px solid $color-wf3;
+                        // }
+                       
                     }
-                   
-                }
-            }
-            .form-add-brand{
-                margin-left: auto;
-                margin-right: auto;
-                 width: 90%;
-                 .marca-campo{
-                     display: flex;
-                     font-family: $fte-sec;
-                     .marca{
-                         font-size: 15px;
-                     }
-                     #marca{
-                         margin-top: -10px;
-                         margin-left: 15px;
-                         border: none;
-                         outline: none;
-                         border-bottom: 1px solid grey;
-                         font-size: 13px;
-                         width: 200px;
-                         padding-right: 3px;
-                         &:focus{
-                             border-bottom: 2px solid $color-wf3;
-                         }
-                     }
-                     }
-                     .btn{
-                         margin-left: 70%;
-                         background-color: $color-wf1;
-                         color: white;
-                         font-family: $fte-sec;
-                         font-size: 16px;
-                         border: 0px ;
-                         padding: 3px 8px;
-                         box-sizing: border-box;
-                         width: 30%;
-                         border-radius: 0px;                        
-                         &:hover{
-                             background-color: $color-wf2;
-                         }
-                     }
-             }
-             #listo{
-                font-family: $fte-sec;
-                font-size: 20px;
-                color: $color-sec;
-                display: none;
-             }
-             .modalTitle{
-                 font-family: $fte-ppal;
-                 font-size: 20px;
-                 margin-bottom: -20px;
-             }
-             .close{
-                 &:focus{
-             outline: none;
-                 }
-             }
-             .btn-add-brand{
-                border: none;
-              background-color: #fff;
                     .fa-plus-square{
                         color: $color-wf3;
-                        margin-right: 4px;
+                        margin-left: 10px;
                         font-size: 17px;
+                        cursor: pointer;
+                        &:hover{
+                            transform: scale(1.1);
+                        }
                     }
-                    &:hover > i{
-                        transform: scale(1.1);
-                    }
-                    &:focus{
-                        outline: none;
-                    }
-            } 
-            #btn-end2,#btn-promo2{
-                display: none ;
-            }
-            .btn{
-                background-color: $color-wf1;
-                color: white;
-                margin-top: 0px;
-                font-family: $fte-ppal;
-                text-transform: uppercase;
-                font-size: 18px;
-                border: 0px ;
-                padding: 7px 13px;
-                box-sizing: border-box;
-                border-radius: 0px;     
-                margin-left: auto;
-                margin-right: auto;               
-                &:hover{
-                    transform: scale(1.03);
                 }
+                 
+                .text-rojo{
+                    font-family: $fte-sec;
+                    color: red;
+                    text-align: right;
+                    margin-bottom: 0;
+                    font-size: 12px;
+                   }
+           
+            .input-msj{
+                #categories, #subcategories, #marca{
+                    font-size: 15px;
+                    border: none;
+                    outline: none;
+                    width: 140px;
+                    padding-left: 5px;
+                    border-bottom: 1px solid grey;
+                    &:focus{
+                        border-bottom: 2px solid $color-wf3;
+                    }
+                    &.is-invalid{
+                        border-bottom: 1px solid red;
+                      }
+                }
+                #subcategories {
+                    margin-left: 90px;
+                    display: block;
+                }
+                #marca{
+                    
+                    margin-left: 90px;
+                }
+            }
+         
+           #unidadMedida{
+            font-size: 15px;
+            border: none;
+            outline: none;
+            width: 160px;
+            padding-left: 5px;
+            border-bottom: 1px solid grey;
+            &:focus{
+                border-bottom: 2px solid $color-wf3;
+            }
+            &.is-invalid{
+                border-bottom: 1px solid red;
               }
+           }
+            
+            #property{
+                font-size: 15px;
+                border: none;
+                outline: none;
+                width: 110px;
+                padding-left: 5px;
+                border-bottom: 1px solid grey;
+                &:focus{
+                    border-bottom: 2px solid $color-wf3;
+                }
+            }
+           .price-container{
+            display: flex;
+            align-items: baseline;
+            margin-left: 60px;
+            #euro{
+                font-weight: bold;
+                font-size: 14px;
+                display: block;
+                margin-left: 10px;
+            }
+            #price{
+                border: none;
+                outline: none;
+                font-size: 14px;
+                padding-right: 3px;
+                padding-left: 3px;
+                width: 90px;
+                border-bottom: 1px solid grey;
+                &:focus{
+                    border-bottom: 2px solid $color-wf3;
+                } &.is-invalid{
+                    border-bottom: 1px solid red;
+                  }
+            }
+           }
+           
+            .check-oferta{
+               margin-left: 50px;
+            }
+           
+           .availability-container{
+            margin-left: 60px;
+           
+           }
+       
+
+        }
+        .text-rojo{
+            font-family: $fte-sec;
+            color: red;
+            text-align:left;
+            margin-bottom: 0;
+            font-size: 14px;  
+        }
+        .subandcat{
+            margin-top: -20px;
+        }
+        .elegir-props{
+            display: flex;
+            height: fit-content;
+            margin-top: -30px;
+            margin-bottom: 30px;
+            .contenido{
+                .leyenda{
+                    font-family: $fte-sec;
+                    font-size: 14px;
+                    display: block;
+                }
+                .aclaracion{
+                    font-family: $fte-sec;
+                    font-size: 13px;
+                    display: block;
+                    font-style: italic;
+                    color: grey;
+                    margin-top: -12px;
+                }
+                .propiedad-check{
+                    font-family: $fte-sec;
+                    font-size: 13px;
+                    color: $color-wf3;
+                    margin-right: 25px;
+                    display: block;
+                    margin-top: 10px;
+                    #propiedad{
+                        margin-right: 5px;
+                    }
+                }  
+                .btn-add-property{
+                    border: none;
+                   
+                    #add{
+                        position: absolute;
+                        font-size: 14px;
+                        right: 0px;
+                        top: 0px;
+                        font-family: $fte-sec;
+                        display: block;
+                        padding: 4px 13px;
+                        border-radius: 7px;
+                        background-color:#90cafa71 ;
+                        cursor: pointer;
+                        box-shadow: 1px 1px 1px rgb(195, 197, 197);
+                        .fa-plus-square{
+                            color: $color-wf3;
+                            margin-left: 7px;
+                            font-size: 17px;
+                        }
+                        &:hover {
+                            transform: scale(1.03);
+                        }
+                    }
+                }   
+                
+            }
+           
+            
+        }
+        .textarea{
+            width: 103%;
+            font-family: $fte-sec;
+            margin-left: -1vw;
+            margin-bottom: 25px;
+            margin-top: -15px;
+            #descripcion{
+                resize: none;
+                outline: none;
+                width: 100%;
+                padding: 5px 10px;
+            }
+        }
+       }
+    }
+    .form-promo{
+        // display: none;
+        flex-direction: column;
+        .botones-contenedor{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            width: 30vw;
+            align-self: center;
+            
+        }
+        .check-sku{
+            #combinations{
+                margin-right: 20px;
+            }
+        }
+       
+    }
+}          
+.form-add-brand{
+    margin-left: auto;
+    margin-right: auto;
+     width: 90%;
+     .marca-campo{
+         display: flex;
+         font-family: $fte-sec;
+         .marca{
+             font-size: 15px;
+         }
+         #marca{
+             margin-top: -10px;
+             margin-left: 15px;
+             border: none;
+             outline: none;
+             border-bottom: 1px solid grey;
+             font-size: 13px;
+             width: 200px;
+             padding-right: 3px;
+             &:focus{
+                 border-bottom: 2px solid $color-wf3;
+             }
+         }
+         }
+         .btn{
+             margin-left: 70%;
+             background-color: $color-wf1;
+             color: white;
+             font-family: $fte-sec;
+             font-size: 16px;
+             border: 0px ;
+             padding: 3px 8px;
+             box-sizing: border-box;
+             width: 30%;
+             border-radius: 0px;                        
+             &:hover{
+                 background-color: $color-wf2;
+             }
+         }
+ }           
+ #listo{
+    font-family: $fte-sec;
+    font-size: 20px;
+    color: $color-sec;
+    display: none;
+ }            
+ .modalTitle{
+    font-family: $fte-ppal;
+    font-size: 20px;
+    margin-bottom: -20px;
+}            
+.close{
+    &:focus{
+    outline: none;
+    }
+} 
+         
+.btn-add-brand{
+    border: none;
+    background-color: #fff;
+        .fa-plus-square{
+            color: $color-wf3;
+            margin-right: 4px;
+            font-size: 17px;
+        }
+        &:hover > i{
+            transform: scale(1.1);
+        }
+        &:focus{
+            outline: none;
+        }
+}              
+           
+.btn-cont{
+    background-color: rgba(168, 164, 164, 0.733);
+    color: black;
+    font-family: $fte-sec;
+    width: 20%;
+    font-size: 16px;
+    margin-bottom: 20px;
+    margin-top: -15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    &:hover{
+        background-color: $color-wf2;
+        cursor: pointer;
+    }
+    &:focus{
+        outline: none;
+    }
+}           
+#btn-end{
+    border: none;
+    box-shadow: none;
+    margin-left: 83%;
+    font-size: 14px;
+    background-color: $color-wf1;
+    color: white;
+    font-family: $fte-sec;
+    width: 17%;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: -15px;
+    display: block;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 20px;
+    &:hover{
+        background-color: $color-wf2;
+        cursor: pointer;
+    }
+    &:focus{
+        outline: none;
+    }
+}            
+            
 
 
-/* .cdk-overlay-container,.cdk-global-overlay-wrapper,.cdk-overlay-connected-position-bounding-box {
-    z-index: 1050;
-} */
+
 

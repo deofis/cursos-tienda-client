@@ -1,0 +1,418 @@
+
+$fte-ppal: 'Poppins', sans-serif;
+$fte-sec: 'Open Sans', sans-serif;
+$color-ppal:#fff;
+ $color-sec: rgb(87, 83, 83);
+ $color-ter: rgb(172, 165, 165);
+ $color-menues: rgb(243, 236, 236);
+ $color-wf1:#223e66;
+ $color-wf2:#1f4e84;
+ $color-wf3:#2779cd;
+ $color-wf4:#70b8f3;
+ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
+    appearance: none;
+    margin: 0;
+}
+
+#nombre-producto{
+    text-transform: capitalize;
+} 
+.texto{
+    font-family: $fte-sec;
+    font-size: 15px;
+}
+.campos{
+    margin-top: 10px ;
+}
+.text-rojo{
+    font-family: $fte-sec;
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 10px;
+    margin-left: -10px;
+   }   
+        .form2{
+                width: 100%;
+                font-family:$fte-sec;
+                margin-bottom: 25px;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                display: flex;
+                padding-bottom: 30px;
+                position: relative;
+                .container-white{
+                width: 95%;
+                background-color: white;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 15px;
+                .fila{
+                    display: flex;
+                    
+                    align-items: baseline;
+                    
+                    .property{
+                        font-size: 15px;
+                        border: none;
+                        outline: none;
+                        width: 110px;
+                        margin-right: 50px;
+                        padding-left: 5px;
+                        margin-bottom: 35px;
+                        margin-top: 10px;
+                        border-width: 2px;
+                        line-height: 1.6rem;
+                        border-top: 0px;
+                        border-left: 0px;
+                        border-right: 0px;
+                        border-bottom: 1px solid rgb(34, 62, 102);
+                        &:focus{
+                            border-bottom: 2px solid $color-wf3;
+                        }
+                    }
+                .price-container{
+                    display: flex;
+                    margin-left: 60px;
+                    align-items: baseline;
+                    #euro-signo{
+                        font-weight: bold;
+                        font-size: 14px;
+                        display: block;
+                        margin-left: 10px;
+                    }
+                    #precio{
+                        border: none;
+                        outline: none;
+                        font-size: 14px;
+                        padding-right: 3px;
+                        padding-left: 3px;
+                        width: 90px;
+                        border-bottom: 1px solid grey;
+                        &:focus{
+                            border-bottom: 2px solid $color-wf3;
+                        }
+                        &.is-invalid{
+                            border-bottom: 1px solid red;
+                          }
+                    }
+                }
+                .availability-container{
+                
+                    #availabilitySku{
+                        border: none;
+                        outline: none;
+                        margin-left: 8px;
+                        font-size: 14px;
+                        padding-right: 3px;
+                        padding-left: 3px;
+                        width: 60px;
+                        border-bottom: 1px solid grey;
+                        &:focus{
+                            border-bottom: 2px solid $color-wf3;
+                        }
+                        &.is-invalid{
+                            border-bottom: 1px solid red;
+                          }
+                    } 
+                }
+
+                }  
+                  
+                
+                .properties{
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                }
+                .btn{
+                    background-color: $color-wf1;
+                    color: white;
+                    font-family: $fte-ppal;
+                    text-transform: uppercase;
+                    font-size: 16px;
+                    border: 0px ;
+                    margin-left: -12px;
+                    margin-top:-25px;
+                    padding: 4px 8px;
+                    align-self: center;
+                    box-sizing: border-box;
+                    width: 20%;
+                    border-radius: 10px;                        
+                    &:hover{
+                        transform: scale(1.03);
+                        background-color: $color-wf2;
+                    }
+                }
+                .leyenda{
+                    color: $color-sec;
+                    font-size: 14px;
+                    font-style: italic;
+                }
+                .btn-end{
+                    background-color: $color-wf1;
+                    color: white;
+                    font-family: $fte-sec;
+                    font-size: 15px;
+                    border: 0px ;
+                    border-radius: 15px;
+                    box-sizing: border-box;
+                    width: 15%;
+                    padding-top: 3px;
+                    padding-bottom: 4px;
+                    margin-left: 53%;
+                    margin-bottom: 30px;  
+                    &:hover{
+                        transform: scale(1.03);
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+                    }
+                .container-skus{
+                    padding-bottom: 20px;
+                    margin-top: 20px;
+                    width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    .titulo{
+                        display: flex;
+                        justify-content: space-between;
+                        border-bottom: 1px solid  rgba(128, 128, 128, 0.295);
+                        padding-bottom: 0px;
+                        h3{
+                            font-family: $fte-sec;
+                            display: block;
+                            margin-bottom: -3px;
+                        }
+                        .generar{
+                            color: $color-wf3;
+                            font-family: $fte-sec;
+                            font-size: 13px;
+                            display: block;
+                            margin-top: 3px;
+                            margin-bottom: -15px;
+                            &:hover{
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                   
+                    
+                    .new-products{
+                        width: 100%;
+                        .product{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            font-family: $fte-sec;
+                            padding-top: 5px;
+                            font-size: 15px;
+                            margin-bottom: -8px;
+                            &:hover> .description{
+                                color: $color-wf3;
+                            }
+                            .description{
+                                cursor: default;
+                                font-size: 14px;
+                                color: $color-wf2;
+                            }
+                            .iconos-editar{
+                             display: flex;
+                             justify-content: space-between;   
+                             width: 80px;
+                                i{
+                                 text-align: right;
+                                color: $color-wf2;
+                                cursor: pointer;
+                                &:hover{
+                                font-size: 1.1em;
+                                color: $color-wf3;
+                                }
+                                }
+                            }
+                        
+                        }
+                        .msje-advertencia{
+                            font-size: 12px;
+                            display: none;
+                            color: orangered;
+                            margin-top: 10px;
+                        }
+                    }
+                    
+                }
+                }
+        }
+        .botones-final{
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            width: 100%;
+            .btn-final{
+                background-color: $color-wf1;
+                color: white;
+                font-family: $fte-sec;
+                font-size: 16px;
+                border: 0px ;
+                box-sizing: border-box;
+                width: 20%;   
+                &:hover{
+                    background-color: $color-wf2;
+                    cursor: pointer;
+                }
+                &:focus{
+                    outline: none;
+                }
+                }
+            .medio{
+                margin-left: 30px;
+                margin-right: 30px;
+            }
+
+        }
+            
+  // modal-editar
+    .leyenda{
+        font-family: $fte-sec;
+        font-size: 16px;
+        color: $color-sec;
+    }
+    .form-editar{
+        display: flex;
+        margin-bottom: 50px;
+        align-items: baseline;
+        margin-top: 25px;
+       
+    .price-container{
+        display: flex;
+        margin-left: 60px;
+        align-items: baseline;
+        #euro-signo{
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            margin-left: 10px;
+        }
+        label{
+            font-family: $fte-sec;
+            color: $color-sec;
+            font-size: 15px;
+        }
+        #precio-editar{
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding-right: 3px;
+            padding-left: 3px;
+            width: 90px;
+            border-bottom: 1px solid grey;
+            &:focus{
+                border-bottom: 2px solid $color-wf3;
+            }
+        }
+    }
+    .availability-container{
+        label{
+            font-family: $fte-sec;
+            color: $color-sec;
+            font-size: 15px;
+        }
+        #disponibilidad-editar{
+            border: none;
+            outline: none;
+            margin-left: 8px;
+            font-size: 14px;
+            padding-right: 3px;
+            padding-left: 3px;
+            width: 60px;
+            border-bottom: 1px solid grey;
+            &:focus{
+                border-bottom: 2px solid $color-wf3;
+            }
+        } 
+    }
+
+    }
+
+    
+.form-add-property{
+   margin-left: auto;
+   margin-right: auto;
+    width: 90%;
+    .propiedad-campo{
+        display: flex;
+        font-family: $fte-sec;
+        .propiedad{
+            font-size: 15px;
+        }
+        #propiedad{
+            margin-top: -10px;
+            margin-left: 15px;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid grey;
+            font-size: 13px;
+            width: 200px;
+            padding-right: 3px;
+            &:focus{
+                border-bottom: 2px solid $color-wf3;
+            }
+        }
+        }
+        
+        .valores-campo{
+            margin-top: 25px;
+            font-family: $fte-sec;
+            margin-bottom: 30px;
+            p{
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+            .valores{
+                margin-bottom: 10px;
+                label{
+                    font-size: 14px;
+                }
+                .valor{
+                    margin-left: 15px;
+                    border: none;
+                    outline: none;
+                    border-bottom: 1px solid grey;
+                    font-size: 14px;
+                    width: 225px;
+                    padding-right: 3px;
+                    &:focus{
+                        border-bottom: 2px solid $color-wf3;
+                    }
+                }
+            }
+        }
+        .btn{
+            margin-left: 70%;
+            background-color: $color-wf1;
+            color: white;
+            font-family: $fte-sec;
+            font-size: 16px;
+            border: 0px ;
+            padding: 3px 8px;
+            box-sizing: border-box;
+            width: 30%;
+            border-radius: 0px;                        
+            &:hover{
+                background-color: $color-wf2;
+            }
+        }
+}
+.modalTitle{
+    font-family: $fte-ppal;
+    font-size: 20px;
+    margin-bottom: -20px;
+}
+.close{
+    &:focus{
+outline: none;
+    }
+}

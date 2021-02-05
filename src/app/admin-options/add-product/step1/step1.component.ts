@@ -1,3 +1,4 @@
+  
 import { DataService } from './../../admin-promos/data.service';
 import { MarcasService } from './../../marcas.service';
 import { PropiedadesService } from './../../propiedades.service';
@@ -21,6 +22,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Output,EventEmitter } from '@angular/core';
 import { EnviarProductoService } from '../../enviar-producto.service';
+import { DataPromoSubService } from '../../admin-propiedades/data-promo-sub.service';
 
 @Component({
   selector: 'app-step1',
@@ -34,6 +36,7 @@ export class Step1Component implements OnInit, OnDestroy {
   categorias:Categoria[];
   subcategorias: Subcategoria[];
   categoriaSeleccionada: Categoria;
+  subcategoriaElegida:Subcategoria;
   unidadSeleccionada:UnidadMedida;
   form:FormGroup;
   oferta:boolean=false;
@@ -45,9 +48,6 @@ export class Step1Component implements OnInit, OnDestroy {
   categoria:string="-Categoría-";
   subcategoria:string="-Subcategoría-";
   unidad:string="-Unidad de Medida-";
-  // file
-  url:string;
- selectedFile:File=null; 
  
 // autocomplete
   autoControl = new FormControl();
@@ -58,17 +58,18 @@ export class Step1Component implements OnInit, OnDestroy {
 
   // propiedades
   formPropiedades: FormGroup;
-  propiedadesProducto:PropiedadProducto[];  
+  propiedadesSubcategoria:PropiedadProducto[];  
   estaSubcatSeleccionada: boolean;
   propiedadSeleccionada: PropiedadProducto;
   propiedadesSeleccionadas: any[];
   
-  cerrarModalPromo:Subscription
-
+ /// boton
+ habilitarBoton:boolean=false
   constructor(private router:Router,
               private catalogoservice:CatalogoService,
               private fb:FormBuilder,
               public modal: NgbModal,
+              private dataPropiedad:DataPromoSubService,
               private productoService:ProductoService,
               private validadores: ValidadoresService,
               private dataService:DataService,
@@ -102,18 +103,13 @@ export class Step1Component implements OnInit, OnDestroy {
         )
 
         
-        
-
-      //// para suscribirse a cerrar el componente de promos
-    this.cerrarModalPromo=this.dataService.cerrarModal$.subscribe(resp =>{
-     this.showStep2()
-    })
+    
       
   }
 
 
   ngOnDestroy():void{
-    this.cerrarModalPromo.unsubscribe();
+    
   }
 
   mostrarNombre(marca?: Marca): string | undefined {
@@ -128,29 +124,8 @@ export class Step1Component implements OnInit, OnDestroy {
    
   }
 
-  // enviarProductoAStep2(){
-  //   setTimeout(() => {
-  //   this.enviarNewProduct.enviarProducto$.emit(this.newProduct)
-  // },300);
-  // }
-/// *** ***  Formulario 1
-mensajeProductoCreado(){
-  if (this.form.invalid){
-    return this.form.markAllAsTouched();
-  }else{
-    this.crearProducto();
-    Swal.fire({
-      icon: 'success',
-      title: 'El producto ha sido creado con éxito',
-    });
-     //para refrescar el form 
-     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-     this.router.navigate(['/products-list']);
-     this.modal.dismissAll(); 
-  }); 
-  }
- 
-}
+
+
 crearProducto(){
 
   if (this.form.invalid){
@@ -159,9 +134,9 @@ crearProducto(){
     this.newProduct.nombre=this.form.controls.nombre.value;
     this.newProduct.descripcion=this.form.controls.descripcion.value;
     this.newProduct.precio=this.form.controls.precio.value;
-    this.newProduct.disponibilidadGeneral=this.form.controls.disponibilidadGeneral.value;
     this.newProduct.destacado=this.form.controls.destacado.value;
     this.newProduct.marca=this.form.controls.marca.value;
+    this.newProduct.disponibilidadGeneral=this.form.controls.disponibilidadGeneral.value;
     this.newProduct.subcategoria=this.form.controls.subcategoria.value;
     this.newProduct.unidadMedida=this.form.controls.unidadMedida.value;
     this.newProduct.propiedades = this.propiedadesSeleccionadas;
@@ -169,23 +144,12 @@ crearProducto(){
     this.productoService.createNewProduct(this.newProduct).subscribe( response => {
       console.log(response);
       this.newProduct.id=response.id;
-      if (this.selectedFile!==null) {
-        this.productoService.uploadPhoto(this.selectedFile, this.newProduct?.id).subscribe(response => 
-          console.log(response) );
-      }
- 
-   
       this.form.disable();
-      let button1 = document.getElementById("btn-end1");
-      button1.style.display="none";
-      let button2 = document.getElementById("btn-end2");
-      button2.style.display="none";
-      let formPromocion=document.getElementById("form-promo");
-      formPromocion.style.display="flex";
-      this.deshabilitarInputFoto();
-  }, err => {
-    console.log(err);
+ 
+    }, err => {
+      console.log(err);
   });
+  this.enviarProducto()
 }
 
 crearForm(){
@@ -194,7 +158,7 @@ crearForm(){
     nombre:["", Validators.required],
     descripcion:[""],
     precio:["", Validators.required],
-    disponibilidadGeneral:[null, Validators.required],
+    disponibilidadGeneral:[0],
     destacado:[false],
     marca: ["", Validators.required],
     subcategoria:["", Validators.required],
@@ -216,9 +180,7 @@ crearForm(){
     get marcaInvalida() {
       return this.form.get('marca').invalid && this.form.get('marca').touched;
     }
-    get disponibilidadGeneralInvalida() {
-      return this.form.get('disponibilidadGeneral').invalid && this.form.get('disponibilidadGeneral').touched;
-    }
+   
     get subcategoriaInvalida() {
       return this.form.get('subcategoria').touched  && (this.form.controls.subcategoria.value == this.subcategoria);
     }
@@ -231,90 +193,7 @@ crearForm(){
     get precioInvalido() {
       return this.form.get('precio').invalid && this.form.get('precio').touched;
     }
-
-
-
-  //// Upload imgs///////
-  readUrl(event:any) {
-    // console.log(event);
-    this.selectedFile=event.target.files[0];
-    // console.log(this.selectedFile)
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = (event:any) => {
-        this.url = event.target.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
-      document.getElementById("img-ppal").style.display="block"
-    }
-}
-
-  ///// *** *** STEP 1 **** *** ///
-  showStep2(){
-    let step1=document.getElementById("step1");
-    step1.style.display="none";   
-    this.step2=true;
-  }
-
-  deshabilitarInputFoto(){
-    let inputFoto = document.getElementById("add-files") as HTMLInputElement;
-    if (inputFoto.disabled) {
-      
-    }else{
-      inputFoto.disabled=true
-    }
-  } 
-  // cambiar botones al cambiar el estado del checkbox de promocion y de combinaciones ... si tiene alguna de estas dos opciones el boton cambia su texto a "guardar y CONTINUAR" en vez de finalizar 
-  changeButtons(){
-    let btn= document.getElementById("btn-end1");
-    let btn2= document.getElementById("btn-end2");
-    if ((document.getElementById("combinations")as HTMLInputElement).checked ||
-      (document.getElementById("checkbox-oferta")as HTMLInputElement).checked ) {
-        btn.style.display="none";
-        btn2.style.display="block"
-        if ((document.getElementById("combinations")as HTMLInputElement).checked) {
-          this.showForm2=true;
-          this.showFormPromo=false
-        }
-        if ((document.getElementById("checkbox-oferta")as HTMLInputElement).checked) {
-          this.showForm2=false;
-          this.showFormPromo=true
-        }
-        if ((document.getElementById("checkbox-oferta")as HTMLInputElement).checked && 
-        (document.getElementById("combinations")as HTMLInputElement).checked){
-          this.showForm2=false;
-          this.showFormPromo=true
-        }
-    }else{
-      btn.style.display="block";
-      btn2.style.display="none"
-    }
-  }
-  mostrarSiguiente(){
-    if (this.showForm2) {
-      let step1=document.getElementById("step1");
-      step1.style.display="none";   
-      this.step2=true;
-    }
-    if (this.showFormPromo){
-      this.formPromo=true;
-    }
-  }
-  //cambiar botones al cambiar el estado del checkbox de tiene combinaciones
-  changeButtons2(){
-    let btn= document.getElementById("btn-promo1");
-    let btn2= document.getElementById("btn-promo2");
-    if(this.showForm2 == false){
-      btn.style.display="none";
-      btn2.style.display="block"
-      this.showForm2=true;
-    }else {
-      btn.style.display="block";
-      btn2.style.display="none";
-      this.showForm2=false;
-    }
-  }
+  
   
   private _filter(value:any) {
     const filterValue = value;
@@ -360,13 +239,20 @@ crearForm(){
     }
 
     showProperties(): void {
-      let subcategoria: Subcategoria;
-      subcategoria = this.form.controls.subcategoria.value;
+      this.subcategoriaElegida = this.form.controls.subcategoria.value;
       this.estaSubcatSeleccionada = true;
 
-      this.propiedadesProducto = subcategoria.propiedades;
+      this.propiedadesSubcategoria = this.subcategoriaElegida.propiedades;
       this.propiedadesSeleccionadas = [];
       this.formPropiedades.reset();
+    }
+    actualizarPropiedades(){
+      // llamar a las propiedades de la subcategoria llamandoal del servicio x su id 
+      // para q cuando agregue una propiedad me traiga las propiedades de la subcategoria actualizada
+      this.catalogoservice.getSubcategoriasPorId(this.subcategoriaElegida.id).subscribe(response => {
+        console.log(response.subcategoria.propiedades);
+        this.propiedadesSubcategoria=response.subcategoria.propiedades
+      });
     }
 
     guardarPropiedades(propiedad: PropiedadProducto) {
@@ -375,60 +261,29 @@ crearForm(){
       if (checked) {
         this.propiedadesSeleccionadas.push(propiedad);
 
-        // si tiene una propiedad si o si tienen que estar tildado el checkbox de q tiene combinacione
-        let checkBoxCombiations = document.getElementById("combinations") as HTMLInputElement;
-        checkBoxCombiations.checked=true;
-        setTimeout(() => {
-          checkBoxCombiations.disabled=true
-        }, 50);
-        this.changeButtons()
+      
       } else {
         this.propiedadesSeleccionadas = this.propiedadesSeleccionadas.filter(item => item !== propiedad);
         
       }
       if(this.propiedadesSeleccionadas.length == 0){
-         // si no tiene ninguna propiedad destildo el checkbox de q tiene combinaciones
-         let checkBoxCombiations = document.getElementById("combinations") as HTMLInputElement;
-         checkBoxCombiations.checked=false;
-         setTimeout(() => {
-           checkBoxCombiations.disabled=true;
-         }, 50);
-         this.changeButtons()
+         
       }
 
     
     }
 
-    showUnit(){
-       this.unidadSeleccionada = this.form.controls.unidadMedida.value;
-     
-      let unidad = document.getElementById("unidadElegida");
-      
-      if(this.unidadSeleccionada.nombre=="Unidad"){
-        unidad.innerText="unidades";
-      }
-      if(this.unidadSeleccionada.nombre=="Kilo"){
-        unidad.innerText="kilos"
-      }
-      if(this.unidadSeleccionada.nombre=="Litro"){
-        unidad.innerText="litros"
-      }
-           
-    }
-    changeUnit(){
-      let inputDisponibilidad= document.getElementById("availability") as HTMLInputElement;
-      let unidad = document.getElementById("unidadElegida");
-      this.unidadSeleccionada = this.form.controls.unidadMedida.value;
-      if(inputDisponibilidad.value== "1"){
-       unidad.innerText=this.unidadSeleccionada.nombre
-      }else{
-        this.showUnit();
-      }
-    }
+   
+    
 
       ///// MODAL  NUEVA MARCA////
-  openCentrado(contenido){
-    this.modal.open(contenido,{centered:true})
+  openModal(marca){
+    this.modal.open(marca,{centered:true})
+  }
+  addProperty(subcategoria:Subcategoria){
+    setTimeout(() => {
+      this.dataPropiedad.subSelect$.emit(this.subcategoriaElegida)
+    }, 100);
   }
   addBrand(){
    let input = document.getElementById("marca")as HTMLInputElement;
@@ -451,5 +306,42 @@ crearForm(){
   let btn =document.getElementById("btn-brand");
   btn.style.display="none"
    }
+  }
+
+  ///// MODAL PROPIEDAD ////
+  openCentrado(agregarprop){
+    this.modal.open(agregarprop,{size: 'lg', centered:true})
+  }
+
+
+
+
+
+/// si no sirve eliminar 
+
+
+
+  mensajeProductoCreado(){
+    if (this.form.invalid){
+      return this.form.markAllAsTouched();
+    }else{
+      Swal.fire({
+        icon: 'success',
+        title: 'El producto ha sido creado con éxito',
+      });
+      // deshabilito los checkbox de propiedades
+      document.getElementById("btn-end").style.display="none"
+      let checkbox = document.getElementsByClassName("checkbox-prop") as HTMLCollectionOf<HTMLInputElement>;
+      for (let i = 0; i < checkbox.length; i++) {
+        checkbox[i].disabled=true;
+      }
+      //coloreo el boton q se habilita
+      this.habilitarBoton=true
+      document.getElementById("btn-end2").style.color="#fff";
+      document.getElementById("btn-end2").style.backgroundColor="#223e66"
+      // elimino el boton de agregar propieaddes para q no se puedan crear nuevas
+      document.getElementById("add-p-b").style.display="none"
+    }
+   
   }
 }

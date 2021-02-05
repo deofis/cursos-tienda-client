@@ -15,52 +15,13 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
 }
-
-section {
-    width: 100%;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 200px auto;
+#bg{
+    position: relative;
+    background-color: #fff; 
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
     height: fit-content;
-    min-height: 100vh;
-    .container-steps {
-        padding-left: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background: linear-gradient(to bottom, $color-menues, white);
-        .tit-ppal {
-            font-family: $fte-ppal;
-            font-size: 22px;
-            color: $color-sec;
-            border-bottom: 1px solid rgb(190, 187, 187);
-            padding-bottom: 5px;
-            width: 95%;
-            margin-top: 30px;
-        }
-        .frame {
-            width: 85%;
-            margin-top: 20px;
-            margin-left: 50px;
-            .title {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 10px;
-                h3 {
-                    font-family: $fte-ppal;
-                    font-size: 21px;
-                    color: $color-sec;
-                    img {
-                        width: 25px;
-                        height: 25px;
-                        margin-top: -3px;
-                        margin-left: -40px;
-                        margin-right: 10px;
-                    }
-                }
-            }
-        }
-        
-    }
+    min-height: 87vh;
 }

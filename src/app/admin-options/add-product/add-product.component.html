@@ -1,7 +1,27 @@
-<!-- <section>
-    <app-admin-sidebar></app-admin-sidebar> -->
+
+<mat-horizontal-stepper  linear id="bg" >
+    <ng-template matStepperIcon="done">
+        <mat-icon>done</mat-icon>
+    </ng-template>
+
+    <mat-step label="Agregar Producto"[completed]="productoCreado" >
+        <app-step1></app-step1>
+    </mat-step>
+
+    <mat-step label="Imagen y Oferta"  [completed]="mostrarStep3">
+        <app-step2 [newProduct]="newProduct" *ngIf="productoCreado"></app-step2>
+    </mat-step>
+
+    <mat-step label="Generar Combinaciones"  *ngIf="mostrarStep3">
+        <app-step3 [newProduct]="newProduct" ></app-step3 >
+
+    </mat-step>
+</mat-horizontal-stepper>
+
+
+<!-- 
     <div class="container-steps">
-        <!-- <h2 class="tit-ppal">Añadir Producto</h2> -->
+        
        
         <div class="frame step1" id="step1">
             <div class="title">
@@ -17,6 +37,4 @@
 
             <app-step2  [newProduct]="newProduct" ></app-step2>
         </div>
-    </div>
-
-<!-- </section> -->
+    </div> -->

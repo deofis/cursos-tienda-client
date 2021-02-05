@@ -8,7 +8,7 @@
        
     </mat-step>
 
-    <mat-step label="Envío y Facturación" [completed]="step2Completo">
+    <mat-step label="Envío y Facturación"  [completed]="step2Completo">
         <app-checkout [actualizarCarrito]="actualizarCarrito"  [mostrarResumen]="mostrarResumen" [mostrarCheckout]="mostrarCheckout" *ngIf="mostrarCheckout"></app-checkout>
     </mat-step>
 

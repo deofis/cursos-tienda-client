@@ -46,10 +46,17 @@ id:number;
   getListaCategorias():Observable<Categoria[]>{
     return this.http.get(`${this.url}/categorias`).pipe( map( (response:any) => response.categorias as Categoria[]));
   }
+
+  getCategoriaPorSubcategoria(idSubcategoria:number):Observable<Categoria>{
+    return this.http.get(`${this.url}/categorias/por-subcategoria/${idSubcategoria}`).pipe( map( (response:any) =>
+     response.categoria as Categoria))
+  }
   getSubcategoriasPorCategoria(categoriaId:number):Observable<any>{
     return this.http.get(`${this.url}/categorias/${categoriaId}/subcategorias`)
   }
-
+  getSubcategoriasPorId(subcategoriaId:number):Observable<any>{
+    return this.http.get(`${this.url}/subcategorias/${subcategoriaId}`)
+  }
   getRdoBusqueda(termino:string):Observable<any>{
     let parametros=new HttpParams();
     parametros=parametros.append("termino",termino);

@@ -1,177 +1,144 @@
+<div class="contenedor">
+    <form autocomplete="off" class="form1" id="form1" [formGroup]="form" (ngSubmit)="crearProducto()" >
+        <div class="container-white">
+            <div class="fila row">
 
-    <div class="contenedor">
-        <form autocomplete="off" class="form1" id="form1" [formGroup]="form" (ngSubmit)="crearProducto()">
-            <div class="container-white">
-                <div class="row">
+                <div class="name">
+                    <label for="name"> Nombre:</label>
+                    <input type="text" id="name" formControlName="nombre" [class.is-invalid]="nombreInvalido">
+                    <span *ngIf="nombreInvalido" class="text-rojo"><strong>(*)</strong></span>
+                </div>
 
-                    <div class="name">
-                        <label for="name"> Nombre:</label>
-                        <input type="text" id="name" formControlName="nombre" [class.is-invalid]="nombreInvalido">
-                        <span *ngIf="nombreInvalido" class="text-rojo"><strong>(*)</strong></span>
-                    </div>
+                <div class="brand">
+                    <label for="brand">Marca: </label>
+                    <mat-form-field class="example-full-width inputBrand">
 
-                    <div class="brand">
-                        <label for="brand">Marca: </label>
-                        <mat-form-field class="example-full-width inputBrand">
+                        <input type="text" id="brand" aria-label="Number" matInput formControlName="marca" [matAutocomplete]="auto" [class.is-invalid]="marcaInvalida">
+                        <mat-autocomplete [displayWith]="mostrarNombre" #auto="matAutocomplete">
+                            <mat-option *ngFor="let marca of filteredBrands | async" [value]="marca">
+                                {{marca.nombre}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <span *ngIf="marcaInvalida" class="text-rojo"><strong>(*)</strong></span>
 
-                            <input type="text" id="brand" aria-label="Number" matInput formControlName="marca" [matAutocomplete]="auto" [class.is-invalid]="marcaInvalida">
-                            <mat-autocomplete [displayWith]="mostrarNombre" #auto="matAutocomplete">
-                                <mat-option *ngFor="let marca of filteredBrands | async" [value]="marca">
-                                    {{marca.nombre}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                        <span *ngIf="marcaInvalida" class="text-rojo"><strong>(*)</strong></span>
+                    <ng-template #marca let-modal>
+                        <div class="modal-header">
+                            <h4 class="modalTitle">
+                                Agregar nueva marca</h4>
+                            <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-add-brand">
+                                <div class="marca-campo" id="form-add-brand">
+                                    <label for="marca" class="marca">Marca:</label>
+                                    <input type="text" id="marca">
+                                </div>
 
-                        <ng-template #contenido let-modal>
-                            <div class="modal-header">
-                                <h4 class="modalTitle">
-                                    Agregar nueva marca</h4>
-                                <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" class="form-add-brand">
-                                    <div class="marca-campo" id="form-add-brand">
-                                        <label for="marca" class="marca">Marca:</label>
-                                        <input type="text" id="marca">
-                                    </div>
+                                <button class="btn" (click)="addBrand()" id="btn-brand"> Agregar</button>
+                            </form>
+                            <p id="listo">Listo!</p>
+                        </div>
+                    </ng-template>
+                    
+                    
+                    <button type="button" class="btn-add-brand " (click)="openModal(marca)">
+                        <i class="far fa-plus-square" id="plus-brand"></i>
+                    </button>
 
-                                    <button class="btn" (click)="addBrand()" id="btn-brand"> Agregar</button>
-                                </form>
-                                <p id="listo">Listo!</p>
-                            </div>
-                        </ng-template>
+                </div>
+            </div>
+          
 
-                        <button type="button" class="btn-add-brand " (click)="openCentrado(contenido)">
-                            <i class="far fa-plus-square" id="plus-brand"></i>
+            <div class="fila row subandcat">
+                <div class="input-msj">
+                    <span *ngIf="categoriaInvalida" class="text-rojo"><strong>(*)</strong></span>
+                    <select name="category" id="categories" (change)="showSubcategories()" formControlName="categoria" [ngModel]="categoria" [class.is-invalid]="categoriaInvalida">
+                        <option disabled>{{categoria}}</option>
+                        <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria.nombre}}
+                        </option>
+
+                    </select>
+
+                </div>
+                <div class="input-msj">
+                    <span *ngIf="subcategoriaInvalida" class="text-rojo"><strong>(*)</strong></span>
+                    <select name="subcategory" *ngIf="subcategorias" id="subcategories" formControlName="subcategoria" [class.is-invalid]="subcategoriaInvalida" [ngModel]="subcategoria" (change)="showProperties()">
+                        <option>{{subcategoria}}</option>
+                        <option *ngFor="let subcategoria of subcategorias" [ngValue]="subcategoria">
+                            {{subcategoria.nombre}}
+                        </option>
+                    </select>
+
+                </div>
+                
+            </div>
+            <form [formGroup]="formPropiedades" class="row elegir-props" *ngIf="estaSubcatSeleccionada">
+                <div class="col contenido" >
+                    <div class="row ">
+                        <p class="leyenda">De las siguientes propiedades, seleccione las que son aplicables a su producto.</p>
+                        
+                        <button type="button" id="add-p-b" class="btn-add-property " (click)="openCentrado(agregarprop); addProperty()">
+                             <p id="add">Agregar propiedades<i class="far fa-plus-square "></i></p>
                         </button>
+                    </div>
+                    <div class="row">
+                        <span class="aclaracion">-La elección es opcional y te permitirá generar combinaciones luego.-</span>
+                    </div>
+                    <div class="row ">
+                        <div *ngFor="let propiedad of propiedadesSubcategoria; let i = index" class="propiedad-check">
+                            <input class="checkbox-prop" formControlName="propiedad" (change)="guardarPropiedades(propiedad)" type="checkbox" id="{{propiedad.nombre}}" style="margin-right: 7px;">
+                            <label for="{{propiedad.nombre}}">{{propiedad.nombre}}</label>
+                        </div>
 
                     </div>
-                </div>
-                <form class="form-img" id="form-img" autocomplete="off">
-                    <div class="row box-img">
-                        <div class="add-img">
-                            <p>Añada una fotografía principal de su producto.
-                                <br>
-                                <!-- <span>-Hasta 6 fotografías permitidas-</span> -->
-                            </p>
-                            <input type="file" id="add-files" (change)="readUrl($event)" accept=".png, .jpg, .jpeg">
+                    <ng-template id="promoSku" #agregarprop let-modal>
+                        <div class="modal-header">
+                            <h4 class="modalTitle">
+                                Agregar nueva propiedad</h4>
+                            <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss();actualizarPropiedades()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <app-form-propiedades></app-form-propiedades>
 
                         </div>
-                        <div class="images">
-                            <img id="img-ppal" [src]="url">
-                        </div>
-                    </div>
-
-
-                </form>
-
-                <div class="row subandcat">
-                    <div class="input-msj">
-                        <span *ngIf="categoriaInvalida" class="text-rojo"><strong>(*)</strong></span>
-                        <select name="category" id="categories" (change)="showSubcategories()" formControlName="categoria" [ngModel]="categoria" [class.is-invalid]="categoriaInvalida">
-                            <option disabled>{{categoria}}</option>
-                            <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria.nombre}}
-                            </option>
-
-                        </select>
-
-                    </div>
-                    <div class="input-msj">
-                        <span *ngIf="subcategoriaInvalida" class="text-rojo"><strong>(*)</strong></span>
-                        <select name="subcategory" id="subcategories" formControlName="subcategoria" [class.is-invalid]="subcategoriaInvalida" [ngModel]="subcategoria" (change)="showProperties()">
-                            <option>{{subcategoria}}</option>
-                            <option *ngFor="let subcategoria of subcategorias" [ngValue]="subcategoria">
-                                {{subcategoria.nombre}}
-                            </option>
-                        </select>
-
-                    </div>
+                    </ng-template>
                 </div>
-                <form [formGroup]="formPropiedades" class="row elegir-props" *ngIf="estaSubcatSeleccionada">
-                    <div class="col">
-                        <div class="row">
-                            <p>De las siguientes propiedades, seleccione las que son aplicables a su producto.</p>
-                        </div>
-                        <div class="row">
-                            <div *ngFor="let propiedad of propiedadesProducto; let i = index" class="propiedad-check">
-                                <input formControlName="propiedad" (change)="guardarPropiedades(propiedad)" type="checkbox" id="{{propiedad.nombre}}" style="margin-right: 7px;">
-                                <label for="{{propiedad.nombre}}">{{propiedad.nombre}}</label>
-                            </div>
 
-                        </div>
-                    </div>
+            </form>
+            <div class="fila row">
+                <div class="input-msj">
+                    <span *ngIf="unidadInvalida" class="text-rojo"><strong>(*)</strong></span>
+                    <select name="unidadMedida" id="unidadMedida" formControlName="unidadMedida" [ngModel]="unidad" [class.is-invalid]="unidadInvalida">
+                        <option>{{unidad}}</option>
+                        <option *ngFor="let unidad of unidadesMedida" [ngValue]="unidad">{{unidad.nombre}}</option>
+                    </select>
 
-                </form>
-                <div class="row">
-                    <div class="input-msj">
-                        <span *ngIf="unidadInvalida" class="text-rojo"><strong>(*)</strong></span>
-                        <select name="unidadMedida" id="unidadMedida" (change)="showUnit()" formControlName="unidadMedida" [ngModel]="unidad" [class.is-invalid]="unidadInvalida">
-                            <option>{{unidad}}</option>
-                            <option *ngFor="let unidad of unidadesMedida" [ngValue]="unidad">{{unidad.nombre}}</option>
-                        </select>
-
-                    </div>
-                    <div class="availability-container">
-                        <span *ngIf="disponibilidadGeneralInvalida" class="text-rojo"><strong>(*)</strong></span>
-                        <label for="availability"> Disponibilidad General:</label>
-                        <input type="number" min="0" pattern="^[0-9]+" id="availability" (input)="changeUnit()" [class.is-invalid]="disponibilidadGeneralInvalida" formControlName="disponibilidadGeneral">
-                        <span id="unidadElegida"></span>
-                    </div>
-                    <div class="destacado">
-                        <input type="checkbox" id="destacado" style="margin-right: 7px;" formControlName="destacado">
-                        <label for="destacado"> Producto destacado</label>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="price-container">
-                        <label for="price"> Precio:</label>
-                        <p id="euro">€</p>
-                        <input type="number" min=0 pattern="^[0-9]+" id="price" formControlName="precio" [class.is-invalid]="precioInvalido">
-                        <span *ngIf="precioInvalido" class="text-rojo"><strong>(*)</strong></span>
-                    </div>
-
-
-                    <div class="check-oferta">
-                        <input type="checkbox" style="margin-right: 7px;" id="checkbox-oferta" (input)="changeButtons()">
-                        <label for="checkbox-oferta"> Este producto está en oferta</label>
-                    </div>
-                </div>
-                <div class="textarea">
-                    <label for="descripcion">Añada una descripción a su producto: </label>
-                    <textarea name="descripcion" id="descripcion" rows="6" formControlName="descripcion"></textarea>
-                </div>
-                <div class="row">
-                    <div class="check-sku col-10 offset-1">
-                        <input type="checkbox" disabled id="combinations" style="margin-right: 7px;" >
-                        <label for="combinations"> Mi producto posee diversas propiedades que pueden ser combinables
-                            entre ellas.</label>
-                    </div>
-                </div>
-                <span *ngIf="precioInvalido || categoriaInvalida || subcategoriaInvalida || unidadInvalida || nombreInvalido || disponibilidadGeneralInvalida" class="text-rojo"><strong>(*)Los campos señalados son obligatorios.</strong></span>
-            </div>
-            <button class="btn" id="btn-end1" (click)="mensajeProductoCreado()"> Guardar y Finalizar </button>
-            <button class="btn" id="btn-end2" (click)="enviarProducto();mostrarSiguiente()"> Guardar y Continuar </button>
-        </form>
-        <form class="form-promo" *ngIf="formPromo" id="form-promo">
-            <div class="row">
-                <div class="col-10 offset-1">
-                    <app-form-promo-product></app-form-promo-product>
+                
+                <div class="price-container">
+                    <label for="price"> Precio:</label>
+                    <p id="euro">€</p>
+                    <input type="number" min=0 pattern="^[0-9]+" id="price" formControlName="precio" [class.is-invalid]="precioInvalido">
+                    <span *ngIf="precioInvalido" class="text-rojo"><strong>(*)</strong></span>
                 </div>
             </div>
+      
+            <div class="textarea">
+                <label for="descripcion">Añada una descripción a su producto: </label>
+                <textarea name="descripcion" id="descripcion" rows="4" formControlName="descripcion"></textarea>
+            </div>
+           
+            <span *ngIf="precioInvalido || categoriaInvalida || subcategoriaInvalida || unidadInvalida || nombreInvalido " class="text-rojo"><strong>(*)Los campos señalados son obligatorios.</strong></span>
+            <button    id="btn-end" (click)="mensajeProductoCreado()"> Crear producto</button>
+        </div>
+    </form>
+   
+</div>
+<button *ngIf="newProduct" mat-button matStepperNext [disabled]="!habilitarBoton" class="btn-cont" id="btn-end2" > Guardar y Continuar </button>
 
-            <!-- <div class="row">
-                <div class="botones-contenedor check-sku col-10 offset-1">
-                   <button class="btn" id="btn-cancel"> Cancelar</button>
-                    <button class="btn" id="btn-promo1"> Guardar  </button> 
-                    <button class="btn" *ngIf="showForm2" id="btn-promo2" (click)="showStep2()"> Guardar y Continuar </button>
-                </div>
-            </div> -->
-        </form>
-
-    </div>
-
-
-<!-- <app-step2 *ngIf="step2" [newProduct]="newProduct"></app-step2> -->

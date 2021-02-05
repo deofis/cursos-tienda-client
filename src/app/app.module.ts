@@ -67,7 +67,6 @@ import { AdminPropiedadesComponent } from './admin-options/admin-propiedades/adm
 import { PropiedadSubcategoriaComponent } from './admin-options/admin-propiedades/propiedad-subcategoria/propiedad-subcategoria.component';
 import { FormPropiedadesComponent } from './admin-options/admin-propiedades/form-propiedades/form-propiedades.component';
 import { TablaPromoSubComponent } from './admin-options/admin-propiedades/tabla-promo-sub/tabla-promo-sub.component';
-import { ContenedorFormComponent } from './admin-options/add-product/contenedor-form/contenedor-form.component';
 import { StepperCartComponent } from './cart/components/stepper-cart/stepper-cart.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatSnackBarModule} from  '@angular/material/snack-bar';
@@ -83,7 +82,7 @@ import { CheckoutCancelComponent } from './cart/components/checkout/checkout-red
 import { ProductEditComponent } from './admin-options/products-list/product-edit/product-edit.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { SkuEditComponent } from './admin-options/products-list/product-edit/sku-edit/sku-edit.component';
-
+import { Step3Component } from './admin-options/add-product/step3/step3.component';
 
 
 
@@ -136,7 +135,6 @@ import { SkuEditComponent } from './admin-options/products-list/product-edit/sku
     PropiedadSubcategoriaComponent,
     FormPropiedadesComponent,
     TablaPromoSubComponent,
-    ContenedorFormComponent,
     StepperCartComponent,
     ConvertFechaPipe,
     ConvertEstadoOpPipe,
@@ -146,7 +144,8 @@ import { SkuEditComponent } from './admin-options/products-list/product-edit/sku
     FmEfectivoComponent,
     CheckoutCancelComponent,
     ProductEditComponent,
-    SkuEditComponent
+    SkuEditComponent,
+    Step3Component,
   ],
   imports: [
     BrowserModule,
