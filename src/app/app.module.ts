@@ -80,6 +80,10 @@ import { DetalleCompraDesktopComponent } from './user-options/mis-compras/detall
 import { ResumenCarritoComponent } from './cart/components/checkout/resumen-carrito/resumen-carrito.component';
 import { FmEfectivoComponent } from './cart/components/checkout/checkout-redirect/efectivo/fm-efectivo.component';
 import { CheckoutCancelComponent } from './cart/components/checkout/checkout-redirect/otros/cancel/checkout-cancel.component';
+import { ProductEditComponent } from './admin-options/products-list/product-edit/product-edit.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { SkuEditComponent } from './admin-options/products-list/product-edit/sku-edit/sku-edit.component';
+
 
 
 
@@ -141,6 +145,8 @@ import { CheckoutCancelComponent } from './cart/components/checkout/checkout-red
     ResumenCarritoComponent,
     FmEfectivoComponent,
     CheckoutCancelComponent,
+    ProductEditComponent,
+    SkuEditComponent
   ],
   imports: [
     BrowserModule,
@@ -165,7 +171,8 @@ import { CheckoutCancelComponent } from './cart/components/checkout/checkout-red
     MatStepperModule,
     MatIconModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true

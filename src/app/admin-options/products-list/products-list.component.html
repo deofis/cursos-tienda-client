@@ -181,8 +181,8 @@
                       </ng-container>
     
                       <ng-container matColumnDef="tools">
-                        <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header>  </th>
-                        <td mat-cell *matCellDef="let element"> <i class="far fa-edit point"></i> </td>
+                        <th mat-header-cell *matHeaderCellDef class="headerTable">  </th>
+                        <td mat-cell *matCellDef="let element"> <i class="far fa-edit point" (click)="productoAEditar = element; open(content)"></i> </td>
                       </ng-container>
       
                       <ng-container matColumnDef="expandedDetail">
@@ -211,7 +211,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let item of element.skus">
-                                                <td ><img [src]="item.foto | noimage" alt="" style="width: 40px; height: auto"></td>
+                                                <td ><img [src]="item.foto ? item.foto.imageUrl : '../../../../assets/imagenes/noimage.png'" alt="" style="width: 40px; height: auto"></td>
                                                 <td class="text-center">{{item.id}}</td>
                                                 <td>{{item.nombre}} - <small style="color: #1f4e84;">{{item.valoresData | slice:0:-1}}</small></td>
                                                 <td class="text-center">{{item.precio | currency:"EUR":"symbol"}}</td>
@@ -271,17 +271,29 @@
             
 
         </div>
-        <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-danger" (click)="modal.close()"> Cancelar</button>
-        </div> -->
+
     </ng-template>
 </div>
 
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-6">
-            <app-add-product></app-add-product>
-        </div>
+
+
+
+<!-- Modal Editar Producto -->
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+        <h1 class="mt-4">Editar producto</h1>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-</div> -->
+
+    <div class="modal-body">
+      
+
+        <app-product-edit [producto]="productoAEditar"></app-product-edit>
+
+    </div>
+
+</ng-template>
 

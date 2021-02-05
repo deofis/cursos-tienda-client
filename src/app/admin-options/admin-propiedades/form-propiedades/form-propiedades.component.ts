@@ -204,6 +204,7 @@ export class FormPropiedadesComponent implements OnInit, AfterViewInit, OnDestro
     this.formPropiedad.patchValue({
       nombre: prop.nombre
     })
+    
   }
 
 

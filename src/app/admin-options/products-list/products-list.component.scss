@@ -565,3 +565,11 @@ table {
     border-radius: 5px;
 }
 
+.point{
+    cursor: pointer;
+    &:hover {
+        font-size: 1.2em;
+        color: #1f4e84;
+    }
+}
+

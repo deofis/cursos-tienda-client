@@ -49,6 +49,8 @@ export class ProductsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  productoAEditar: Producto;
+
 
   constructor( private router:Router,
                private authService: AuthService,
@@ -141,6 +143,11 @@ hideDetail1() {
 
   getProperty = (obj, path) => (
     path.split('.').reduce((o, p) => o && o[p], obj).toLocaleLowerCase()
-  )
+  );
+
+
+  //Logica edición de producto ---->>>>>
+
+  
 
 }
