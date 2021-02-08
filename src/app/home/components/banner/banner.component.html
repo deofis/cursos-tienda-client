@@ -1,16 +1,17 @@
+<ngb-carousel *ngIf="banners" id="banner">
 
-<ngb-carousel *ngIf="images" id="banner">
-    
-    <ng-template ngbSlide  *ngFor="let image of images">
-        <i class="fas fa-times" style="position: absolute;right:15px; top: 10px;z-index: 2; color: rgba(255, 255, 255, 0.514);" (click)= "hideBanner()" ></i>
-      <div class="picsum-img-wrapper" style="height: 70vh;">
-        <img src="{{image.img}}" alt="banner" style="width: 100vw;">
-      </div>
-      <div class="carousel-caption">
-        <h3></h3>
-       
-        <p></p>
-      </div>
-    </ng-template>
-       
-  </ngb-carousel>
+  <ng-template ngbSlide *ngFor="let banner of banners">
+    <i class="fas fa-times"
+      style="position: absolute;right:15px; top: 10px;z-index: 2; color: rgba(255, 255, 255, 0.514);"
+      (click)="hideBanner()"></i>
+    <div class="picsum-img-wrapper" style="height: 70vh;">
+      <img src="{{banner.imagen.imageUrl}}" alt="banner" style="width: 100vw;">
+    </div>
+    <div class="carousel-caption">
+      <h3></h3>
+
+      <p></p>
+    </div>
+  </ng-template>
+
+</ngb-carousel>

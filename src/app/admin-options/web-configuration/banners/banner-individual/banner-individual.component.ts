@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebConfigurationService } from 'src/app/admin-options/web-configuration.service';
 import { Banner } from '../../clases/banner';
 
@@ -16,11 +16,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class BannerIndividualComponent implements OnInit {
 
   @Input() banner: Banner;
+  @Output() propagar = new EventEmitter();
 
   imageSrc: string;
 
   formEditarBanner: FormGroup;
   formEditarUrl: FormGroup;
+
+  urlPrincipal: string = 'wantfrom-tienda.web.app/';
 
   constructor( private webConfigurationService: WebConfigurationService,
                private modalService: NgbModal,
@@ -39,7 +42,7 @@ export class BannerIndividualComponent implements OnInit {
   eliminarBanner(){
     this.webConfigurationService.eliminarBanner(this.banner.id).subscribe((resp:any) => {
       console.log(resp);
-      this.banner = null;
+      this.propagar.emit();
       this.openSnackBar("Banner eliminado con éxito", null);
       
     })

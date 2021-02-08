@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig } from "@ng-bootstrap/ng-bootstrap";
+import { WebConfigurationService } from 'src/app/admin-options/web-configuration.service';
+import { Banner } from 'src/app/admin-options/web-configuration/clases/banner';
 
 @Component({
   selector: 'app-banner',
@@ -8,7 +10,8 @@ import { NgbCarouselConfig } from "@ng-bootstrap/ng-bootstrap";
 })
 
 export class BannerComponent implements OnInit {
-  images:any[]=[
+  images: any[] = [
+
     {
       name:'imagen 1',
       img:'../../../../assets/imagenes/bannerCalzado3.png',
@@ -29,15 +32,23 @@ export class BannerComponent implements OnInit {
       name:'imagen 3',
       img:'../../../../assets/imagenes/bannerCalzado2.png',
     }
-  ]
-  constructor(private _caruselconfig:NgbCarouselConfig) {
+  ];
+
+  banners: Banner[] = [];
+
+  constructor(private _caruselconfig:NgbCarouselConfig,
+              private webconfigurationService: WebConfigurationService) {
+
     _caruselconfig.interval=3000;
     _caruselconfig.pauseOnHover= true;
     _caruselconfig.showNavigationArrows= true
     _caruselconfig.wrap=true
+
    }
 
   ngOnInit(): void {
+
+    this.obtenerBanners();
    
   }
 
@@ -49,10 +60,20 @@ export class BannerComponent implements OnInit {
  
 
 
-hideBanner(){
-  
-  let banner = document.getElementById("banner");
-  banner.style.display="none";
-}
+  hideBanner(){
+    
+    let banner = document.getElementById("banner");
+    banner.style.display="none";
+  }
+
+  obtenerBanners(){
+
+    this.webconfigurationService.getBanners().subscribe((resp: any ) => {
+      
+      this.banners = resp.banners;
+      
+    })
+
+  };
 
 }

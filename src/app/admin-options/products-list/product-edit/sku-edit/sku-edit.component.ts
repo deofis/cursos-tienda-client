@@ -57,7 +57,7 @@ export class SkuEditComponent implements OnInit {
   crearformEdicionSku(){
     
     this.formEdicionSku = this.fb.group({
-      nombre: ['', Validators.required],
+      nombre: [{value: '', disabled: true}, Validators.required],
       descripcion: ['']
     });
 
@@ -106,7 +106,7 @@ export class SkuEditComponent implements OnInit {
   crearFormEditarPrecioSlu(){
 
     this.formEdicionPrecioSku = this.fb.group({
-      precio: ['', Validators.required]
+      precio: ['', [Validators.required, Validators.min(0)]]
     })
 
   }
@@ -150,7 +150,7 @@ export class SkuEditComponent implements OnInit {
   crearFormEditarDisponibilidadSku(){
 
     this.formEdicionDisponibilidad = this.fb.group({
-      disponibilidad: ['', Validators.required]
+      disponibilidad: ['', [Validators.required, Validators.min(0)]]
     });
 
   };

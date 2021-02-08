@@ -22,7 +22,8 @@
                     <div class="row">
                         <div class="col-10">
                             <label class="ml-1"> Nombre</label>
-                            <input formControlName="nombre" type="text" class="form-control">
+                            <input formControlName="nombre" type="text" class="form-control" [class.is-invalid]="nombreInvalido">
+                            <small *ngIf="nombreInvalido" class="text-danger">Ingrese un nombre válido.</small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -126,24 +127,27 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="addon-wrapping">$</span>
                                 </div>
-                                <input formControlName="precio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
+                                <input [class.is-invalid]="precioInvalido" formControlName="precio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="editarPrecio()">
+                                    <button [disabled]="producto.skus.length > 0" class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="editarPrecio()">
                                         Editar
                                     </button> 
                                 </div>
-                            </div>                        
+                                
+                            </div>
+                            <small *ngIf="precioInvalido" class="text-danger">Ingrese precio válido.</small>                        
                         </div>
                         <div class="col">
                             <label>Stock</label>
                             <div class="input-group flex-nowrap" [formGroup]="formEditarDisponibilidad">
-                                <input formControlName="disponibilidad" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
+                                <input [class.is-invalid]="disponibilidadInvalida" formControlName="disponibilidad" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="editarDisponibilidad()">
+                                    <button [disabled]="producto.skus.length > 0" class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="editarDisponibilidad()">
                                         Editar
                                     </button>
                                 </div>
                             </div>
+                            <small *ngIf="disponibilidadInvalida" class="text-danger">Ingrese una disponibilidad válida.</small>
                         </div>
                     </div>
                 </div>
