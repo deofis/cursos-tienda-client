@@ -87,10 +87,11 @@ export class FormLogInComponent implements OnInit {
       /// si estoy iniciando sesion desde el carrito , me devuelve al carrito 
       if (this.router.url== "/pre-checkout") {
         this.router.navigate(['shopping-cart']).then(() => window.location.reload());
+        this.unirCarritos()
       }else{ // sino al home
         this.router.navigate(['home'])
       }
-      this.unirCarritos()
+      
     }, err => {
       Swal.fire({
         icon: 'error',
