@@ -4,7 +4,7 @@ import { WebConfigurationService } from '../../web-configuration.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Banner } from '../clases/banner';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -20,6 +20,8 @@ export class BannersComponent implements OnInit {
   formNuevoBanner: FormGroup;
 
   imageSrc: string;
+
+  urlPrincipal: string = 'wantfrom-tienda.web.app/';
 
   constructor( private webConfigurationService: WebConfigurationService,
                private modalService: NgbModal,
@@ -56,10 +58,14 @@ export class BannersComponent implements OnInit {
     this.formNuevoBanner = this.fb.group({
       file: [''],
       fileSource: [''],
-      actionUrl: [''],
+      actionUrl: ['', Validators.required],
       
     })
 
+  };
+
+  get actionInvalida(){
+    return this.formNuevoBanner.get('actionUrl').touched && this.formNuevoBanner.get('actionUrl').invalid;
   };
 
   onFileChange(event) {

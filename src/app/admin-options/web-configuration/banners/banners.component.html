@@ -1,6 +1,8 @@
+<div *ngIf="banners.length >= 5" class="alert alert-primary mt-3" role="alert">
+  Sr/Sra. Administrador/a, usted ya tiene configurado el máximo de banners permitidos. Por favor, elimine o edite un banner ya existente en caso de que lo requiera.
+</div>
 
-
-<div class="row mt-3">
+<div *ngIf="banners.length < 5" class="row mt-3">
     <div class="col text-right">
         <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="open(content)">
             Nuevo banner
@@ -10,7 +12,7 @@
 
 <div class="row row-cols-1 row-cols-md-2 mt-4">
   <div *ngFor="let banner of banners">
-    <app-banner-individual [banner]="banner"></app-banner-individual>
+    <app-banner-individual [banner]="banner" (propagar)="obtenerBanners()"></app-banner-individual>
   </div>
 </div>
 
@@ -53,15 +55,20 @@
               </div> -->
 
               <div class="col-12 col-md-12">
-                <div class="form-group">
-                  <label for="">URL</label>
-                  <input type="string" formControlName="actionUrl"
+                <label for="">URL</label>
+                <div class="input-group flex-nowrap">
+                  <div class="input-group-prepend d-none d-sm-none d-md-block">
+                    <span class="input-group-text" id="basic-addon3">{{urlPrincipal}}</span>
+                  </div>
+                  <input [class.is-invalid]="actionInvalida" type="string" formControlName="actionUrl"
                          class="form-control" placeholder="Url">
+                  
                 </div>
+                <small *ngIf="actionInvalida" class="text-danger">Ingrese una URL válida.</small>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
               <div class="col text-right">
                 <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="crearBanner()">
                   Aceptar

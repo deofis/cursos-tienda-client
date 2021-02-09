@@ -1,9 +1,10 @@
 <div *ngIf="banner" class="col mb-4">
     <div class="card">
       <img [src]="banner.imagen.imageUrl" class="card-img-top" alt="...">
+
       <div class="card-body">
-        <h4 class="card-title">Banner N° {{banner.orden}} - <small><a [href]="banner.actionUrl">{{banner.actionUrl}}</a></small></h4>
-        <!-- <p>{{banner.actionUrl}}</p> -->
+        <h3><span class="badge badge-secondary">Banner N° {{banner.orden}}</span> - <small><a [href]="banner.actionUrl">{{banner.actionUrl}}</a></small></h3>
+        
         <div class="row">
           <div class="col">
             <button class="btn btn-secondary btn-block btn-sm" style="border: none;" (click)="eliminarBanner()">
@@ -59,13 +60,17 @@
               <div class="col-12 col-md-12">
                 <label for=""> URL</label>
                 <div class="input-group flex-nowrap" [formGroup]="formEditarUrl">
-                  <input formControlName="actionUrl" type="string" class="form-control" placeholder="Url">
+                  <div class="input-group-prepend d-none d-sm-none d-md-block">
+                    <span class="input-group-text" id="basic-addon3">{{urlPrincipal}}</span>
+                  </div>
+                  <input [class.is-invalid]="urlInvalida" formControlName="actionUrl" type="string" class="form-control" placeholder="Url">
                   <div class="input-group-append">
                     <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="editarUrlBanner()">
                       Editar
                     </button>
                   </div>
                 </div>
+                <small *ngIf="urlInvalida" class="text-danger">Ingrese una URL válida.</small>
             
               </div>
             </div>

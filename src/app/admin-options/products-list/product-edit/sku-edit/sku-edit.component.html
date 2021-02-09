@@ -115,13 +115,14 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text" id="addon-wrapping">$</span>
                         </div>
-                        <input formControlName="precio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
+                        <input [class.is-invalid]="precioInvalido" formControlName="precio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
                         <div class="input-group-append">
                             <button class="btn btn-primary" 
                                     style="background-color: #1f4e84; border: none;" (click)="editarPrecioSku()">
                                 Editar
                             </button>  
                         </div>
+                        <small *ngIf="precioInvalido" class="text-danger">Ingrese precio válido.</small>
                     </div>
                     <!-- <div class="row text-right mt-1">
                         <div class="col text-right">
@@ -133,15 +134,16 @@
                     </div> -->
                 </div>
                 <div class="col">
-                    <label>Stock</label>
+                    <label>Disponibilidad</label>
                     <div class="input-group flex-nowrap" [formGroup]="formEdicionDisponibilidad">
-                        <input formControlName="disponibilidad" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
+                        <input [class.is-invalid]="disponibilidadInvalida" formControlName="disponibilidad" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
                         <div class="input-group-append">
                             <button class="btn btn-primary" 
                                 style="background-color: #1f4e84; border: none;" (click)="editarDisponibilidadSku()">
                                 Editar
                             </button> 
                         </div>
+                        <small *ngIf="disponibilidadInvalida" class="text-danger">Ingrese una disponibilidad válida.</small>
                     </div>
                     <!-- <div class="row text-right mt-1">
                         <div class="col text-right">

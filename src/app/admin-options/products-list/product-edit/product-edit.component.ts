@@ -142,7 +142,9 @@ export class ProductEditComponent implements OnInit {
         })
       }
 
-    }
+    };
+
+    this.formEdicionProducto.markAsUntouched();
 
 
   };
@@ -154,7 +156,8 @@ export class ProductEditComponent implements OnInit {
   crearFormEditarPrecio(){
 
     this.formEditarPrecio = this.fb.group({
-      precio: ['', Validators.required]
+      precio: [{value: '', disabled: this.producto.skus.length > 0 ? true : false}, 
+               [Validators.required, Validators.min(0)]]
     })
 
   };
@@ -206,7 +209,8 @@ export class ProductEditComponent implements OnInit {
   crearFormEditarDispo(){
 
     this.formEditarDisponibilidad = this.fb.group({
-      disponibilidad: ['', Validators.required]
+      disponibilidad: [{value: '', disabled: this.producto.skus.length > 0 ? true : false},
+                       [Validators.required, Validators.min(0)] ]
     })
 
   };
