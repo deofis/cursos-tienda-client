@@ -21,7 +21,7 @@ export class BannersComponent implements OnInit {
 
   imageSrc: string;
 
-  urlPrinciipal: string = 'wantfrom-tienda.web.app/';
+  urlPrincipal: string = 'wantfrom-tienda.web.app/';
 
   constructor( private webConfigurationService: WebConfigurationService,
                private modalService: NgbModal,

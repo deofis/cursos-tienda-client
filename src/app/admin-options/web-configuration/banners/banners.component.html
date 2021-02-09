@@ -55,16 +55,20 @@
               </div> -->
 
               <div class="col-12 col-md-12">
-                <div class="form-group">
-                  <label for="">URL</label>
+                <label for="">URL</label>
+                <div class="input-group flex-nowrap">
+                  <div class="input-group-prepend d-none d-sm-none d-md-block">
+                    <span class="input-group-text" id="basic-addon3">{{urlPrincipal}}</span>
+                  </div>
                   <input [class.is-invalid]="actionInvalida" type="string" formControlName="actionUrl"
                          class="form-control" placeholder="Url">
-                  <small *ngIf="actionInvalida" class="text-danger">Ingrese una URL válida.</small>
+                  
                 </div>
+                <small *ngIf="actionInvalida" class="text-danger">Ingrese una URL válida.</small>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
               <div class="col text-right">
                 <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="crearBanner()">
                   Aceptar
