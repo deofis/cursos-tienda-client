@@ -31,7 +31,7 @@
   <div *ngIf="producto.skus.length == 0" class="cont-props container">
 
   </div>
-  <div class="i-fondo d-block"><i id="fav" class=" iconos far fa-heart fav" (click)="saveToFav()"></i></div>
+  <div class="i-fondo d-block" ><i id="fav"  *ngIf="!hasRole('ROLE_ADMIN')" class=" iconos fas fa-heart fav" [ngClass]="{'corazon':esFavorito}"  (click)="administrarFavoritos(producto?.id)"></i></div>
 </div>
 
 

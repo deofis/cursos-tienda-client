@@ -148,12 +148,12 @@ $color-ppal:#fff;
                  text-decoration: none;
                     i{
                         font-size: 1.4em;
-                        color: $color-sec;
+                        color: rgb(143, 128, 128);
                         &:hover{
                             font-size: 1.6em;
                         }
                     }
-                    .fa-whatsapp{
+                    .fa-whatsapp-square{
                         font-style: 1.5em;
                     }
                 }
@@ -873,5 +873,9 @@ $color-ppal:#fff;
     }
 }
 
+
+.corazon{
+    color: rgb(228, 42, 42) !important;
+}
 
 

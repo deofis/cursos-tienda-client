@@ -1,7 +1,6 @@
 <div class="items">
-    <div class="i-fondo"><i id="fav" class=" iconos far fa-heart fav" (click)=saveToFav()></i></div>
+    <div  class="i-fondo"><i id="fav" class="iconos fas fa-heart fav" *ngIf="!estaLogueado || hasRole('ROLE_USER')"  [ngClass]="{'corazon':esFavorito}"  (click)="administrarFavoritos(producto?.id)"></i></div>
     <div class="img-fondo" [routerLink]="['/viewmore',producto.id]">
-       <!-- <img class="medalla" src="../../../../../assets/imagenes/medalla.png" alt="hdj">  -->
       <i class="fas fa-medal" *ngIf="destacado"></i>
         <img *ngIf="tieneFotoPpal" class="producto" src="{{producto.foto.imageUrl}}" alt="foto-producto">
         <img *ngIf="!tieneFotoPpal" class="mt-0 mt-md-5" src="assets/imagenes/noimage.png" alt="" style="width: 60px; height: auto;">

@@ -88,7 +88,7 @@ $color-ppal:#fff;
             right: 20px;
             top: 10px;
             z-index: 1;
-            color: $color-sec;
+            color: $color-menues;
         }
     }
     h3{ outline: none;
@@ -335,4 +335,8 @@ $color-ppal:#fff;
             }}
     }
 
+}
+
+.corazon{
+    color: rgb(228, 42, 42) !important;
 }

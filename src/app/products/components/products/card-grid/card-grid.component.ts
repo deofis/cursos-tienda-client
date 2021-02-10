@@ -6,6 +6,9 @@ import { ItemCarrito } from 'src/app/cart/clases/item-carrito';
 import { CatalogoService } from 'src/app/products/services/catalogo.service';
 import { PropiedadProducto } from 'src/app/products/clases/propiedad-producto';
 import { ValorPropiedadProducto } from 'src/app/products/clases/valor-propiedad-producto';
+import { AuthService } from 'src/app/log-in/services/auth.service';
+import { FavoritosService } from 'src/app/user-options/favoritos.service';
+import { Favorito } from 'src/app/products/clases/favorito';
 
 @Component({
   selector: 'app-card-grid',
@@ -22,8 +25,15 @@ export class CardGridComponent implements OnInit {
   valoresSkus:ValorPropiedadProducto[]=[];
   valoresPropiedades:string[];
   propiedadesYValoresUsadosEnSkus:PropiedadProducto[] = [];
-  arrayMostrarProp:PropiedadProducto[]=[]
-  constructor(private catalogoservice:CatalogoService,private _cartService:MockCartService) { }
+  arrayMostrarProp:PropiedadProducto[]=[];
+  estaLogueado: boolean;
+  userEmail: string;
+  esFavorito:boolean;
+  favoritos:Favorito[]=[]
+  constructor(private catalogoservice:CatalogoService,
+              private _cartService:MockCartService,
+              private favoritosService:FavoritosService,
+              private authService: AuthService) { }
  
 
   ngOnInit(): void {
@@ -35,11 +45,27 @@ export class CardGridComponent implements OnInit {
     this.tieneFoto();
     //obtengo los valores de mis skus
     this.obtenerValoresSkus();
-    
+    this.verificarSesion;
  
     this.propiedades=this.producto.propiedades
-   
+    this.getFavoritos();
   }
+
+  /**
+   * Valida que el usuario posea el rol para poder visualizar el recurso solicitado.
+   * @param role string rol requerido para mostrar el recurso.
+   */
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
+  verificarSesion(): void {
+    this.authService.loggedIn.subscribe(resp => this.estaLogueado = resp);
+    this.estaLogueado = this.authService.isLoggedIn();
+
+    this.authService.useremail.subscribe(resp => this.userEmail = resp);
+    this.userEmail = this.authService.getEmailUser();
+  }
+
   destacadosInsignia(){
     if (this.producto.destacado) {
       this.destacado=true
@@ -77,9 +103,6 @@ export class CardGridComponent implements OnInit {
 
    }, 200);
 
-    // for (let i = 0; i <this.valoresSkus.length; i++) {
-    //   this.valoresPropiedades.push(this.valoresSkus[i].valor);
-    // }
   }
     obtenerPropiedades(){
       let valores =[]
@@ -99,21 +122,10 @@ export class CardGridComponent implements OnInit {
                 //si coinciden, lo agrego a mi array de valores de la propiedad q estoy recorriendo 
                 valores.push(this.valoresSkus[i]?.valor)
               }
-              
-               
          
             }
             
-          }
-          /// uno el nombre de mi propiedad y sus valores en un objeto llamado propiedades y valores usados
-          /* this.propiedadesYValoresUsadosEnSkus.nombre=propiedad;
-          this.propiedadesYValoresUsadosEnSkus.valores=valores;
-          console.log(this.propiedadesYValoresUsadosEnSkus) */
-          
-          //hago un push de ese objeto al array q voy a mostrar
-          /* this.arrayMostrarProp.push(this.propiedadesYValoresUsadosEnSkus);
-          console.log(this.arrayMostrarProp);   */
-        
+          }        
       }
       
     }
@@ -139,10 +151,6 @@ export class CardGridComponent implements OnInit {
 
       
       
-
-      
-
-
       for (let i = 0; i < this.propiedades.length; i++) {
         
         for (let j = 0; j < this.propiedades[i].valores.length; j++) {
@@ -152,25 +160,15 @@ export class CardGridComponent implements OnInit {
             props[i].valores.push(this.propiedades[i].valores[j])
             
           }
-        
-          
         }
         
       }
 
       this.propiedadesYValoresUsadosEnSkus.push(props);
-      
-
-
-      /* for (let i = 0; i < this.propiedades.length; i++) {
-        props[i].valores = []
-        
-      } */    
+     
     }
   
-saveToFav() {
 
-}
 
  copy (obj) {
   let result;
@@ -199,4 +197,68 @@ mostrarPrecioOferta(producto:Producto){
   }
   
 }
+
+//////////////// FAVORITOS ///////////////////
+getFavoritos(){
+  this.favoritosService.getFavoritos().subscribe(resp=>{
+    this.favoritos=resp;
+    console.log(this.favoritos);
+    this.marcarFavoritos(this.producto?.id);
+
+  })
+}
+
+marcarFavoritos(id:number){
+  console.log('ejecutando')
+  for (let i = 0; i < this.favoritos.length; i++) {
+    if (this.favoritos[i].producto.id == id) {
+      this.esFavorito=true
+      console.log(this.esFavorito)
+    }
+    
+  }
+}
+administrarFavoritos(id:number){
+  //si estoy logueado
+  if (this.authService.isLoggedIn()) {
+
+    // me fijo si tengo favoritos, los recorro
+    if(this.favoritos.length!==0){
+      //filtro los favoritos, si coincide con el id lo guardo en valor
+      let valor= this.favoritos.filter(favorito=> favorito.producto.id == id)
+      //si valor no tiene nada es porque no hubo coincidencia, entonces lo agrego
+      if(valor.length==0){
+        this.agregarFavorito(id);
+      }else{
+        this.eliminarFavorito(id);
+      }
+     
+    }else{ /// si no tengo favoritos, lo agrego
+      this.agregarFavorito(id);
+      console.log("primer favorito")
+    }
+    
+    
+    
+  }
+}
+
+eliminarFavorito(id:number){
+  this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
+   this.getFavoritos()
+    console.log("producto quitado de favorito");
+    this.esFavorito=false
+  })
+}
+
+agregarFavorito(id:number){
+  this.favoritosService.agregarProductoFavorito(id).subscribe(resp=>{
+    console.log(resp);
+    this.getFavoritos();
+    this.esFavorito=true;
+    console.log("producto agregado")
+  })
+}
+
+///////////////////////////////////////////
 }

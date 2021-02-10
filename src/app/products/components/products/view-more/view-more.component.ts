@@ -18,6 +18,8 @@ import { MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPo
 import {MatSelectModule} from  '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Categoria } from 'src/app/products/clases/categoria';
+import { FavoritosService } from 'src/app/user-options/favoritos.service';
+import { Favorito } from 'src/app/products/clases/favorito';
 
 @Component({
   selector: 'app-view-more',
@@ -59,7 +61,12 @@ export class ViewMoreComponent implements OnInit {
 
 
  /// rol de usuario 
-
+ estaLogueado: boolean;
+ userEmail: string;
+ 
+///carrito
+ esFavorito:boolean;
+  favoritos:Favorito[]=[]
   constructor(private catalogoservice:CatalogoService,
               private activatedroute:ActivatedRoute,
               private _cartService:MockCartService,
@@ -67,6 +74,7 @@ export class ViewMoreComponent implements OnInit {
               private enviarInfoCompra:EnviarInfoCompraService,
               private carritoService: CarritoService,
               private productoService:ProductoService,
+              private favoritosService:FavoritosService,
               private snackBar:MatSnackBar,
               private authService: AuthService) {
     this.stock = true;
@@ -95,6 +103,24 @@ export class ViewMoreComponent implements OnInit {
     // destacado
     this.destacadosInsignia();
    
+    this.verificarSesion();
+
+    this.getFavoritos();
+  }
+
+  /**
+   * Valida que el usuario posea el rol para poder visualizar el recurso solicitado.
+   * @param role string rol requerido para mostrar el recurso.
+   */
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
+  verificarSesion(): void {
+    this.authService.loggedIn.subscribe(resp => this.estaLogueado = resp);
+    this.estaLogueado = this.authService.isLoggedIn();
+
+    this.authService.useremail.subscribe(resp => this.userEmail = resp);
+    this.userEmail = this.authService.getEmailUser();
   }
   ///// obtengo el producto, sus skus  y sus propiedades para mostrar los combobox
   getProduct(){
@@ -503,6 +529,8 @@ restarUnidad(){
      });
     }
    }
+
+ 
 ////////////////////////
    mostrarPrecioOferta(){
      if (this.skuAEnviar.promocion) {
@@ -549,4 +577,68 @@ restarUnidad(){
 	window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent("¡Te invito a que veas este producto!" + "  "+ url));
  }
  ////
+ ///// Agregar a Favoritos ///////
+
+getFavoritos(){
+  this.favoritosService.getFavoritos().subscribe(resp=>{
+    this.favoritos=resp;
+    console.log(this.favoritos);
+    this.marcarFavoritos(this.infoProducto?.id);
+
+  })
+}
+
+marcarFavoritos(id:number){
+  console.log('ejecutando')
+  for (let i = 0; i < this.favoritos.length; i++) {
+    if (this.favoritos[i].producto.id == id) {
+      this.esFavorito=true
+      console.log(this.esFavorito)
+    }
+    
+  }
+}
+administrarFavoritos(id:number){
+  //si estoy logueado
+  if (this.authService.isLoggedIn()) {
+
+    // me fijo si tengo favoritos, los recorro
+    if(this.favoritos.length!==0){
+      //filtro los favoritos, si coincide con el id lo guardo en valor
+      let valor= this.favoritos.filter(favorito=> favorito.producto.id == id)
+      //si valor no tiene nada es porque no hubo coincidencia, entonces lo agrego
+      if(valor.length==0){
+        this.agregarFavorito(id);
+      }else{
+        this.eliminarFavorito(id);
+      }
+     
+    }else{ /// si no tengo favoritos, lo agrego
+      this.agregarFavorito(id);
+      console.log("primer favorito")
+    }
+    
+    
+    
+  }
+}
+
+eliminarFavorito(id:number){
+  this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
+   this.getFavoritos()
+    console.log("producto quitado de favorito");
+    this.esFavorito=false
+  })
+}
+
+agregarFavorito(id:number){
+  this.favoritosService.agregarProductoFavorito(id).subscribe(resp=>{
+    console.log(resp);
+    this.getFavoritos();
+    this.esFavorito=true;
+    console.log("producto agregado")
+  })
+}
+
+///////////////////////////////////////////
 }
