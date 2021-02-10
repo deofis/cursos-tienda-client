@@ -1,36 +1,13 @@
 <li>
-    <img *ngIf="infoProducto?.foto" src="{{infoProducto?.foto.imageUrl}}" alt="">
-    <img *ngIf="!infoProducto?.foto" src="assets/imagenes/noimage.png" style="width: 350px; height: auto;" alt="">
-    <div class="info" *ngIf="skuAEnviar?.disponibilidad==0 || skuAEnviar==null">
+    <img *ngIf="infoProducto?.foto" src="{{infoProducto?.foto.imageUrl}}" alt="" >
+    <img *ngIf="!infoProducto?.foto" src="assets/imagenes/noimage.png"  alt="">
+    
+    <div class="info">
         <span class="item-name">{{infoProducto.nombre}}</span>
-        <div class="row-oferta" *ngIf="infoProducto.promocion!==null && infoProducto.promocion.estaVigente">
-            <span>{{infoProducto?.precio| currency:'EUR':'symbol'}}</span>
-            <p class="off">{{infoProducto?.promocion.porcentaje * 100 | number:'2.0-0'}}%0FF</p>
-        </div>
-        <div class="row-oferta" *ngIf="infoProducto.promocion==null || !infoProducto.promocion.estaVigente">
-            <br>
-        </div>
-        <div class="price-quatity">
-            <span class="item-price"
-                *ngIf="infoProducto.promocion!==null && infoProducto.promocion.estaVigente">{{infoProducto?.promocion.precioOferta|
-                currency:'EUR':'symbol'}}</span>
-
-            <span class="item-price" style="color: rgb(87, 83, 83);"
-                *ngIf="infoProducto.promocion==null || !infoProducto.promocion.estaVigente">{{infoProducto?.precio|
-                currency:'EUR':'symbol'}}</span>
-            <div class="modify-quantity" id="cantidad">
-                <i class="fas fa-minus-circle" id="restar"></i>
-                <span class="item-quantity">0</span>
-                <i class="fas fa-plus-circle" id="sumar" ></i>
-
-            </div>
-        </div>
-    </div>
-    <div class="info" *ngIf="skuAEnviar?.disponibilidad!==0 && skuAEnviar!==null">
-        <span class="item-name">{{infoProducto.nombre}}</span>
+        <span>{{skuAEnviar?.nombre}}</span>
         <div class="row-oferta" *ngIf="skuAEnviar?.promocion!==null && skuAEnviar?.promocion.estaVigente">
-            <span>{{SkuAEnviar?.precio| currency:'EUR':'symbol'}}</span>
-            <p class="off">{{SkuAEnviar?.promocion.porcentaje * 100 | number:'2.0-0'}}%0FF</p>
+            <span>{{skuAEnviar?.precio| currency:'EUR':'symbol'}}</span>
+            <p class="off">{{skuAEnviar?.promocion.porcentaje * 100 | number:'2.0-0'}}%0FF</p>
         </div>
         <div class="row-oferta" *ngIf="skuAEnviar?.promocion==null || !skuAEnviar?.promocion.estaVigente">
             <br>
@@ -67,9 +44,9 @@
 
     <div class="buttons">
         <button  mat-button (click)="agregarCarrito(skuAEnviar); openSnackBar();  resetSeleccion()"
-        class="btn" [disabled]="!skuAEnviar" id="btn-carrito">Agregar al carrito</button>
+        class="btn" [disabled]="skuAEnviar==null || skuAEnviar.disponibilidad==0" id="btn-carrito">Agregar al carrito</button>
         <button  mat-button (click)="agregarCarrito(skuAEnviar)" class="btn" disabled
         id="btn-comprar">Comprar ahora</button>
     </div>
-    <i id="close" class="fas fa-times" (click)="eliminarFavorito(infoProducto.id)"></i>
+    <div class="i-fondo d-block" ><i id="fav"  class=" iconos fas fa-heart fav" [ngClass]="{'corazon':!esFavorito}"  (click)="administrarFavoritos(infoProducto?.id)"></i></div>
 </li>

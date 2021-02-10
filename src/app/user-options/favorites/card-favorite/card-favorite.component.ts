@@ -37,6 +37,8 @@ export class CardFavoriteComponent implements OnInit {
   itemsCarrito:DetalleCarrito[];
   totalItemsCarrito:number;
   skusCombobox:Sku[];
+  favoritos:Favorito[]=[];
+  esFavorito:boolean;
 
   /// carrito del localStorage
   skusCarritoLS;
@@ -65,46 +67,67 @@ export class CardFavoriteComponent implements OnInit {
     this.skusDelProducto=new Array<Sku>()
     this.totalItemsCarrito = 0;
   
-    this.getProduct();
+    
+  
+    //this.getProduct();
+    this.getSkusDelProducto();
+    this.obtenerValoresSkus();
+    this.filtrarPropiedades();
     this.getPropiedadesProducto();
+   
+    this.getFavoritos()
+    
 
 
   }
 
 
-  eliminarFavorito(id:number){
-    this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
-      // this.getFavoritos()
+  getFavoritos(){
+    this.favoritosService.getFavoritos().subscribe(resp=>{
+      this.favoritos=resp;
+      console.log(this.favoritos);
+      this.marcarFavoritos(this.infoProducto?.id);
+
     })
+  }
+
+  marcarFavoritos(id:number){
+    console.log('ejecutando')
+    for (let i = 0; i < this.favoritos.length; i++) {
+      if (this.favoritos[i].producto.id == id) {
+        this.esFavorito=true
+      }
+      
+    }
   }
 
   sumarUnidad(){
     this.cantidadSeleccionada=this.cantidadSeleccionada+1
-    /// evaluo si la cantidad seleccionada es menor q la cantidad disponible, le sumo 
-    // if (this.cantidadSeleccionada < this.skuAEnviar.disponibilidad) {
-    //   this.cantidadSeleccionada=this.cantidadSeleccionada+1
-    //   if (this.cantidadSeleccionada == this.skuAEnviar.disponibilidad) {
-    //     document.getElementById("sumar").style.opacity="0.5"
-    //   }
-    // }
+    // evaluo si la cantidad seleccionada es menor q la cantidad disponible, le sumo 
+    if (this.cantidadSeleccionada < this.skuAEnviar.disponibilidad) {
+      this.cantidadSeleccionada=this.cantidadSeleccionada+1
+      if (this.cantidadSeleccionada == this.skuAEnviar.disponibilidad) {
+        document.getElementById("sumar").style.opacity="0.5"
+      }
+    }
    
-    // if (this.cantidadSeleccionada!==1) {
-    //   document.getElementById("restar").style.opacity="1"
-    // }
+    if (this.cantidadSeleccionada!==1) {
+      document.getElementById("restar").style.opacity="1"
+    }
    
   }
   restarUnidad(){
     console.log("restando")
     this.cantidadSeleccionada=this.cantidadSeleccionada-1;
 
-    // if (this.cantidadSeleccionada !==1) {
-    //   ///  si es distinto de uno le resto uno y evaluo nuevamente, si esunocambio el estilo del boton
-    //   this.cantidadSeleccionada=this.cantidadSeleccionada-1;
-    //   document.getElementById("sumar").style.opacity="1";
-    //    if (this.cantidadSeleccionada==1) {
-    //       document.getElementById("restar").style.opacity="0.5"
-    //    }
-    // }
+    if (this.cantidadSeleccionada !==1) {
+      ///  si es distinto de uno le resto uno y evaluo nuevamente, si esunocambio el estilo del boton
+      this.cantidadSeleccionada=this.cantidadSeleccionada-1;
+      document.getElementById("sumar").style.opacity="1";
+       if (this.cantidadSeleccionada==1) {
+          document.getElementById("restar").style.opacity="0.5"
+       }
+    }
   }
 
 
@@ -270,11 +293,12 @@ export class CardFavoriteComponent implements OnInit {
       }, 700);
   }
   identificarSkuSeleccionado(){
- 
+    console.log("identificamnso sku ")
     //guardo en un array vacio los objetos completos de propiedadque coincidadn con los valores elegidos en los select
     let select = document.getElementsByClassName("select") as HTMLCollectionOf<HTMLInputElement>;
     let valoresAEnviar:ValorPropiedadProducto []=[]
     for (let i = 0; i < select.length; i++) {
+     
       let valorCombobox= select[i].value;
       for (let x = 0; x < this.valoresSkus.length; x++) {
         if (valorCombobox == this.valoresSkus[x].valor) {
@@ -284,17 +308,20 @@ export class CardFavoriteComponent implements OnInit {
     }
     // recommo mi array de skus del producto y si algun sku tiene los mismos valores seleccionados, obtengo su id
     for (let x = 0; x < this.skusDelProducto.length; x++) {
+     console.log('for')
       let a = this.skusDelProducto[x].valores;
       let b = valoresAEnviar
       console.log("estoyaca")
         if ( JSON.stringify(a) == JSON.stringify(b)) {
+          console.log("entre al if")
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
             console.log(this.idSkuAEnviar);
-          
+          console.log(this.infoProducto)
               // con el id llamo a ese sku para luego enviarlo al servicio
-            this.productoService.getSku(this.infoProducto.id, this.idSkuAEnviar).subscribe( response => {
-            this.skuAEnviar=response;  
+            this.productoService.getSku(this.infoProducto?.id, this.idSkuAEnviar).subscribe( response => {
+            this.skuAEnviar=response; 
+            console.log(response) 
             console.log(this.skuAEnviar)  
             if (this.skuAEnviar.disponibilidad===0) {
                let btnCarrito = document.getElementById("btn-carrito") as HTMLButtonElement;
@@ -381,5 +408,47 @@ export class CardFavoriteComponent implements OnInit {
     }
    }
 
-   
+   administrarFavoritos(id:number){
+    //si estoy logueado
+    if (this.authService.isLoggedIn()) {
+
+      // me fijo si tengo favoritos, los recorro
+      if(this.favoritos.length!==0){
+        //filtro los favoritos, si coincide con el id lo guardo en valor
+        let valor= this.favoritos.filter(favorito=> favorito.producto.id == id)
+        //si valor no tiene nada es porque no hubo coincidencia, entonces lo agrego
+        if(valor.length==0){
+          this.agregarFavorito(id);
+        }else{
+          this.eliminarFavorito(id);
+        }
+       
+      }else{ /// si no tengo favoritos, lo agrego
+        this.agregarFavorito(id);
+        console.log("primer favorito")
+      }
+      
+      
+      
+    }
+  }
+
+  eliminarFavorito(id:number){
+    this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
+      console.log("producto quitado de favorito");
+      this.getFavoritos();
+      this.esFavorito=false
+    })
+  }
+
+  agregarFavorito(id:number){
+    this.favoritosService.agregarProductoFavorito(id).subscribe(resp=>{
+      console.log(resp);
+      this.esFavorito=true;
+      this.getFavoritos();
+      console.log("producto agregado")
+    })
+  }
+ 
+ 
 }

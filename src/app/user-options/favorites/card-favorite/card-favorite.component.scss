@@ -19,7 +19,7 @@ $color-wf3:#2779cd;
     padding: 10px 10px;
     margin-bottom: 25px;
     box-shadow: 1px 3px 5px rgb(170, 168, 168);
-    height: 135px;
+    height: 145px;
     &:hover {
         box-shadow: 2px 4px 6px $color-sec;
         cursor: default;
@@ -72,7 +72,7 @@ $color-wf3:#2779cd;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 200px;
+            width: 300px;
             margin-top: 5px;
             .item-price {
                 font-size: 28px;
@@ -90,7 +90,6 @@ $color-wf3:#2779cd;
                 align-items: center;
                 width: 65px;
                 padding-top: 2px;
-                margin-left: 30px;
                 padding-bottom: 2px;
                 i {
                     color: $color-wf2;
@@ -198,17 +197,17 @@ $color-wf3:#2779cd;
             margin-bottom: 10px;
         }
     }
-    .fa-times {
+    .i-fondo{
         justify-self: flex-end;
         align-self: flex-start;
         margin-top: 10px;
         margin-right: 20px;
-        color: rgba(218, 40, 40, 0.746);
-        font-size: 0.8em;
-        &:hover {
-            font-size: 0.9em;
-            color: red;
-            cursor: pointer;
+        .fa-heart{
+            color: rgb(228, 42, 42);
         }
+      
     }
+}
+.corazon{
+    color: $color-menues !important;
 }
