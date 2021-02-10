@@ -286,6 +286,7 @@ export class CardFavoriteComponent implements OnInit {
     for (let x = 0; x < this.skusDelProducto.length; x++) {
       let a = this.skusDelProducto[x].valores;
       let b = valoresAEnviar
+      console.log("estoyaca")
         if ( JSON.stringify(a) == JSON.stringify(b)) {
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
