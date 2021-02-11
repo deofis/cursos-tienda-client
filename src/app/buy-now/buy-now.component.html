@@ -1,0 +1,13 @@
+<mat-horizontal-stepper  linear id="bg"  >
+    <ng-template matStepperIcon="done">
+        <mat-icon>done</mat-icon>
+    </ng-template>
+
+    <mat-step label="Checkout"  [completed]="step2Completo">
+        <app-checkout   [mostrarResumen]="true" [mostrarCheckout]="true" ></app-checkout>
+    </mat-step>
+
+    <mat-step label="Confirmación"  >
+        <app-confirm-data *ngIf="mostrarConfirmacion" [clienteDireccion]="clienteDireccion" [entrega]="entrega" [pago]="pago"></app-confirm-data>
+    </mat-step>
+</mat-horizontal-stepper>

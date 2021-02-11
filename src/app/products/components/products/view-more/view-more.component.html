@@ -14,12 +14,7 @@
                 <a title="Compartí por Whatsapp" (click)="compartirWhatsapp()"><i class="iconos fab fa-whatsapp-square"></i></a>
             </div>
         </div>
-        <!-- <ng-template #iniciar let-modal >           
-            <div class="modal-body modal" style="display: flex; justify-content: center; align-items: center;">
-                <span class="cruz" aria-hidden="true" (click)="modal.dismiss()" style=" position: absolute; right: 20px; top: 20px; font-size: 25px;" >&times;</span>
-                <app-form-log-in></app-form-log-in>
-            </div>
-        </ng-template> -->
+       
         <article class="contenedor-uno">
             <div id="izquierda" class="izquierda">
                 <div id="img-sec" class="img-sec">
@@ -96,12 +91,24 @@
                     <button mat-button (click)="agregarCarrito(skuAEnviar); openSnackBar();  resetSeleccion()"
                         class="btn" [disabled]="!skuAEnviar" id="btn-carrito">Agregar al
                         Carrito</button>
-                    <button mat-button (click)="agregarCarrito(skuAEnviar)" class="btn" disabled
+                    <button mat-button (click)="openModal(comprarAhora);enviarInfoComprarAhora(skuAEnviar)" class="btn"  [disabled]="!skuAEnviar" 
                         id="btn-comprar">Comprar
                         ahora</button>
-
                 </div>
-
+                <!--COMPRAR AHORA MODAL  -->
+                <ng-template #comprarAhora let-modal  >   
+                    <div class="modal-header ">
+                        <h4 class="modalTitle" >
+                            Comprar Ahora</h4>
+                        <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>        
+                    <div class="modal-body " style="display: flex; justify-content: center; align-items: center;">
+                        <app-buy-now></app-buy-now>
+                    </div>
+                </ng-template>
+                <!-- FIN DE COMPRAR AHORA MODAL -->
             </div>
         </article>
         <article class="contenedor-dos">

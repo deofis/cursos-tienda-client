@@ -27,7 +27,7 @@ export class ResumenCarritoComponent implements OnInit ,  OnDestroy{
       this.carrito = new Carrito();
      }
   ngOnDestroy(): void {
-    console.log("destruyendoresumente")
+    
   }
 
   ngOnInit(): void {

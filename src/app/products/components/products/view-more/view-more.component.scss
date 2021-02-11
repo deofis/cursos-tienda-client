@@ -522,10 +522,11 @@ $color-ppal:#fff;
      animation-timing-function: (cubic-bezier(.12,1.14,.62,1.33));
     
 }
-.modal{
-    //background-color: rgba(255, 0, 0, 0.034) !important;
-    background-color: red;
-}
+.modalTitle{
+    font-family: $fte-ppal  !important;
+    font-size: 23px !important; 
+    margin-bottom: -20px !important;
+} 
 
 .inciar-sesion{
     width: 100%;

@@ -430,7 +430,7 @@ restarUnidad(){
 ////
 
 
-//// agregar al carrito y mostrar snackbar 
+//// AGREGAR AL CARRITO ///// 
   agregarCarrito(sku:Sku): void {
     // if localStorage.getItem("carrito")
    if (this.authService.isLoggedIn()) {
@@ -484,6 +484,16 @@ restarUnidad(){
 
   
   }
+////////////////////////////
+
+//// COMPRAR AHORA /////////
+openModal(comprarAhora){
+  this.modal.open(comprarAhora,{centered:true, size: 'xl', scrollable: true})
+}
+enviarInfoComprarAhora(skuAEnviar:Sku){
+
+}
+/////////////////////////////
   /////**** ALERTAS ***/////
   // prod agregado al carrito
   openSnackBar(){
@@ -663,4 +673,7 @@ abrirInicioDeSesion(){
   }
 }
 ///////////////////////////////////////////
+
+
+
 }

@@ -2,13 +2,26 @@
     <h2>Resumen de compra</h2>
     <div class="cont-detalle-compra">
         <div class="detalle-compra" *ngFor="let item of carrito?.items">
+
             <div class="cant-nombre">
-                <span id="cantidad">{{item?.cantidad }}</span>
-                <span>{{item?.sku.nombre}}</span>
+                <div class="ppal">
+                    <img *ngIf="!item?.sku.producto.foto" src="../../../../../assets/imagenes/noimage.png" alt=""
+                        style="width: 30px; height: 30px;">
+                    <img *ngIf="item?.sku.producto.foto" src="{{item?.sku.producto.foto.imageUrl}}" alt=""
+                        style="width: 30px; height: 30px;">
+
+                    <span>{{ (item?.sku.nombre.length>25) ? (item?.sku.nombre | slice:0:25)+'...' : (item?.sku.nombre)}}</span>
+                </div>
+                <div class="info">
+                    <span id="cantidad">{{item?.cantidad }}U.</span>
+                    <span>{{item?.sku.valoresData}}</span>
+                </div>
+
             </div>
             <span *ngIf="!item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.precio | number:
                 '.0-2'}}</span>
-            <span *ngIf="item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.promocion.precioOferta | number:
+            <span *ngIf="item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.promocion.precioOferta |
+                number:
                 '.0-2'}}</span>
         </div>
     </div>

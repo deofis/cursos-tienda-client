@@ -19,6 +19,8 @@ $color-ppal:#fff;
     font-family: $fte-sec;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-width:350px;
     h2{
         font-family: $fte-ppal;
         color: $color-sec;
@@ -55,18 +57,37 @@ $color-ppal:#fff;
         .detalle-compra{
             padding: 5px 25px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             font-family: $fte-sec;
             color: $color-wf2;
             .cant-nombre{
                 display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                text-transform: capitalize;
-                #cantidad{
-                    margin-right: 10px;
+                flex-direction: column;
+                .ppal{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    text-transform: capitalize;
+                    img{
+                        margin-right: 10px;
+                    }
                 }
+                .info{
+                    color: $color-sec;
+                    font-size: 12px;
+                    margin-top: -10px;
+                    padding-left: 40px;
+                    #cantidad{
+                        margin-right: 10px;
+                    }
+                }
+                
+               
+            }
+            .item-price{
+                display: block;
+                margin-top: 5px;
             }
         }
     }
