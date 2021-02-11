@@ -20,6 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Categoria } from 'src/app/products/clases/categoria';
 import { FavoritosService } from 'src/app/user-options/favoritos.service';
 import { Favorito } from 'src/app/products/clases/favorito';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/admin-options/admin-promos/data.service';
 
 @Component({
   selector: 'app-view-more',
@@ -66,13 +69,18 @@ export class ViewMoreComponent implements OnInit {
  
 ///carrito
  esFavorito:boolean;
-  favoritos:Favorito[]=[]
+  favoritos:Favorito[]=[];
+
+subscripcionModal : Subscription;
+modalInicio:boolean;
   constructor(private catalogoservice:CatalogoService,
               private activatedroute:ActivatedRoute,
               private _cartService:MockCartService,
               private Router:Router,
               private enviarInfoCompra:EnviarInfoCompraService,
               private carritoService: CarritoService,
+              public modal: NgbModal,
+              private dataService:DataService,
               private productoService:ProductoService,
               private favoritosService:FavoritosService,
               private snackBar:MatSnackBar,
@@ -106,6 +114,11 @@ export class ViewMoreComponent implements OnInit {
     this.verificarSesion();
 
     this.getFavoritos();
+
+    this.subscripcionModal=this.dataService.modalInicioSesion$.subscribe(resp=> {
+      this.modalInicio=resp;
+       
+     })
   }
 
   /**
@@ -580,12 +593,15 @@ restarUnidad(){
  ///// Agregar a Favoritos ///////
 
 getFavoritos(){
-  this.favoritosService.getFavoritos().subscribe(resp=>{
-    this.favoritos=resp;
-    console.log(this.favoritos);
-    this.marcarFavoritos(this.infoProducto?.id);
-
-  })
+  if (this.authService.hasRole('ROLE_USER')) {
+    this.favoritosService.getFavoritos().subscribe(resp=>{
+      this.favoritos=resp;
+      console.log(this.favoritos);
+      this.marcarFavoritos(this.infoProducto?.id);
+  
+    })
+  }
+ 
 }
 
 marcarFavoritos(id:number){
@@ -622,6 +638,7 @@ administrarFavoritos(id:number){
     
   }
 }
+ 
 
 eliminarFavorito(id:number){
   this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
@@ -640,5 +657,10 @@ agregarFavorito(id:number){
   })
 }
 
+abrirInicioDeSesion(){
+  if (!this.authService.isLoggedIn()) {
+    this.modalInicio=true
+  }
+}
 ///////////////////////////////////////////
 }

@@ -17,5 +17,7 @@ export class DataService {
 
   productoSkuSelec = new EventEmitter<Sku>();
 
+  modalInicioSesion$ = new EventEmitter();
+
   constructor() { }
 }

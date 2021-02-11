@@ -4,7 +4,7 @@
     
     <div class="info">
         <span class="item-name">{{infoProducto.nombre}}</span>
-        <span>{{skuAEnviar?.nombre}}</span>
+        
         <div class="row-oferta" *ngIf="skuAEnviar?.promocion!==null && skuAEnviar?.promocion.estaVigente">
             <span>{{skuAEnviar?.precio| currency:'EUR':'symbol'}}</span>
             <p class="off">{{skuAEnviar?.promocion.porcentaje * 100 | number:'2.0-0'}}%0FF</p>
@@ -29,11 +29,10 @@
         </div>
     </div>
     <!-- contenedor propiedades  -->
-    <div class="text-center" id="cont-props"  *ngIf="tieneValores">
+    <div class="text-center" id="cont-props"  >
         <div class="combobox-cont" *ngFor="let propiedad of propiedadesFiltradas;let i=index ">
             <span>{{propiedad.nombre}}:</span>
-            <select id="color"  class="select"
-               (change)="valoresSiguienteCombobox(i)">
+            <select id="color"  class="select-prop" (change)="valoresSiguienteCombobox(i)">
                 <option [value]="valor.valor" *ngFor="let valor of propiedad.valores">{{valor.valor}}</option>
 
            </select>

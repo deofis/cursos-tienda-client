@@ -9,11 +9,17 @@
                         href="">{{ (infoProducto?.nombre.length>40) ? (infoProducto?.nombre | slice:0:40)+'...' : (infoProducto?.nombre)}} </a></p>
             </div>
             <div class="iconos-detalle-producto">
-                <a title="Agregar a Favoritos"  (click)="administrarFavoritos(infoProducto?.id)"> <i *ngIf="!estaLogueado || hasRole('ROLE_USER')" [ngClass]="{'corazon':esFavorito}"  class=" iconos fas fa-heart"></i></a>
+                <a title="Agregar a Favoritos"  (click)="administrarFavoritos(infoProducto?.id); abrirInicioDeSesion()"> <i *ngIf="!estaLogueado || hasRole('ROLE_USER')" [ngClass]="{'corazon':esFavorito}"  class=" iconos fas fa-heart"></i></a>
                 <a title="Copiá este link!" (click)="getlink()"> <i class="iconos fas fa-link"></i></a>
                 <a title="Compartí por Whatsapp" (click)="compartirWhatsapp()"><i class="iconos fab fa-whatsapp-square"></i></a>
             </div>
         </div>
+        <!-- <ng-template #iniciar let-modal >           
+            <div class="modal-body modal" style="display: flex; justify-content: center; align-items: center;">
+                <span class="cruz" aria-hidden="true" (click)="modal.dismiss()" style=" position: absolute; right: 20px; top: 20px; font-size: 25px;" >&times;</span>
+                <app-form-log-in></app-form-log-in>
+            </div>
+        </ng-template> -->
         <article class="contenedor-uno">
             <div id="izquierda" class="izquierda">
                 <div id="img-sec" class="img-sec">
@@ -127,4 +133,8 @@
 
         </article>
     </section>
+
+    <div class="inciar-sesion" id="iniciar" *ngIf="modalInicio">
+        <app-form-log-in [(modalInicio)]="modalInicio"></app-form-log-in>
+    </div>
 </div>

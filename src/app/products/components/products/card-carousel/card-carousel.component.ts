@@ -9,6 +9,9 @@ import { FavoritosService } from 'src/app/user-options/favoritos.service';
 import { AuthService } from 'src/app/log-in/services/auth.service';
 import { Favorito } from 'src/app/products/clases/favorito';
 import { isBreakOrContinueStatement } from 'typescript';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/admin-options/admin-promos/data.service';
 
 @Component({
   selector: 'app-card-carousel',
@@ -24,8 +27,13 @@ export class CardCarouselComponent implements OnInit {
   esFavorito:boolean;
   estaLogueado: boolean;
   userEmail: string;
+
+  subscripcionModal : Subscription;
+  modalInicio:boolean;
   constructor(private catalogoservice:CatalogoService,
               private _cartService:MockCartService,
+              public modal: NgbModal,
+              private dataService:DataService,
               private favoritosService:FavoritosService,
               private authService: AuthService) { }
 
@@ -36,7 +44,11 @@ export class CardCarouselComponent implements OnInit {
     this.getFavoritos(); 
     this.verificarSesion();  
    
-  
+    /// me suscribo para sabes cuando abrir o cerrar el modal de inicio de sesion
+    this.subscripcionModal=this.dataService.modalInicioSesion$.subscribe(resp=> {
+      this.modalInicio=resp;       
+      console.log(resp)
+     })
 
   }
 
@@ -75,12 +87,14 @@ export class CardCarouselComponent implements OnInit {
  
 
   getFavoritos(){
-    this.favoritosService.getFavoritos().subscribe(resp=>{
-      this.favoritos=resp;
-      console.log(this.favoritos);
-      this.marcarFavoritos(this.producto?.id);
-
-    })
+    if (this.authService.hasRole('ROLE_USER')) {
+      this.favoritosService.getFavoritos().subscribe(resp=>{
+        this.favoritos=resp;
+        console.log(this.favoritos);
+        this.marcarFavoritos(this.producto?.id);
+  
+      })
+    }    
   }
 
   marcarFavoritos(id:number){
@@ -117,7 +131,7 @@ export class CardCarouselComponent implements OnInit {
       
     }
   }
-
+ 
   eliminarFavorito(id:number){
     this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
      this.getFavoritos()
@@ -149,4 +163,9 @@ export class CardCarouselComponent implements OnInit {
   }
 
 
+  abrirInicioDeSesion(){
+    if (!this.authService.isLoggedIn()) {
+      this.modalInicio=true
+    }
+  }
 }

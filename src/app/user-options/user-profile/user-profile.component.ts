@@ -84,7 +84,6 @@ export class UserProfileComponent implements OnInit {
 
     this.prefilClienteService.getInfoPerfilCliente().subscribe((resp: any) => {
       this.cliente = resp
-      console.log(this.cliente);
       this.cargarDatosFormCliente();
     })
 
@@ -92,9 +91,7 @@ export class UserProfileComponent implements OnInit {
 
   getPaises(){
     this.catalogoService.getPaises().subscribe((resp: any) => {
-      this.paises = resp
-      console.log(this.paises);
-      
+      this.paises = resp      
     })
   };
 

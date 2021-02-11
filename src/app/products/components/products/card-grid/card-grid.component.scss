@@ -27,6 +27,9 @@ $color-ppal:#fff;
     &:hover >.i-fondo {
         display: block;
     }
+    &:hover > .i-fondo >i{
+        color: $color-sec;
+    }
     &:hover{
         border-bottom: 1px solid rgba(161, 157, 157, 0.589);
     }
@@ -66,7 +69,8 @@ $color-ppal:#fff;
             right: 20px;
             top: 10px;
             z-index: 1;
-            color: $color-sec;
+            color: $color-menues;
+           
         }
     }
     .title-pcio{
@@ -175,6 +179,17 @@ $color-ppal:#fff;
     top: 20px;
     margin-top: 20px;
     
+}
+.inciar-sesion{
+    width: 100%;
+    height: 100vh;
+    display: flex;justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 5;
+    background-color: rgba(61, 54, 54, 0.363);
 }
 @media  screen and (max-width: 767px) {
     .cont-props{

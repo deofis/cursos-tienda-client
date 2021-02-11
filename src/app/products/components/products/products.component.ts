@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Categoria } from 'src/app/products/clases/categoria';
 import { Producto } from '../../clases/producto';
 import { CatalogoService } from '../../services/catalogo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -22,7 +23,8 @@ export class ProductsComponent implements OnInit {
 
 tarjeta= document.querySelectorAll(".tarjetas")
 cantidadPaginas= Math.ceil(this.tarjeta.length /5);
-  constructor(private catalogoService:CatalogoService) { 
+  constructor(private catalogoService:CatalogoService,
+              private router:Router,) { 
 
   }
   ngOnInit(): void {
@@ -70,6 +72,11 @@ const fila2=document.getElementById("contenedor-carouselOfertas");
   
     //this.categoriasFoto();
   }
+
+  /**** Search bar  ****/
+  buscarProducto(termino:string):void {
+    this.router.navigate(['/search',termino]);
+   }
 
   backButton1(){
     const flecha1= document.getElementById("flecha-izquierda-fila1");

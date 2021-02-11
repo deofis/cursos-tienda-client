@@ -1,5 +1,6 @@
 <div class="items">
-    <div  class="i-fondo"><i id="fav" class="iconos fas fa-heart fav" *ngIf="!estaLogueado || hasRole('ROLE_USER')"  [ngClass]="{'corazon':esFavorito}"  (click)="administrarFavoritos(producto?.id)"></i></div>
+    <div  class="i-fondo"><i id="fav" class="iconos fas fa-heart fav" *ngIf="!estaLogueado || hasRole('ROLE_USER')"  [ngClass]="{'corazon':esFavorito}"  (click)="administrarFavoritos(producto?.id); abrirInicioDeSesion()"></i></div>
+   
     <div class="img-fondo" [routerLink]="['/viewmore',producto.id]">
       <i class="fas fa-medal" *ngIf="destacado"></i>
         <img *ngIf="tieneFotoPpal" class="producto" src="{{producto.foto.imageUrl}}" alt="foto-producto">
@@ -14,4 +15,7 @@
         <p class="precio"  *ngIf="!mostrarPrecioOferta(producto)" >{{producto.precio | currency:'EUR':'symbol'}}</p>
         <p class="precioOferta" *ngIf="mostrarPrecioOferta(producto)">{{producto.promocion?.precioOferta | currency:'EUR':'symbol'}}</p>
     </div>
+</div>
+<div class="inciar-sesion" id="iniciar" *ngIf="modalInicio">
+  <app-form-log-in [(modalInicio)]="modalInicio"></app-form-log-in>
 </div>

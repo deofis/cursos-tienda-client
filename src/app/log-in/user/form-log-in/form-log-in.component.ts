@@ -1,5 +1,5 @@
 import { Carrito } from './../../../cart/clases/carrito';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IniciarSesionRequest } from '../../clases/login-request';
 import { AuthService } from '../../services/auth.service';
@@ -8,6 +8,9 @@ import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from '../../../config/config';
 import Swal from 'sweetalert2';
 import { CarritoService } from 'src/app/cart/services/carrito.service';
 import { EnviarInfoCompraService } from 'src/app/user-options/user-profile/services/enviar-info-compra.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EnviarProductoService } from 'src/app/admin-options/enviar-producto.service';
+import { DataService } from 'src/app/admin-options/admin-promos/data.service';
 
 @Component({
   selector: 'app-form-log-in',
@@ -15,7 +18,8 @@ import { EnviarInfoCompraService } from 'src/app/user-options/user-profile/servi
   styleUrls: ['./form-log-in.component.scss']
 })
 export class FormLogInComponent implements OnInit {
-
+  @Input() modalInicio:boolean;
+  @Output() enviar= new EventEmitter();
   GOOGLE_AUTH_URL = GOOGLE_AUTH_URL;
   FACEBOOK_AUTH_URL = FACEBOOK_AUTH_URL;
 
@@ -28,7 +32,10 @@ export class FormLogInComponent implements OnInit {
   totalItemsCarrito:number;
   constructor(private authService: AuthService, 
               private fb: FormBuilder,
+              private enviarNewProduct:EnviarProductoService,
               private carritoService: CarritoService,
+              public modal: NgbModal,
+              private dataService:DataService,
               private enviarInfoCompra:EnviarInfoCompraService,
               private router: Router,) {
     this.usuario = new IniciarSesionRequest();
@@ -68,7 +75,17 @@ export class FormLogInComponent implements OnInit {
       email: ["", [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
     });
   }
+  cerrarModales(){
+    this.modal.dismissAll()
+  }
 
+  cerrarInicio(){
+    this.modalInicio=false
+    setTimeout(() => {
+      this.dataService.modalInicioSesion$.emit(this.modalInicio);
+    }, 100);
+   
+  }
   /**
    * Inicia una petición a la API para iniciar sesión, si las credenciales son válidas, nos devuelve los datos de 
    * inicio de sesión: JWT, email y rol del usuario, refresh token para iniciar sesion automaticamente y timestamp 
@@ -89,7 +106,12 @@ export class FormLogInComponent implements OnInit {
         this.router.navigate(['shopping-cart']).then(() => window.location.reload());
         this.unirCarritos()
       }else{ // sino al home
-        this.router.navigate(['home'])
+        if (this.router.url== "/login") {
+          this.router.navigate(['home']).then(()=>window.location.reload())
+          
+        }
+        window.location.reload()
+        this.modal.dismissAll();
       }
       
     }, err => {

@@ -59,7 +59,7 @@ export class CardFavoriteComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.cantidadSeleccionada=1;
+   
     this.infoProducto=new Producto();
     this.infoProducto=this.favorito?.producto;
     this.skusCarritoLS= new Array();
@@ -67,21 +67,29 @@ export class CardFavoriteComponent implements OnInit {
     this.skusDelProducto=new Array<Sku>()
     this.totalItemsCarrito = 0;
   
-    
   
-    //this.getProduct();
-    this.getSkusDelProducto();
-    this.obtenerValoresSkus();
-    this.filtrarPropiedades();
-    this.getPropiedadesProducto();
+    this.getProduct();   
+    this.getFavoritos();
    
-    this.getFavoritos()
-    
-
-
   }
+ 
 
+  cantidad(){
+    console.log("calculado cantidas")
+    console.log(this.skuAEnviar)
+    if (this.skuAEnviar!== null) {
+      if (this.skuAEnviar.disponibilidad==0) {
+        this.cantidadSeleccionada=0;
+      }
+      else{
+        this.cantidadSeleccionada=1
+      }
+    }else{
+      this.cantidadSeleccionada= 0
 
+    }
+    
+  }
   getFavoritos(){
     this.favoritosService.getFavoritos().subscribe(resp=>{
       this.favoritos=resp;
@@ -92,7 +100,6 @@ export class CardFavoriteComponent implements OnInit {
   }
 
   marcarFavoritos(id:number){
-    console.log('ejecutando')
     for (let i = 0; i < this.favoritos.length; i++) {
       if (this.favoritos[i].producto.id == id) {
         this.esFavorito=true
@@ -102,7 +109,7 @@ export class CardFavoriteComponent implements OnInit {
   }
 
   sumarUnidad(){
-    this.cantidadSeleccionada=this.cantidadSeleccionada+1
+    
     // evaluo si la cantidad seleccionada es menor q la cantidad disponible, le sumo 
     if (this.cantidadSeleccionada < this.skuAEnviar.disponibilidad) {
       this.cantidadSeleccionada=this.cantidadSeleccionada+1
@@ -117,10 +124,7 @@ export class CardFavoriteComponent implements OnInit {
    
   }
   restarUnidad(){
-    console.log("restando")
-    this.cantidadSeleccionada=this.cantidadSeleccionada-1;
-
-    if (this.cantidadSeleccionada !==1) {
+    if (this.cantidadSeleccionada !==1 && this.cantidadSeleccionada !==0) {
       ///  si es distinto de uno le resto uno y evaluo nuevamente, si esunocambio el estilo del boton
       this.cantidadSeleccionada=this.cantidadSeleccionada-1;
       document.getElementById("sumar").style.opacity="1";
@@ -136,24 +140,49 @@ export class CardFavoriteComponent implements OnInit {
       this.catalogoservice.getInfoProducto(this.infoProducto?.id).subscribe(response => {
         this.infoProducto=response;
         setTimeout(() => {
-          console.log("ejecutango get prpoduct")
+          this.getPropiedadesProducto();
           this.getSkusDelProducto();
           this.obtenerValoresSkus();
-          this.filtrarPropiedades();
         }, 300);
       });
   };
 
 
   getSkusDelProducto(){
-    console.log("get skus")
     this.productoService.getAllTheSkus(this.infoProducto?.id).subscribe(response => {
       this.skusDelProducto=response;
       this.identificarSkuSeleccionado()
     });
   }
+  
+  obtenerValoresSkus(){
+    let skus = this.infoProducto.skus;
+
+    skus.forEach(sku => {
+      let values = sku.valores;
+      values.forEach((value) => {
+        if (!this.valoresSkus.some(val => val.id == value.id)) {
+          this.valoresSkus.push(value);
+        }
+      });
+    });
+    if (skus.length===0) {
+     let idDefaultSku=this.infoProducto.defaultSku.id;
+     this.productoService.getSku(this.infoProducto.id, idDefaultSku).subscribe( response => {
+      this.skuAEnviar=response;   
+      this.cantidad();
+    })
+
+    }
+  }
+
+  getPropiedadesProducto(){  /////FUNCIONA  
+       this.catalogoservice.getPropiedadesProducto(this.infoProducto?.id).subscribe((resp:any) => {
+        this.propiedadesProducto = resp;
+        this.filtrarPropiedades();
+      });
+  };
   filtrarPropiedades() {
-    console.log("filtrando props")
     this.propiedadesFiltradas = this.propiedadesProducto;
     this.propiedadesFiltradas?.forEach(propiedad => {
       let valoresPropiedad = propiedad.valores;
@@ -169,45 +198,8 @@ export class CardFavoriteComponent implements OnInit {
         this.tieneValores=false
       }
     });
-  
+    console.log(this.propiedadesFiltradas)
   }
-
-  obtenerValoresSkus(){
-    console.log("obteniendo valores skus")
-    let skus = this.infoProducto.skus;
-
-    skus.forEach(sku => {
-      let values = sku.valores;
-      values.forEach((value) => {
-        if (!this.valoresSkus.some(val => val.id == value.id)) {
-          this.valoresSkus.push(value);
-        }
-      });
-    });
-    if (skus.length===0) {
-     let idDefaultSku=this.infoProducto.defaultSku.id;
-     this.productoService.getSku(this.infoProducto.id, idDefaultSku).subscribe( response => {
-      this.skuAEnviar=response;   
-    })
-
-    }
-  }
-
-  getPropiedadesProducto(){
-    console.log("trayendo props")
-  
-      this.catalogoservice.getPropiedadesProducto(this.infoProducto?.id).subscribe((resp:any) => {
-
-        this.propiedadesProducto = resp;
-        if (this.propiedadesProducto?.length>4) {
-          console.log("tiene muchas props ")
-          let contenedoCombobox= document.getElementById("cont-props");
-          contenedoCombobox.style.display="grid";
-        }
-      });
-    
-    
-  };
  //// recargar el componente para que se reestablezcan los valores de los combobox 
  resetSeleccion(){
   this.mostrarActualizar=false;
@@ -221,9 +213,11 @@ export class CardFavoriteComponent implements OnInit {
   //// metodo que se activa en change del combobox, para ir trayendo skus acorde al valor seleccionado
   valoresSiguienteCombobox(i){
     /// pongo el sku ocmo null para que vuelva por unos segundos a estar los botones disabled hasta q haga todo el proceso y encuentre q los valores me generan un sku a enviar 
-     this.skuAEnviar=null
- /// tomo el valor de la propiedad que seleccioné
-      let select = document.getElementsByClassName("select") as HTMLCollectionOf<HTMLInputElement>;
+    this.skuAEnviar=null
+    /// tomo el valor de la propiedad que seleccioné
+    setTimeout(() => {
+     
+      let select = document.getElementsByClassName("select-prop") as HTMLCollectionOf<HTMLInputElement>;
       console.log(select)
       let valorCombobox= select[i].value;
       console.log(valorCombobox)
@@ -286,19 +280,20 @@ export class CardFavoriteComponent implements OnInit {
           }         
         } 
        };
-       console.log(preseleccion)
       }
-      setTimeout(() => {
-        this.identificarSkuSeleccionado()
-      }, 700);
+     
+    }, 900);
+    setTimeout(() => {
+      this.identificarSkuSeleccionado()
+    }, 600);
+     
   }
   identificarSkuSeleccionado(){
-    console.log("identificamnso sku ")
     //guardo en un array vacio los objetos completos de propiedadque coincidadn con los valores elegidos en los select
-    let select = document.getElementsByClassName("select") as HTMLCollectionOf<HTMLInputElement>;
+    let select = document.getElementsByClassName("select-prop") as HTMLCollectionOf<HTMLSelectElement>;
+    console.log(select)
     let valoresAEnviar:ValorPropiedadProducto []=[]
     for (let i = 0; i < select.length; i++) {
-     
       let valorCombobox= select[i].value;
       for (let x = 0; x < this.valoresSkus.length; x++) {
         if (valorCombobox == this.valoresSkus[x].valor) {
@@ -308,25 +303,17 @@ export class CardFavoriteComponent implements OnInit {
     }
     // recommo mi array de skus del producto y si algun sku tiene los mismos valores seleccionados, obtengo su id
     for (let x = 0; x < this.skusDelProducto.length; x++) {
-     console.log('for')
       let a = this.skusDelProducto[x].valores;
       let b = valoresAEnviar
-      console.log("estoyaca")
         if ( JSON.stringify(a) == JSON.stringify(b)) {
-          console.log("entre al if")
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
-            console.log(this.idSkuAEnviar);
-          console.log(this.infoProducto)
               // con el id llamo a ese sku para luego enviarlo al servicio
             this.productoService.getSku(this.infoProducto?.id, this.idSkuAEnviar).subscribe( response => {
-            this.skuAEnviar=response; 
-            console.log(response) 
+            this.skuAEnviar=response;
+            this.cantidad();
             console.log(this.skuAEnviar)  
-            if (this.skuAEnviar.disponibilidad===0) {
-               let btnCarrito = document.getElementById("btn-carrito") as HTMLButtonElement;
-               this.skuAEnviar=null
-           }       
+                
             })
             break;
          }      
@@ -380,7 +367,6 @@ export class CardFavoriteComponent implements OnInit {
         localStorage.setItem("miCarrito",JSON.stringify(nuevoCarrito) );
         this.totalItemsCarrito = nuevoCarrito.items.length;
         setTimeout(() => {
-          console.log(this.totalItemsCarrito)
           this.enviarInfoCompra.enviarCantidadProductosCarrito$.emit(this.totalItemsCarrito); 
         }, 100);
       }
@@ -425,7 +411,6 @@ export class CardFavoriteComponent implements OnInit {
        
       }else{ /// si no tengo favoritos, lo agrego
         this.agregarFavorito(id);
-        console.log("primer favorito")
       }
       
       
@@ -435,7 +420,7 @@ export class CardFavoriteComponent implements OnInit {
 
   eliminarFavorito(id:number){
     this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
-      console.log("producto quitado de favorito");
+    
       this.getFavoritos();
       this.esFavorito=false
     })
@@ -443,10 +428,8 @@ export class CardFavoriteComponent implements OnInit {
 
   agregarFavorito(id:number){
     this.favoritosService.agregarProductoFavorito(id).subscribe(resp=>{
-      console.log(resp);
       this.esFavorito=true;
       this.getFavoritos();
-      console.log("producto agregado")
     })
   }
  
