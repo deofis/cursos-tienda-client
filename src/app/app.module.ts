@@ -86,6 +86,8 @@ import { Step3Component } from './admin-options/add-product/step3/step3.componen
 import { WebConfigurationComponent } from './admin-options/web-configuration/web-configuration/web-configuration.component';
 import { BannersComponent } from './admin-options/web-configuration/banners/banners.component';
 import { BannerIndividualComponent } from './admin-options/web-configuration/banners/banner-individual/banner-individual.component';
+import { ImgSecundariasComponent } from './admin-options/products-list/product-edit/img-secundarias/img-secundarias.component';
+import { NuevaImgSecundariaComponent } from './admin-options/products-list/product-edit/nueva-img-secundaria/nueva-img-secundaria.component';
 
 
 
@@ -152,6 +154,8 @@ import { BannerIndividualComponent } from './admin-options/web-configuration/ban
     WebConfigurationComponent,
     BannersComponent,
     BannerIndividualComponent,
+    ImgSecundariasComponent,
+    NuevaImgSecundariaComponent,
   ],
   imports: [
     BrowserModule,

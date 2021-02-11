@@ -7,7 +7,10 @@
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Producto</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sku</a>
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#prop" role="tab" aria-controls="prop" aria-selected="false">Propiedades</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Skus</a>
     </li>
 
 </ul>
@@ -70,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4">
+                    <div class="row mt-3">
                         <div class="col-3 offset-md-4">
                             <!-- <button class="btn btn-block btn-secondary" style="border: none;">
                                 Cancelar
@@ -85,42 +88,69 @@
                 </div>
 
                 <div class="col-12 col-md-6">
+                    
                     <div class="row">
+                
                         <div class="col-12 col-md">
 
-                            <div class="card mt-2" style="max-width: 540px;">
+                            <div class="card mb-3" style="max-width: 540px;">
                                 <div class="row no-gutters">
-                                  <div class="col-md-4 mt-4" >
-                                    <img [src]="imageSrc ? imageSrc : '../../../../assets/imagenes/noimage.png'" class="card-img" alt="..." style="width: 150px; height: auto;">
-                                  </div>
-                                  <div class="col-md-8">
-                                    <div class="card-body">
-                                      <h3 class="card-title">Imagen del producto</h3>
-                                      <p class="card-text">Los formatos admitidos son .PNG, .JPG. El tamaño máximo de la imagen del producto es de 1MB.</p>
+                                    <div class="col-md-6">
+                                        <img [src]="imageSrc ? imageSrc : '../../../../assets/imagenes/noimage.png'"
+                                            class="card-img-top mx-auto mt-1 ml-md-5" style="width: 170px; height: auto;">
                                     </div>
-                                    
-                                  </div>
-                                </div>
-                                <div class="row mt-2 mb-2 mr-2">
-                                    <div class="col-md-8 offset-4" [formGroup]="formEditarImagenPrincipal">
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" 
-                                                     formControlName="file" (change)="onFileChange($event)">
-                                              <label class="custom-file-label" >Elige una imagen</label>
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Imagen principal</h5>
+                                            <p class="card-text"><small>Los formatos admitidos son .PNG, .JPG. El tamaño máximo de la imagen del producto es
+                                                de 1MB.</small></p>
+                                            
+                                            <div class="input-group" [formGroup]="formEditarImagenPrincipal">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                                        aria-describedby="inputGroupFileAddon04" formControlName="file"
+                                                        (change)="onFileChange($event)">
+                                                    <label class="custom-file-label">Buscar</label>
+                                                </div>
+                                                <div class="input-group-append" for="inputGroupFile04">
+                                                    <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" type="button"
+                                                        id="inputGroupFileAddon04" (click)="editarImagenPrincipal()">Subir</button>
+                                                </div>
                                             </div>
-                                            <div class="input-group-append" for="inputGroupFile04">
-                                                <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" 
-                                                        type="button" id="inputGroupFileAddon04" (click)="editarImagenPrincipal()">Subir</button>
-                                              </div>
+
+                                            
+
                                         </div>
+
+                                        
+                                    </div>
+                                </div>
+                                <div class="card-footer" style="background: none;">
+                                    <div class="row ml-md-2 imageResalt">
+                                        <app-img-secundarias *ngFor="let imagen of producto.imagenes" 
+                                            [imagen]="imagen" 
+                                            [producto]="producto" 
+                                            (propagar)="actualizarProductoAEditar()">
+                                        </app-img-secundarias>
+                                        <app-nueva-img-secundaria 
+                                            [producto]="producto" 
+                                            (propagar)="actualizarProductoAEditar()"
+                                            *ngFor='let in of counter(numeroDeRepeticionesPlus)'>
+                                        </app-nueva-img-secundaria>
                                     </div>
                                 </div>
                             </div>
+        
+                            
+        
+                           
                         </div>
+        
+                        
+        
                     </div>
-                    <hr>
-                    <div class="row mt-3">
+
+                    <div class="row">
                         <div class="col">
                             <label>Precio</label>
                             <div class="input-group flex-nowrap" [formGroup]="formEditarPrecio">
@@ -138,7 +168,7 @@
                             <small *ngIf="precioInvalido" class="text-danger">Ingrese precio válido.</small>                        
                         </div>
                         <div class="col">
-                            <label>Stock</label>
+                            <label>Disponibilidad</label>
                             <div class="input-group flex-nowrap" [formGroup]="formEditarDisponibilidad">
                                 <input [class.is-invalid]="disponibilidadInvalida" formControlName="disponibilidad" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
                                 <div class="input-group-append">
@@ -152,7 +182,9 @@
                     </div>
                 </div>
             </div>
-            <hr>
+
+
+
         </div>
 
         
@@ -166,4 +198,57 @@
 
     </div>
 
+    <div class="tab-pane fade" id="prop" role="tabpanel" aria-labelledby="profile-tab">
+
+        
+
+    </div>
+
 </div>
+
+
+<ng-template #secundaria let-modal id="secundary">
+    <div class="modal-header">
+      <h4 class="modal-title">Nueva imagen secundaria</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+        <div class="container">
+            <div class="col mb-4">
+              <div class="card">
+                <img [src]="imageSrcSecundaria ? imageSrcSecundaria : '../../../../assets/imagenes/noimage.png'" class="card-img-top mx-auto mt-1" alt="..." style="width: 150px; height: auto;">
+                <div class="card-body" [formGroup]="formNuevaImagenSecundaria">
+                  <div class="row">
+                    <div class="col">
+      
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                 formControlName="file" (change)="onSecundariaChange($event)">
+                          <label class="custom-file-label">Elige una imagen</label>
+                        </div>
+                      </div>
+      
+                    </div>
+                  </div>
+      
+      
+                  <div class="row mt-3">
+                    <div class="col text-right">
+                      <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="agregarImgSecundaria()">
+                        Aceptar
+                      </button>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+          </div>
+          </div>
+  
+    </div>
+    
+  </ng-template>

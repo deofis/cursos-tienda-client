@@ -5,6 +5,8 @@ import { ProductoService } from '../../producto.service';
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -18,14 +20,21 @@ export class ProductEditComponent implements OnInit {
   formEditarPrecio: FormGroup;
   formEditarDisponibilidad: FormGroup;
   formEditarImagenPrincipal: FormGroup;
+  formNuevaImagenSecundaria: FormGroup;
 
   imageSrc: string;
+  imageSrcSecundaria: string;
+
+  numeroDeRepeticionesPlus:number; 
 
   constructor( private productoService: ProductoService,
                private fb: FormBuilder,
-               private snackBar: MatSnackBar ) { }
+               private snackBar: MatSnackBar,
+               private modalService: NgbModal ) { }
 
   ngOnInit(): void {
+
+    this.numeroDeRepeticionesPlus = 5 - this.producto.imagenes.length 
 
     console.log(this.producto);
     
@@ -42,6 +51,8 @@ export class ProductEditComponent implements OnInit {
     if (this.producto.foto) {
       this.imageSrc = this.producto.foto.imageUrl;
     };
+
+    this.crearFormImgSecundaria();
 
   };
 
@@ -317,6 +328,87 @@ export class ProductEditComponent implements OnInit {
   openSnackBar(message: string, action:string){
     this.snackBar.open(message, action, {duration: 3500, panelClass: ['snackPerfil']})
   };
+
+  
+  //Lógica agregar img secundaria a producto base
+
+  crearFormImgSecundaria(){
+    this.formNuevaImagenSecundaria = this.fb.group({
+      file: [''],
+      fileSource:['']
+    })
+  };
+
+  onSecundariaChange(event) {
+    const reader = new FileReader();
+    
+    
+    
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+        
+   
+        this.imageSrcSecundaria = reader.result as string;
+     
+        this.formNuevaImagenSecundaria.patchValue({
+          fileSource: event.target.files[0]
+        });
+
+       
+        
+   
+      };
+   
+    }
+  };
+
+  agregarImgSecundaria(){
+
+    if (this.formNuevaImagenSecundaria.invalid) {
+
+      return Object.values(this.formNuevaImagenSecundaria.controls).forEach(control => {
+
+        if (control instanceof FormGroup) {
+          Object.values(control.controls).forEach(control => control.markAsTouched());
+        } else {
+          control.markAsTouched();
+        }
+      });
+    };
+
+
+    this.productoService.subirFotoSecundariaProducto(this.formNuevaImagenSecundaria.controls.fileSource.value, this.producto.id).subscribe( resp => {
+      console.log(resp);
+      this.producto.imagenes.push(resp.foto);
+      this.formNuevaImagenSecundaria.reset();
+      this.imageSrcSecundaria = null;
+      
+    });
+
+
+
+  };
+
+  open(contenido){
+    
+    this.modalService.open(contenido, { centered: true, scrollable: true});
+
+  };
+
+  actualizarProductoAEditar(){
+    this.productoService.getProducto(this.producto.id).subscribe(resp => {
+      this.producto = resp.producto;
+      this.numeroDeRepeticionesPlus = 5 - this.producto.imagenes.length;
+    })
+  };
+
+  counter(i: number) {
+    return new Array(i);
+}
+
 
 
 

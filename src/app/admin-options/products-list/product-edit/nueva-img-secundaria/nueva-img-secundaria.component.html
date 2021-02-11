@@ -1,0 +1,68 @@
+
+
+<div class="col mb-4 imageResalt">
+    <div class="card imageResalt" style="width: 60px; height: 60px;">
+        <i class="fas fa-plus fa-3x  mx-auto mt-md-2" style="color: #1f4e84;" (click)="open(secundaria)"></i>
+        <!-- <img src="..." class="card-img-top mx-auto" style="width: 60px; height: auto;" (click)="open(secundaria)"> -->
+        <!-- <div class="card-body">
+            <div class="row text-center">
+                <div class="col-6">
+                    <button class="btn btn-block btn-sm btn-secondary" style="border: none;" (click)="eliminarImagenSecundaria()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-block btn-sm btn-primary" style="background-color: #1f4e84; border: none;" (click)="open(content)">
+                        <i class="far fa-edit"></i>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+
+
+
+
+<ng-template #secundaria let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Nueva imagen secundaria</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+        <div class="container">
+            <div class="col mb-4">
+              <div class="card">
+                <img [src]="imageSrcSecundaria ? imageSrcSecundaria : '../../../../assets/imagenes/noimage.png'" class="card-img-top mx-auto mt-1" alt="..." style="width: 150px; height: auto;">
+                <div class="card-body" [formGroup]="formNuevaImagenSecundaria">
+                  <div class="row">
+                    <div class="col">
+      
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                 formControlName="file" (change)="onSecundariaChange($event)">
+                          <label class="custom-file-label">Elige una imagen</label>
+                        </div>
+                        <div class="input-group-append" for="inputGroupFile04">
+                          <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="agregarImgSecundaria(modal)" 
+                                  type="button" id="inputGroupFileAddon04"><i class="fas fa-check"></i></button>
+                        </div>
+                      </div>
+      
+                    </div>
+                  </div>
+      
+      
+                </div>
+              </div>
+          </div>
+          </div>
+  
+    </div>
+    
+</ng-template>

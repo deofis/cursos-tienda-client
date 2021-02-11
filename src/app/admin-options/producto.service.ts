@@ -123,6 +123,12 @@ export class ProductoService {
     }))
   };
 
+  getProducto(idProducto: number){
+    return this.http.get(`${this.url}/productos/${idProducto}`).pipe(map((resp: any) => {
+      return resp;
+    }))
+  };
+
   //Métodos de edición de productos
 
   actualizarDatosProducto(producto: Producto){
@@ -170,6 +176,37 @@ export class ProductoService {
       return resp;
     }))
   };
+
+
+  //Imagenes secundarias
+
+  obtenerFotosSecundariasProducto(idProducto: number){
+    return this.http.get(`${this.url}/productos/${idProducto}/fotos`).pipe(map((resp: any) => {
+      return resp;
+    }))
+  };
+
+  subirFotoSecundariaProducto(foto: File, idProducto: any){
+
+    let formData = new FormData();
+    formData.append("foto", foto);
+    formData.append("id", idProducto);
+
+    return this.http.post(`${this.url}/productos/${idProducto}/fotos`, formData).pipe(map((resp: any) => {
+      return resp;
+    }))
+  };
+
+
+  eliminarFotoSecundaria(idProducto: number, idImagenSec: number){
+    return this.http.delete(`${this.url}/productos/${idProducto}/fotos/${idImagenSec}`).pipe(map((resp: any) => {
+      return resp
+    }))
+  };
+
+  editarFotosSecundaria(idProducto: number, idImagenSec: number){
+    /// Esperando respuesta de eze.
+  }
 
  
 
