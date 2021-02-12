@@ -212,16 +212,19 @@ irAPagar(){
   }
 
   subtotalComprarAhora(){
-    if (this.skuComprarAhora.promocion!==null) {
-      if (this.skuComprarAhora.promocion.estaVigente) {
-        this.subtotal = this.cantidad * this.skuComprarAhora.promocion.precioOferta
+    if (this.skuComprarAhora!==undefined) {
+      if (this.skuComprarAhora.promocion!==null) {
+        if (this.skuComprarAhora.promocion.estaVigente) {
+          this.subtotal = this.cantidad * this.skuComprarAhora.promocion.precioOferta
+        }else{
+          this.subtotal = this.cantidad * this.skuComprarAhora.precio
+  
+        }
       }else{
-        this.subtotal = this.cantidad * this.skuComprarAhora.precio
-
+        this.subtotal= this.cantidad * this.skuComprarAhora.precio
       }
-    }else{
-      this.subtotal= this.cantidad * this.skuComprarAhora.precio
     }
+   
   }
 
   ///////////////////////////////

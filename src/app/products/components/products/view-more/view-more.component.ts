@@ -95,7 +95,6 @@ modalInicio:boolean;
   ngOnInit(): void {
     this.getProduct();
     this.getPropiedadesProducto();
-    this.cantidadSeleccionada=1
    
    
     // cambio de muestra de imagenes
@@ -121,6 +120,23 @@ modalInicio:boolean;
      })
   }
 
+  cantidad(){
+    console.log("calculado cantidas")
+    console.log(this.skuAEnviar)
+    if (this.skuAEnviar!== null) {
+      if (this.skuAEnviar.disponibilidad==0) {
+        this.cantidadSeleccionada=0;
+        this.openSnackBarNoDisponible();
+      }
+      else{
+        this.cantidadSeleccionada=1
+      }
+    }else{
+      this.cantidadSeleccionada= 0
+
+    }
+    
+  }
   /**
    * Valida que el usuario posea el rol para poder visualizar el recurso solicitado.
    * @param role string rol requerido para mostrar el recurso.
@@ -314,18 +330,13 @@ modalInicio:boolean;
         if ( JSON.stringify(a) == JSON.stringify(b)) {
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
-            console.log(this.idSkuAEnviar);
           
               // con el id llamo a ese sku para luego enviarlo al servicio
             this.productoService.getSku(this.infoProducto.id, this.idSkuAEnviar).subscribe( response => {
             this.skuAEnviar=response;  
             console.log(this.skuAEnviar)  
-            if (this.skuAEnviar.disponibilidad===0) {
-              this.openSnackBarNoDisponible();
-               let btnCarrito = document.getElementById("btn-carrito") as HTMLButtonElement;
-               btnCarrito.disabled=true
-               document.getElementById("cantidad").style.display="none"
-           }       
+            this.cantidad();
+                  
             })
             break;
          }      
@@ -416,7 +427,7 @@ sumarUnidad(){
  
 }
 restarUnidad(){
-  if (this.cantidadSeleccionada !==1) {
+  if (this.cantidadSeleccionada !==1 && this.cantidadSeleccionada !==0) {
     ///  si es distinto de uno le resto uno y evaluo nuevamente, si esunocambio el estilo del boton
     this.cantidadSeleccionada=this.cantidadSeleccionada-1;
     document.getElementById("sumar").style.opacity="1";

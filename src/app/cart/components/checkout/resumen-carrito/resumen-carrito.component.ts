@@ -72,7 +72,7 @@ export class ResumenCarritoComponent implements OnInit ,  OnDestroy{
   crearItemComprarAhora(){
     // si existe, seteo el item y la cantidad
     console.log(this.skuComprarAhora)
-    if (this.skuComprarAhora !==undefined || this.skuComprarAhora !== null) {
+    if (this.skuComprarAhora !==undefined ) {
       this.itemComprarAhora.sku=this.skuComprarAhora;
       this.itemComprarAhora.cantidad=this.cantidadComprarAhora;
       // y el subtotal en nbase a si tiene promo o no 

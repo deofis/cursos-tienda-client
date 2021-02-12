@@ -6,9 +6,12 @@
 
             <div class="cant-nombre">
                 <div class="ppal">
-                    <img *ngIf="!item?.sku.producto.foto" src="../../../../../assets/imagenes/noimage.png" alt=""
+                    <img *ngIf="item.sku.defaultProducto!==null && item.sku.defaultProducto.foto !==null " src="{{item.sku.defaultProducto.foto?.imageUrl}}" alt="item compra" style="width: 30px; height: 30px;" />
+                    <img *ngIf="item.sku.defaultProducto!==null && item.sku.defaultProducto.foto ==null" src="../../../../assets/imagenes/noimage.png" alt="item compra" style="width: 30px; height: 30px;" />
+
+                    <img *ngIf="item.sku.defaultProducto ==null && !item?.sku.producto.foto" src="../../../../../assets/imagenes/noimage.png" alt=""
                         style="width: 30px; height: 30px;">
-                    <img *ngIf="item?.sku.producto.foto" src="{{item?.sku.producto.foto.imageUrl}}" alt=""
+                    <img *ngIf="item.sku.defaultProducto ==null && item?.sku.producto.foto" src="{{item?.sku.producto.foto.imageUrl}}" alt=""
                         style="width: 30px; height: 30px;">
 
                     <span>{{ (item?.sku.nombre.length>25) ? (item?.sku.nombre | slice:0:25)+'...' :
@@ -50,9 +53,12 @@
 
             <div class="cant-nombre">
                 <div class="ppal">
-                    <img *ngIf="!itemComprarAhora?.sku.producto.foto" src="../../../../../assets/imagenes/noimage.png" alt=""
+                    <img *ngIf="itemComprarAhora?.sku.defaultProducto!==null && itemComprarAhora?.sku.defaultProducto.foto !==null " src="{{itemComprarAhora.sku.defaultProducto.foto?.imageUrl}}" alt="item compra" style="width: 30px; height: 30px;" />
+                    <img *ngIf="itemComprarAhora?.sku.defaultProducto!==null && itemComprarAhora?.sku.defaultProducto.foto ==null" src="../../../../assets/imagenes/noimage.png" alt="item compra" style="width: 30px; height: 30px;" />
+
+                    <img *ngIf="itemComprarAhora?.sku.defaultProducto ==null && !itemComprarAhora?.sku.producto.foto" src="../../../../../assets/imagenes/noimage.png" alt=""
                         style="width: 30px; height: 30px;">
-                    <img *ngIf="itemComprarAhora?.sku.producto.foto" src="{{itemComprarAhora?.sku.producto.foto.imageUrl}}" alt=""
+                    <img *ngIf="itemComprarAhora?.sku.defaultProducto ==null && itemComprarAhora?.sku.producto.foto" src="{{itemComprarAhora?.sku.producto.foto.imageUrl}}" alt=""
                         style="width: 30px; height: 30px;">
 
                     <span>{{ (itemComprarAhora?.sku.nombre.length>25) ? (itemComprarAhora?.sku.nombre | slice:0:25)+'...' :

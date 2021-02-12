@@ -89,9 +89,9 @@
                     <hr>
                     <p>Costo de envío se informará al realizar la operación.</p>
                     <button mat-button (click)="agregarCarrito(skuAEnviar); openSnackBar();  resetSeleccion()"
-                        class="btn" [disabled]="!skuAEnviar" id="btn-carrito">Agregar al
+                        class="btn" [disabled]="!skuAEnviar || skuAEnviar?.disponibilidad==0" id="btn-carrito">Agregar al
                         Carrito</button>
-                    <button mat-button (click)="openModal(comprarAhora)" class="btn"  [disabled]="!skuAEnviar" 
+                    <button mat-button (click)="openModal(comprarAhora)" class="btn"  [disabled]="!skuAEnviar || skuAEnviar?.disponibilidad==0" 
                         id="btn-comprar">Comprar
                         ahora</button>
                 </div>
