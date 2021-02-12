@@ -89,7 +89,7 @@ export class ImgSecundariasComponent implements OnInit {
   };
 
 
-  editarImgSecundaria(){
+  editarImgSecundaria(contenido){
 
     if (this.formEditarImgSecundaria.invalid) {
 
@@ -102,6 +102,17 @@ export class ImgSecundariasComponent implements OnInit {
         }
       });
     };
+
+    this.ProductoService.editarFotosSecundaria(this.producto.id, this.imagen.id, this.formEditarImgSecundaria.controls.fileSource.value)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.propagar.emit();
+        this.formEditarImgSecundaria.reset();
+        this.imgSrc = null;
+        contenido.dismiss();
+        this.openSnackBar('Imagen secundaria editada con éxito', null);
+        
+      });
 
   };
 

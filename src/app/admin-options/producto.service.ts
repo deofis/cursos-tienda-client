@@ -204,9 +204,16 @@ export class ProductoService {
     }))
   };
 
-  editarFotosSecundaria(idProducto: number, idImagenSec: number){
-    /// Esperando respuesta de eze.
-  }
+  editarFotosSecundaria(idProducto: number, idImagenSec: number, foto: File){
+    
+    let formData = new FormData();
+    formData.append('foto', foto)
+
+    return this.http.put(`${this.url}/productos/${idProducto}/fotos/${idImagenSec}`, formData).pipe(map((resp: any) => {
+      return resp;
+    }))
+
+  };
 
  
 
