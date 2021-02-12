@@ -490,9 +490,7 @@ restarUnidad(){
 openModal(comprarAhora){
   this.modal.open(comprarAhora,{centered:true, size: 'xl', scrollable: true})
 }
-enviarInfoComprarAhora(skuAEnviar:Sku){
 
-}
 /////////////////////////////
   /////**** ALERTAS ***/////
   // prod agregado al carrito

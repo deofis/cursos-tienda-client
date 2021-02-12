@@ -1,5 +1,6 @@
-<div class="row  summary">
-    <h2>Resumen de compra</h2>
+<!-- RESUMEN DEL CARRITO -->
+<div class="row  summary" *ngIf="skuComprarAhora ==undefined">
+    <h2>Resumen de compra carrito</h2>
     <div class="cont-detalle-compra">
         <div class="detalle-compra" *ngFor="let item of carrito?.items">
 
@@ -10,7 +11,8 @@
                     <img *ngIf="item?.sku.producto.foto" src="{{item?.sku.producto.foto.imageUrl}}" alt=""
                         style="width: 30px; height: 30px;">
 
-                    <span>{{ (item?.sku.nombre.length>25) ? (item?.sku.nombre | slice:0:25)+'...' : (item?.sku.nombre)}}</span>
+                    <span>{{ (item?.sku.nombre.length>25) ? (item?.sku.nombre | slice:0:25)+'...' :
+                        (item?.sku.nombre)}}</span>
                 </div>
                 <div class="info">
                     <span id="cantidad">{{item?.cantidad }}U.</span>
@@ -38,3 +40,48 @@
     </div>
     <!-- <button [routerLink]="['/pre-checkout']">Continuar</button> -->
 </div>
+<!-- FIN RESUMEN DEL CARRITO  -->
+
+<!-- RESUMEN DE COMPRAR AHORA -->
+<div class="row  summary" *ngIf="skuComprarAhora!==undefined">
+    <h2>Resumen de compra</h2>
+    <div class="cont-detalle-compra">
+        <div class="detalle-compra">
+
+            <div class="cant-nombre">
+                <div class="ppal">
+                    <img *ngIf="!itemComprarAhora?.sku.producto.foto" src="../../../../../assets/imagenes/noimage.png" alt=""
+                        style="width: 30px; height: 30px;">
+                    <img *ngIf="itemComprarAhora?.sku.producto.foto" src="{{itemComprarAhora?.sku.producto.foto.imageUrl}}" alt=""
+                        style="width: 30px; height: 30px;">
+
+                    <span>{{ (itemComprarAhora?.sku.nombre.length>25) ? (itemComprarAhora?.sku.nombre | slice:0:25)+'...' :
+                        (itemComprarAhora?.sku.nombre)}}</span>
+                </div>
+                <div class="info">
+                    <span id="cantidad">{{itemComprarAhora?.cantidad }}U.</span>
+                    <span>{{itemComprarAhora?.sku.valoresData}}</span>
+                </div>
+
+            </div>
+            <span *ngIf="!itemComprarAhora.sku.promocion?.estaVigente" class="item-price">€{{itemComprarAhora?.sku.precio | number:
+                '.0-2'}}</span>
+            <span *ngIf="itemComprarAhora.sku.promocion?.estaVigente" class="item-price">€{{itemComprarAhora?.sku.promocion.precioOferta |
+                number:
+                '.0-2'}}</span>
+        </div>
+    </div>
+    <span id="linea-sep"></span>
+    <div id="subtotal-summary">
+        <span>Subtotal:</span> 
+        <span >€{{subtotalComprarAhora | number:'.0-2'}}</span>
+    </div>
+    <div class="envio-costo" id="costo-envio">
+        <span>Costo de Envío:</span> <span>€{{costoDeEnvio | number: '.0-2'}}</span>
+    </div>
+    <div id="total-summary"><span>Total:</span> <span>€{{subtotalComprarAhora | number:'.0-2'}}</span> </div>
+    <div class="coupon">
+        <i class="fas fa-ticket-alt"></i> <span>¿Tenés un cupón de descuento?</span>
+    </div>
+</div>
+<!-- FIN RESUMEN COMPRAR AHORA -->

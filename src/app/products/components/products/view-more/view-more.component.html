@@ -91,7 +91,7 @@
                     <button mat-button (click)="agregarCarrito(skuAEnviar); openSnackBar();  resetSeleccion()"
                         class="btn" [disabled]="!skuAEnviar" id="btn-carrito">Agregar al
                         Carrito</button>
-                    <button mat-button (click)="openModal(comprarAhora);enviarInfoComprarAhora(skuAEnviar)" class="btn"  [disabled]="!skuAEnviar" 
+                    <button mat-button (click)="openModal(comprarAhora)" class="btn"  [disabled]="!skuAEnviar" 
                         id="btn-comprar">Comprar
                         ahora</button>
                 </div>
@@ -105,7 +105,7 @@
                         </button>
                     </div>        
                     <div class="modal-body " style="display: flex; justify-content: center; align-items: center;">
-                        <app-buy-now></app-buy-now>
+                        <app-buy-now [skuComprarAhora]="skuAEnviar" [cantidad]="cantidadSeleccionada"></app-buy-now>
                     </div>
                 </ng-template>
                 <!-- FIN DE COMPRAR AHORA MODAL -->

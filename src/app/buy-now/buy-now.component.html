@@ -3,11 +3,19 @@
         <mat-icon>done</mat-icon>
     </ng-template>
 
-    <mat-step label="Checkout"  [completed]="step2Completo">
-        <app-checkout   [mostrarResumen]="true" [mostrarCheckout]="true" ></app-checkout>
+    <mat-step label="Checkout" >
+        <app-checkout   [mostrarResumen]="mostrarResumen"[skuComprarAhora]="skuComprarAhora" [cantidad]="cantidad" ></app-checkout>
     </mat-step>
 
     <mat-step label="Confirmación"  >
-        <app-confirm-data *ngIf="mostrarConfirmacion" [clienteDireccion]="clienteDireccion" [entrega]="entrega" [pago]="pago"></app-confirm-data>
+        <app-confirm-data [clienteDireccion]="clienteDireccion" [entrega]="entrega" [pago]="pago" [skuComprarAhora]="skuComprarAhora"  [cantidad]="cantidad"></app-confirm-data>
     </mat-step>
 </mat-horizontal-stepper>
+
+<!-- <mat-step label="Checkout"  [completed]="step2Completo">
+    <app-checkout   [mostrarResumen]="true" [mostrarCheckout]="true" ></app-checkout>
+</mat-step>
+
+<mat-step label="Confirmación"  >
+    <app-confirm-data *ngIf="mostrarConfirmacion" [clienteDireccion]="clienteDireccion" [entrega]="entrega" [pago]="pago"></app-confirm-data>
+</mat-step> -->
