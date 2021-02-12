@@ -6,6 +6,19 @@
                 <img id="img-ppal" [src]="url">
                 <img id="no-img" src="../../../../assets/imagenes/noimage.png">
 
+                <div class="row mt-2 imageResalt" style="margin-left: 3px;">
+                    <app-img-secundarias *ngFor="let imagen of newProduct.imagenes" 
+                        [imagen]="imagen" 
+                        [producto]="newProduct" 
+                        (propagar)="actualizarImagenesSecundariasProducto()">
+                    </app-img-secundarias>
+                    <app-nueva-img-secundaria 
+                        [producto]="newProduct" 
+                        (propagar)="actualizarImagenesSecundariasProducto()"
+                        *ngFor='let in of counter(numeroDeRepeticionesPlus)'>
+                    </app-nueva-img-secundaria>
+                </div>
+
             </div>
             <div class="row info">
                 <p class="nombre-prod">{{newProduct?.nombre}}</p>
