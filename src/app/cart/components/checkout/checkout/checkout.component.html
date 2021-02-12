@@ -1,6 +1,6 @@
-<div class="container-fluid" id="contai">
-    <div class="row">
-        <div class="col-12 col-md-7 col-lg-7 offset-lg-1 container-left">
+<div  id="contai">
+ 
+        <div class=" container-left">
             <div class="row">
                 <div class="col">
                     <h2>Forma de entrega y pago </h2>
@@ -334,14 +334,14 @@
             </form>
             <!-- <span>Debe  seleccionar una forma de entrega y pago antes de continuar.</span> -->
         </div>
-        <div class="col-12 col-md-5 col-lg-4 offset-lg-1 container-right">
-            <app-resumen-carrito  *ngIf="mostrarResumen"></app-resumen-carrito>
+        <div class="container-right">
+            <app-resumen-carrito  *ngIf="mostrarResumen" [skuComprarAhora]="skuComprarAhora" [cantidadComprarAhora]="cantidad"></app-resumen-carrito>
             <div class="cont-botones">
                 <button mat-button matStepperPrevious class="btn" (click)="cerrarComponente()">Atrás</button>
                 <button mat-button matStepperNext  class="btn" id="btn-continuar"
                     *ngIf="llegoCarrito" [disabled]="!formValido" (click)="guardarDatos()">Continuar</button>
             </div>
         </div>
-    </div>
+  
     
 </div>

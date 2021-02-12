@@ -20,13 +20,16 @@
                     {{clienteDireccion?.pais.nombre}} 
                     -  CP: {{clienteDireccion?.codigoPostal}} </span></p>
            <!-- <p class="campo" *>Dirección de Entrega: <span> Av. Calle XXXX, Barcelona,Cataluña.</span></p> -->
-            <p class="total">Total : <span> €{{carrito?.total + costoDeEnvio | number: '.0-2'}}</span></p>
+            <p class="total" *ngIf="skuComprarAhora==undefined">Total : <span> €{{carrito?.total + costoDeEnvio | number: '.0-2'}}</span></p>
+            <p class="total" *ngIf="skuComprarAhora!==undefined">Total : <span> €{{subtotal | number: '.0-2'}}</span></p>
+
         </div>
        
     </div>
     <div class="buttons">
     <button mat-button matStepperPrevious class="btn" id="btn-edit" (click)="cerrarComponente()">Editar</button>
-    <button  mat-button *ngIf="entrega && clienteDireccion && pago && carrito"  class="btn" id="btn-confirm"(click)="irAPagar()">Ir a pagar</button>
+    <button  mat-button *ngIf="entrega && clienteDireccion && pago && carrito && skuComprarAhora==undefined"  class="btn" id="btn-confirm"(click)="irAPagar()">Ir a pagar</button>
+    <button  mat-button *ngIf="entrega && clienteDireccion && pago && carrito && skuComprarAhora!==undefined"  class="btn" id="btn-confirm"(click)="irAPagarYa()">Ir a pagar</button>
 
 </div>
 </section>

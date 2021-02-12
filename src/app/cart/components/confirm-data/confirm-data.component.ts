@@ -14,6 +14,8 @@ import { Operacion } from 'src/app/admin-options/admin-ventas/clases/Operacion';
 import { DetalleCarrito } from '../../clases/detalle-carrito';
 import Swal from "sweetalert2";
 import { Router } from '@angular/router';
+import { OperacionRequest } from 'src/app/admin-options/admin-ventas/clases/operacionRequest';
+import { Sku } from 'src/app/products/clases/sku';
 
 @Component({
   selector: 'app-confirm-data',
@@ -37,7 +39,11 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
   items:DetalleOperacion[];
   item:DetalleOperacion ;
 
-
+  /// comprar ya
+  operacionComprarYa:OperacionRequest;
+  @Input() skuComprarAhora:Sku;
+  @Input() cantidad:number;
+  subtotal:number
   constructor(private perfilClienteService:PerfilClienteService,
               private authService: AuthService,
               private enviarInfoCompra:EnviarInfoCompraService,
@@ -47,6 +53,7 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
                 this.item = new DetalleOperacion();
                 this.items = new Array<DetalleOperacion>();
                 this.operacion = new Operacion();
+                this.operacionComprarYa = new OperacionRequest();
                }
 
   ngOnInit(): void {
@@ -55,13 +62,13 @@ export class ConfirmDataComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         console.log(this.clienteDireccion)
       }, 1000); 
-     
+      this.subtotalComprarAhora();
       // this.carritoService.refreshNeeded$
       // .subscribe(()=>{
       //   this.getCarrito();
       // })
      }
-
+     
      
   ngOnDestroy():void{
   }
@@ -159,5 +166,67 @@ irAPagar(){
     let btnEdit= document.getElementById("btn-edit") as HTMLButtonElement;
     btnEdit.disabled=true;
   }
+
+///////////// COMPRAR AHORA //////////
+  irAPagarYa(){
+    ////mdio de pago
+    this.operacionComprarYa.medioPago=this.pago;
+    /// direccion de envio
+    let direccion =new Direccion();
+    direccion.calle=this.clienteDireccion?.calle;
+    direccion.ciudad=this.clienteDireccion?.ciudad;
+    direccion.codigoPostal=this.clienteDireccion?.codigoPostal;
+    direccion.numeroCalle=this.clienteDireccion?.numeroCalle;
+    direccion.piso=this.clienteDireccion?.piso;
+
+    this.operacionComprarYa.direccionEnvio=direccion;
+    //// item 
+    let itemComprarYa = new DetalleOperacion();
+    itemComprarYa.sku=this.skuComprarAhora;
+    itemComprarYa.cantidad=this.cantidad;
+    this.operacionComprarYa.item=itemComprarYa
+
+
+    console.log(this.operacionComprarYa);
+     /// registro la operacion
+     this.checkoutService.registrarNuevaOperacionComprarYa(this.operacionComprarYa).subscribe( response => {
+    const infoPago= response.pago;
+    console.log(infoPago);
+    /// evaluo si el metodo de pago es paypal, abro el fm paypal
+    if(this.operacionComprarYa.medioPago.id !==1){
+      window.open(infoPago.approveUrl, "_self");
+    } else { /// si no lo es, abro el de efvo
+      const url = this.router.serializeUrl( this.router.createUrlTree([`cash/approved`]));
+      window.open(url, "_self");
+    }
+   }, err => {
+     alert(err.error.error);
+    console.log(err);
+    });
+
+    //// deshabilito los botones para q no puedan volver a realizar la misma compra o editarla
+    let btnConfirm= document.getElementById("btn-confirm") as HTMLButtonElement;
+    btnConfirm.disabled=true;
+    let btnEdit= document.getElementById("btn-edit") as HTMLButtonElement;
+    btnEdit.disabled=true;
+  }
+
+  subtotalComprarAhora(){
+    if (this.skuComprarAhora!==undefined) {
+      if (this.skuComprarAhora.promocion!==null) {
+        if (this.skuComprarAhora.promocion.estaVigente) {
+          this.subtotal = this.cantidad * this.skuComprarAhora.promocion.precioOferta
+        }else{
+          this.subtotal = this.cantidad * this.skuComprarAhora.precio
+  
+        }
+      }else{
+        this.subtotal= this.cantidad * this.skuComprarAhora.precio
+      }
+    }
+   
+  }
+
+  ///////////////////////////////
 }
 

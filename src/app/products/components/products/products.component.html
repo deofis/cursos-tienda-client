@@ -55,6 +55,9 @@
                     <img id="img-cat" src="{{categoria.foto?.imageUrl}}" alt="foto-categoria">
 
                     <h3>{{categoria.nombre}}</h3>
+                    <div class="subcategories-list">
+                        <p id="subcategoria" *ngFor="let subcategoria of categoria.subcategorias" (click)="buscarProducto(subcategoria.nombre)"> {{subcategoria.nombre}}</p>
+                    </div>
                 </div>
             </div>
         </div>

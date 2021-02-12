@@ -18,6 +18,11 @@ import { MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPo
 import {MatSelectModule} from  '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Categoria } from 'src/app/products/clases/categoria';
+import { FavoritosService } from 'src/app/user-options/favoritos.service';
+import { Favorito } from 'src/app/products/clases/favorito';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/admin-options/admin-promos/data.service';
 
 @Component({
   selector: 'app-view-more',
@@ -59,14 +64,25 @@ export class ViewMoreComponent implements OnInit {
 
 
  /// rol de usuario 
+ estaLogueado: boolean;
+ userEmail: string;
+ 
+///carrito
+ esFavorito:boolean;
+  favoritos:Favorito[]=[];
 
+subscripcionModal : Subscription;
+modalInicio:boolean;
   constructor(private catalogoservice:CatalogoService,
               private activatedroute:ActivatedRoute,
               private _cartService:MockCartService,
               private Router:Router,
               private enviarInfoCompra:EnviarInfoCompraService,
               private carritoService: CarritoService,
+              public modal: NgbModal,
+              private dataService:DataService,
               private productoService:ProductoService,
+              private favoritosService:FavoritosService,
               private snackBar:MatSnackBar,
               private authService: AuthService) {
     this.stock = true;
@@ -79,7 +95,6 @@ export class ViewMoreComponent implements OnInit {
   ngOnInit(): void {
     this.getProduct();
     this.getPropiedadesProducto();
-    this.cantidadSeleccionada=1
    
    
     // cambio de muestra de imagenes
@@ -95,6 +110,46 @@ export class ViewMoreComponent implements OnInit {
     // destacado
     this.destacadosInsignia();
    
+    this.verificarSesion();
+
+    this.getFavoritos();
+
+    this.subscripcionModal=this.dataService.modalInicioSesion$.subscribe(resp=> {
+      this.modalInicio=resp;
+       
+     })
+  }
+
+  cantidad(){
+    console.log("calculado cantidas")
+    console.log(this.skuAEnviar)
+    if (this.skuAEnviar!== null) {
+      if (this.skuAEnviar.disponibilidad==0) {
+        this.cantidadSeleccionada=0;
+        this.openSnackBarNoDisponible();
+      }
+      else{
+        this.cantidadSeleccionada=1
+      }
+    }else{
+      this.cantidadSeleccionada= 0
+
+    }
+    
+  }
+  /**
+   * Valida que el usuario posea el rol para poder visualizar el recurso solicitado.
+   * @param role string rol requerido para mostrar el recurso.
+   */
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
+  verificarSesion(): void {
+    this.authService.loggedIn.subscribe(resp => this.estaLogueado = resp);
+    this.estaLogueado = this.authService.isLoggedIn();
+
+    this.authService.useremail.subscribe(resp => this.userEmail = resp);
+    this.userEmail = this.authService.getEmailUser();
   }
   ///// obtengo el producto, sus skus  y sus propiedades para mostrar los combobox
   getProduct(){
@@ -275,18 +330,13 @@ export class ViewMoreComponent implements OnInit {
         if ( JSON.stringify(a) == JSON.stringify(b)) {
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
-            console.log(this.idSkuAEnviar);
           
               // con el id llamo a ese sku para luego enviarlo al servicio
             this.productoService.getSku(this.infoProducto.id, this.idSkuAEnviar).subscribe( response => {
             this.skuAEnviar=response;  
             console.log(this.skuAEnviar)  
-            if (this.skuAEnviar.disponibilidad===0) {
-              this.openSnackBarNoDisponible();
-               let btnCarrito = document.getElementById("btn-carrito") as HTMLButtonElement;
-               btnCarrito.disabled=true
-               document.getElementById("cantidad").style.display="none"
-           }       
+            this.cantidad();
+                  
             })
             break;
          }      
@@ -377,7 +427,7 @@ sumarUnidad(){
  
 }
 restarUnidad(){
-  if (this.cantidadSeleccionada !==1) {
+  if (this.cantidadSeleccionada !==1 && this.cantidadSeleccionada !==0) {
     ///  si es distinto de uno le resto uno y evaluo nuevamente, si esunocambio el estilo del boton
     this.cantidadSeleccionada=this.cantidadSeleccionada-1;
     document.getElementById("sumar").style.opacity="1";
@@ -391,7 +441,7 @@ restarUnidad(){
 ////
 
 
-//// agregar al carrito y mostrar snackbar 
+//// AGREGAR AL CARRITO ///// 
   agregarCarrito(sku:Sku): void {
     // if localStorage.getItem("carrito")
    if (this.authService.isLoggedIn()) {
@@ -445,6 +495,14 @@ restarUnidad(){
 
   
   }
+////////////////////////////
+
+//// COMPRAR AHORA /////////
+openModal(comprarAhora){
+  this.modal.open(comprarAhora,{centered:true, size: 'xl', scrollable: true})
+}
+
+/////////////////////////////
   /////**** ALERTAS ***/////
   // prod agregado al carrito
   openSnackBar(){
@@ -503,6 +561,8 @@ restarUnidad(){
      });
     }
    }
+
+ 
 ////////////////////////
    mostrarPrecioOferta(){
      if (this.skuAEnviar.promocion) {
@@ -549,4 +609,80 @@ restarUnidad(){
 	window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent("¡Te invito a que veas este producto!" + "  "+ url));
  }
  ////
+ ///// Agregar a Favoritos ///////
+
+getFavoritos(){
+  if (this.authService.hasRole('ROLE_USER')) {
+    this.favoritosService.getFavoritos().subscribe(resp=>{
+      this.favoritos=resp;
+      console.log(this.favoritos);
+      this.marcarFavoritos(this.infoProducto?.id);
+  
+    })
+  }
+ 
+}
+
+marcarFavoritos(id:number){
+  console.log('ejecutando')
+  for (let i = 0; i < this.favoritos.length; i++) {
+    if (this.favoritos[i].producto.id == id) {
+      this.esFavorito=true
+      console.log(this.esFavorito)
+    }
+    
+  }
+}
+administrarFavoritos(id:number){
+  //si estoy logueado
+  if (this.authService.isLoggedIn()) {
+
+    // me fijo si tengo favoritos, los recorro
+    if(this.favoritos.length!==0){
+      //filtro los favoritos, si coincide con el id lo guardo en valor
+      let valor= this.favoritos.filter(favorito=> favorito.producto.id == id)
+      //si valor no tiene nada es porque no hubo coincidencia, entonces lo agrego
+      if(valor.length==0){
+        this.agregarFavorito(id);
+      }else{
+        this.eliminarFavorito(id);
+      }
+     
+    }else{ /// si no tengo favoritos, lo agrego
+      this.agregarFavorito(id);
+      console.log("primer favorito")
+    }
+    
+    
+    
+  }
+}
+ 
+
+eliminarFavorito(id:number){
+  this.favoritosService.eliminarProductoFavorito(id).subscribe(resp =>{
+   this.getFavoritos()
+    console.log("producto quitado de favorito");
+    this.esFavorito=false
+  })
+}
+
+agregarFavorito(id:number){
+  this.favoritosService.agregarProductoFavorito(id).subscribe(resp=>{
+    console.log(resp);
+    this.getFavoritos();
+    this.esFavorito=true;
+    console.log("producto agregado")
+  })
+}
+
+abrirInicioDeSesion(){
+  if (!this.authService.isLoggedIn()) {
+    this.modalInicio=true
+  }
+}
+///////////////////////////////////////////
+
+
+
 }

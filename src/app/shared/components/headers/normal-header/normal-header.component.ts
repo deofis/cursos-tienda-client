@@ -91,9 +91,11 @@ export class NormalHeaderComponent implements OnInit, AfterViewInit {
 
   getCarrito(): void {
     if (this.authService.isLoggedIn()) {
-      this.carritoService.getCarrito().subscribe((response: any) => {
-        this.totalItemsCarrito = response.carrito.items.length;
-      });
+      if (this.authService.hasRole('ROLE_USER')) {
+        this.carritoService.getCarrito().subscribe((response: any) => {
+          this.totalItemsCarrito = response.carrito.items.length;
+        });
+      }
     }else{
       const getlocal = localStorage.getItem("miCarrito");
       this.carrito = JSON.parse(getlocal); 

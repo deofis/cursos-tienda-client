@@ -12,6 +12,16 @@ $color-wf2:#1f4e84;
     padding-right: 10vw;
     padding-left: 10vw;
     .contenedor-form {
+        .fa-times{
+            color: $color-sec;
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            z-index: 5;
+            &:hover{
+                color: rgb(34, 33, 33);
+            }
+        }
         padding-top: 20px;
         padding-bottom: 30px;
         background-color:rgb(246, 242, 242);
@@ -20,6 +30,7 @@ $color-wf2:#1f4e84;
         flex-direction: column;
         align-items: center;
         box-shadow: 2px 4px 10px grey;
+        min-width: 390px;
         .campos-inicio-s {
             margin-left: auto;
             margin-right: auto;

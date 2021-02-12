@@ -18,6 +18,7 @@ import { EnviarInfoCompraService } from 'src/app/user-options/user-profile/servi
 import { Input } from '@angular/core';
 import { PerfilClienteService } from 'src/app/user-options/user-profile/services/perfil-cliente.service';
 import { Subscription } from 'rxjs';
+import { Sku } from 'src/app/products/clases/sku';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -27,6 +28,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   @Input() abriendoStep2:boolean;
   @Input() actualizarCarrito:boolean;
   @Input() mostrarResumen:boolean;
+  @Input() skuComprarAhora:Sku;
+  @Input() cantidad:number;
   carrito: Carrito;
   infoCliente:any;
   totalProductos: number;
@@ -98,14 +101,11 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     this.getPerfilCliente();
     this.getPaises();
     this.crearForm(); 
-    console.log(this.actualizarCarrito)
    
     //// recibo del componente resumen  si llego el carrito para mostrar el bton
     this.subscripcionInfoCompra=this.enviarInfoCompra.llegoCarrito$.subscribe(resp=> {
        this.llegoCarrito=resp;
      })
-  
- 
   }
 
   ngOnDestroy():void{

@@ -9,11 +9,12 @@
                         href="">{{ (infoProducto?.nombre.length>40) ? (infoProducto?.nombre | slice:0:40)+'...' : (infoProducto?.nombre)}} </a></p>
             </div>
             <div class="iconos-detalle-producto">
-                <a title="Agregar a Favoritos"> <i class=" iconos far fa-heart"></i></a>
+                <a title="Agregar a Favoritos"  (click)="administrarFavoritos(infoProducto?.id); abrirInicioDeSesion()"> <i *ngIf="!estaLogueado || hasRole('ROLE_USER')" [ngClass]="{'corazon':esFavorito}"  class=" iconos fas fa-heart"></i></a>
                 <a title="Copiá este link!" (click)="getlink()"> <i class="iconos fas fa-link"></i></a>
-                <a title="Compartí por Whatsapp" (click)="compartirWhatsapp()"><i class="iconos fab fa-whatsapp"></i></a>
+                <a title="Compartí por Whatsapp" (click)="compartirWhatsapp()"><i class="iconos fab fa-whatsapp-square"></i></a>
             </div>
         </div>
+       
         <article class="contenedor-uno">
             <div id="izquierda" class="izquierda">
                 <div id="img-sec" class="img-sec">
@@ -88,14 +89,26 @@
                     <hr>
                     <p>Costo de envío se informará al realizar la operación.</p>
                     <button mat-button (click)="agregarCarrito(skuAEnviar); openSnackBar();  resetSeleccion()"
-                        class="btn" [disabled]="!skuAEnviar" id="btn-carrito">Agregar al
+                        class="btn" [disabled]="!skuAEnviar || skuAEnviar?.disponibilidad==0" id="btn-carrito">Agregar al
                         Carrito</button>
-                    <button mat-button (click)="agregarCarrito(skuAEnviar)" class="btn" disabled
+                    <button mat-button (click)="openModal(comprarAhora)" class="btn"  [disabled]="!skuAEnviar || skuAEnviar?.disponibilidad==0" 
                         id="btn-comprar">Comprar
                         ahora</button>
-
                 </div>
-
+                <!--COMPRAR AHORA MODAL  -->
+                <ng-template #comprarAhora let-modal  >   
+                    <div class="modal-header ">
+                        <h4 class="modalTitle" >
+                            Comprar Ahora</h4>
+                        <button mat-button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>        
+                    <div class="modal-body " style="display: flex; justify-content: center; align-items: center;">
+                        <app-buy-now [skuComprarAhora]="skuAEnviar" [cantidad]="cantidadSeleccionada"></app-buy-now>
+                    </div>
+                </ng-template>
+                <!-- FIN DE COMPRAR AHORA MODAL -->
             </div>
         </article>
         <article class="contenedor-dos">
@@ -127,4 +140,8 @@
 
         </article>
     </section>
+
+    <div class="inciar-sesion" id="iniciar" *ngIf="modalInicio">
+        <app-form-log-in [(modalInicio)]="modalInicio"></app-form-log-in>
+    </div>
 </div>

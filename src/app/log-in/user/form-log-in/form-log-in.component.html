@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 contenedor-form">
+            <i class="fas fa-times" *ngIf="modalInicio" (click)="cerrarInicio()"></i>
             <form id="cont-form" autocomplete="off" [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
                 <!--inicio form iniciar sesion-->
                 <div class="campos-inicio-s row " id="is-uno">
@@ -30,7 +31,7 @@
                         <div class="buttons row">
                             <button type="submit" id="btn-entrar" class="boton">Entrar</button>
                             <button type="button" id="btn-registrar" class="boton"
-                                [routerLink]="['/user-sign-up']">Registrarme</button>
+                                [routerLink]="['/user-sign-up']" (click)="cerrarModales()">Registrarme</button>
 
                         </div>
                     </div>

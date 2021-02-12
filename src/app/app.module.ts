@@ -88,6 +88,8 @@ import { BannersComponent } from './admin-options/web-configuration/banners/bann
 import { BannerIndividualComponent } from './admin-options/web-configuration/banners/banner-individual/banner-individual.component';
 import { ImgSecundariasComponent } from './admin-options/products-list/product-edit/img-secundarias/img-secundarias.component';
 import { NuevaImgSecundariaComponent } from './admin-options/products-list/product-edit/nueva-img-secundaria/nueva-img-secundaria.component';
+import { CardFavoriteComponent } from './user-options/favorites/card-favorite/card-favorite.component';
+import { BuyNowComponent } from './buy-now/buy-now.component';
 
 
 
@@ -156,6 +158,8 @@ import { NuevaImgSecundariaComponent } from './admin-options/products-list/produ
     BannerIndividualComponent,
     ImgSecundariasComponent,
     NuevaImgSecundariaComponent,
+    CardFavoriteComponent,
+    BuyNowComponent,
   ],
   imports: [
     BrowserModule,

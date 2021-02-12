@@ -1,16 +1,16 @@
-
 <div class="items">
   <div>
-    <i class="fas fa-medal" *ngIf="destacado" ></i>
+    <i class="fas fa-medal" *ngIf="destacado"></i>
   </div>
-  
+
   <div class="img-fondo" [routerLink]="['/viewmore',producto.id]">
-  
-    <img *ngIf="tieneFotoPpal" id="fotoprod"  src="{{producto.foto.imageUrl}}" alt="foto-producto">
+
+    <img *ngIf="tieneFotoPpal" id="fotoprod" src="{{producto.foto.imageUrl}}" alt="foto-producto">
     <img *ngIf="!tieneFotoPpal" class="" src="assets/imagenes/noimage.png" alt="" style="width: 60px; height: auto;">
   </div>
   <div class="title-pcio">
-    <h3 [routerLink]="['/viewmore',producto.id]">{{ (producto.nombre.length>40) ? (producto.nombre | slice:0:40)+'...' : (producto.nombre)}}</h3>
+    <h3 [routerLink]="['/viewmore',producto.id]">{{ (producto.nombre.length>40) ? (producto.nombre | slice:0:40)+'...' :
+      (producto.nombre)}}</h3>
 
     <div class="cont-precios">
       <div *ngIf="mostrarPrecioOferta(producto)" class="row-oferta">
@@ -18,20 +18,26 @@
         <p class="off ">{{producto.promocion?.porcentaje * 100 | number:'2.0-0'}}% 0FF</p>
       </div>
       <p class="precio" *ngIf="!mostrarPrecioOferta(producto)">{{producto.precio | currency:'EUR':'symbol'}}</p>
-      <p class="precioOferta" *ngIf="mostrarPrecioOferta(producto)">{{producto.promocion?.precioOferta | currency:'EUR':'symbol'}}</p>
+      <p class="precioOferta" *ngIf="mostrarPrecioOferta(producto)">{{producto.promocion?.precioOferta |
+        currency:'EUR':'symbol'}}</p>
     </div>
 
 
   </div>
   <div *ngIf="producto.skus.length > 0" class="cont-props container">
     <div *ngFor="let prop of propiedadesYValoresUsadosEnSkus[0]; let i=index" class="props">
-      <div style="font-size: 13px;">{{prop.nombre}}:</div>&nbsp;<span *ngFor="let valor of prop.valores">{{valor.valor}}</span>
+      <div style="font-size: 13px;">{{prop.nombre}}:</div>&nbsp;<span
+        *ngFor="let valor of prop.valores">{{valor.valor}}</span>
     </div>
   </div>
   <div *ngIf="producto.skus.length == 0" class="cont-props container">
 
   </div>
-  <div class="i-fondo d-block"><i id="fav" class=" iconos far fa-heart fav" (click)="saveToFav()"></i></div>
+  <div class="i-fondo d-block"><i id="fav" *ngIf="!hasRole('ROLE_ADMIN')" class=" iconos fas fa-heart fav"
+      [ngClass]="{'corazon':esFavorito}" (click)="administrarFavoritos(producto?.id); abrirInicioDeSesion()"></i>
+  </div>
+ 
 </div>
-
-
+<div class="inciar-sesion" id="iniciar" *ngIf="modalInicio">
+  <app-form-log-in [(modalInicio)]="modalInicio"></app-form-log-in>
+</div>

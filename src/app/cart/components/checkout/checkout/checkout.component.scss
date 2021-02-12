@@ -14,6 +14,13 @@ $color-ppal:#fff;
  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
     appearance: none;
  }
+ #contai{
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+     margin-left: auto;
+     margin-right: auto;
+ }
 .is-invalid{
     border-bottom: 1px solid rgb(252, 62, 62);
 }
@@ -35,6 +42,7 @@ $color-ppal:#fff;
 }
 .container-left{
     margin-left: 0px;
+    width: 58%;
     h2{
         font-family: $fte-ppal;
         margin-top: 15px;
@@ -330,11 +338,12 @@ $color-ppal:#fff;
     }
 }
 .container-right{
+    width: 38%;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     height: fit-content;
-    margin-top: 45px;
+    margin-top: 0px;
     .cont-botones{
        margin-top: 50px;
         display: flex;
