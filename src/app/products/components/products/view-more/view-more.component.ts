@@ -628,9 +628,8 @@ marcarFavoritos(id:number){
   for (let i = 0; i < this.favoritos.length; i++) {
     if (this.favoritos[i].producto.id == id) {
       this.esFavorito=true
-      console.log(this.esFavorito)
+      console.log(this.esFavorito);
     }
-    
   }
 }
 administrarFavoritos(id:number){

@@ -9,7 +9,7 @@
                         href="">{{ (infoProducto?.nombre.length>40) ? (infoProducto?.nombre | slice:0:40)+'...' : (infoProducto?.nombre)}} </a></p>
             </div>
             <div class="iconos-detalle-producto">
-                <a title="Agregar a Favoritos"  (click)="administrarFavoritos(infoProducto?.id); abrirInicioDeSesion()"> <i *ngIf="!estaLogueado || hasRole('ROLE_USER')" [ngClass]="{'corazon':esFavorito}"  class=" iconos fas fa-heart"></i></a>
+                <a title="Agregar a Favoritos"  (click)="administrarFavoritos(infoProducto?.id); abrirInicioDeSesion()"> <i id="cora" *ngIf="!estaLogueado || hasRole('ROLE_USER')" [ngClass]="{'corazon':esFavorito}"  class=" iconos fas fa-heart"></i></a>
                 <a title="Copiá este link!" (click)="getlink()"> <i class="iconos fas fa-link"></i></a>
                 <a title="Compartí por Whatsapp" (click)="compartirWhatsapp()"><i class="iconos fab fa-whatsapp-square"></i></a>
             </div>
