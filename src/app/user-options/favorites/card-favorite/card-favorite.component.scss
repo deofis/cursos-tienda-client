@@ -10,6 +10,18 @@ $color-wf1:#223e66;
 $color-wf2:#1f4e84;
 $color-wf3:#2779cd;
 
+/* estilos de snackbar*/
+.mat-snack-bar-container{
+    background-color:$color-wf2!important;
+    color:white !important;
+    margin-top: 90px !important;
+    font-family: $fte-sec !important;
+    width: 270px !important;
+    min-width: unset !important;
+    opacity: 0.9  !important;
+  }
+  ///
+
  li {
     display: grid;
     grid-template-columns: 15% 35% 15% 30% 5%;
@@ -39,8 +51,11 @@ $color-wf3:#2779cd;
         .item-name {
             font-size: 20px;
             &:hover {
-                color: $color-sec;
+                color: $color-wf2;
                 cursor: pointer;
+            }
+            &:focus{
+                outline: none;
             }
         }
         .row-oferta {
@@ -119,9 +134,9 @@ $color-wf3:#2779cd;
         display: flex;
         flex-direction: column;
         .combobox-cont{
-            display: flex;
+            display: flex !important;
             width: 120px;
-            justify-content: space-between;
+            justify-content: space-between !important;
             align-items:baseline;
             span{
                 color: $color-sec;

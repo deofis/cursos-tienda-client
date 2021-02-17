@@ -1,9 +1,9 @@
-<li>
+<li *ngIf="favorito!==null">
     <img *ngIf="infoProducto?.foto" src="{{infoProducto?.foto.imageUrl}}" alt="" >
     <img *ngIf="!infoProducto?.foto" src="assets/imagenes/noimage.png"  alt="">
     
     <div class="info">
-        <span class="item-name">{{infoProducto.nombre}}</span>
+        <span [routerLink]="['/viewmore',infoProducto.id]" class="item-name">{{infoProducto.nombre}}</span>
         
         <div class="row-oferta" *ngIf="skuAEnviar?.promocion!==null && skuAEnviar?.promocion.estaVigente">
             <span>{{skuAEnviar?.precio| currency:'EUR':'symbol'}}</span>
@@ -20,7 +20,9 @@
             <span class="item-price" style="color: rgb(87, 83, 83);"
                 *ngIf="skuAEnviar?.promocion==null || !skuAEnviar?.promocion.estaVigente">{{skuAEnviar?.precio|
                 currency:'EUR':'symbol'}}</span>
-            <div class="modify-quantity" id="cantidad">
+            <span class="item-price" style="color: rgb(87, 83, 83);margin-right: 200px;" *ngIf="skuAEnviar===null">{{infoProducto?.precio |
+                currency:'EUR':'symbol'}}</span>
+            <div class="modify-quantity" id="cantidad" *ngIf="skuAEnviar">
                 <i class="fas fa-minus-circle" id="restar" (click)="restarUnidad()"></i>
                 <span class="item-quantity"> {{cantidadSeleccionada}}</span>
                 <i class="fas fa-plus-circle" id="sumar" (click)="sumarUnidad()"></i>
@@ -30,9 +32,9 @@
     </div>
     <!-- contenedor propiedades  -->
     <div class="text-center" id="cont-props"  >
-        <div class="combobox-cont" *ngFor="let propiedad of propiedadesFiltradas;let i=index ">
+        <div class="combobox-cont" *ngFor="let propiedad of propiedadesFiltradas;let index=index; trackBy:trackByIndex; " >
             <span>{{propiedad.nombre}}:</span>
-            <select id="color"  class="select-prop" (change)="valoresSiguienteCombobox(i)">
+            <select id="color"  class="select-prop" (change)="valoresSiguienteCombobox(i)"  [(ngModel)]="selectedValue[index]">
                 <option [value]="valor.valor" *ngFor="let valor of propiedad.valores">{{valor.valor}}</option>
 
            </select>
