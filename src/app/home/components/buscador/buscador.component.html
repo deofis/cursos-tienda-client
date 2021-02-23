@@ -38,14 +38,14 @@
                          <label for="{{subcategoria.nombre}}"> {{subcategoria.nombre}}</label>
                      </div>
                      
-                     <p class="titulo-filtro">Marcas</p>
+                     <p class="titulo-filtro" *ngIf="marcas">Marcas</p>
                      <div class="marcas" *ngFor="let marca of marcas" (click)="filtrarMarcas()">
                          <input type="radio" id="{{marca.nombre}}" name="marca"  style="margin-right: 7px;">
                          <label for="{{marca.nombre}}" > {{marca.nombre}}</label>
                      </div>
                    
          
-                     <p class="titulo-filtro">Propiedades</p>
+                     <p class="titulo-filtro" *ngIf="propiedades">Propiedades</p>
                      <div *ngFor="let propiedad of propiedades; let i=index" class="propiedades" >
                          <p class="prop-tit"> {{propiedad.nombre}}</p>
                          <ul class="valores">

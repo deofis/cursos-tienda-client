@@ -42,6 +42,7 @@ export class CardFavoriteComponent implements OnInit {
 
   /// carrito del localStorage
   skusCarritoLS;
+  selectedValue:string[]=[];
    /// posicion de la notificacion de producto agregado al carrito
   horizontalPosition : MatSnackBarHorizontalPosition = 'end' ;
   verticalPosition: MatSnackBarVerticalPosition = 'top' ;
@@ -59,24 +60,17 @@ export class CardFavoriteComponent implements OnInit {
 
   ngOnInit(): void {
     
-   
-    this.infoProducto=new Producto();
-    this.infoProducto=this.favorito?.producto;
-    this.skusCarritoLS= new Array();
-    this.skusCombobox = new Array();
-    this.skusDelProducto=new Array<Sku>()
-    this.totalItemsCarrito = 0;
-  
-  
-    this.getProduct();   
+    this.getProduct();
+
+    this.getPropiedadesProducto();
     this.getFavoritos();
+ 
+   
    
   }
  
 
   cantidad(){
-    console.log("calculado cantidas")
-    console.log(this.skuAEnviar)
     if (this.skuAEnviar!== null) {
       if (this.skuAEnviar.disponibilidad==0) {
         this.cantidadSeleccionada=0;
@@ -93,9 +87,7 @@ export class CardFavoriteComponent implements OnInit {
   getFavoritos(){
     this.favoritosService.getFavoritos().subscribe(resp=>{
       this.favoritos=resp;
-      console.log(this.favoritos);
       this.marcarFavoritos(this.infoProducto?.id);
-
     })
   }
 
@@ -136,22 +128,25 @@ export class CardFavoriteComponent implements OnInit {
 
 
   getProduct(){
-  
-      this.catalogoservice.getInfoProducto(this.infoProducto?.id).subscribe(response => {
-        this.infoProducto=response;
-        setTimeout(() => {
-          this.getPropiedadesProducto();
-          this.getSkusDelProducto();
-          this.obtenerValoresSkus();
-        }, 300);
-      });
+    this.infoProducto=new Producto();
+    this.infoProducto=this.favorito?.producto;
+    
+      setTimeout(() => {
+        this.getPropiedadesProducto();
+        this.getSkusDelProducto();
+        this.obtenerValoresSkus();
+      }, 300);
   };
 
 
   getSkusDelProducto(){
     this.productoService.getAllTheSkus(this.infoProducto?.id).subscribe(response => {
       this.skusDelProducto=response;
-      this.identificarSkuSeleccionado()
+      this.obtenerValoresSkus();
+      setTimeout(() => {
+        this.identificarSkuSeleccionado()
+
+      }, 400);
     });
   }
   
@@ -198,7 +193,7 @@ export class CardFavoriteComponent implements OnInit {
         this.tieneValores=false
       }
     });
-    console.log(this.propiedadesFiltradas)
+    // console.log(this.propiedadesFiltradas)
   }
  //// recargar el componente para que se reestablezcan los valores de los combobox 
  resetSeleccion(){
@@ -216,10 +211,7 @@ export class CardFavoriteComponent implements OnInit {
     this.skuAEnviar=null
     /// tomo el valor de la propiedad que seleccioné
     setTimeout(() => {
-     
-      let select = document.getElementsByClassName("select-prop") as HTMLCollectionOf<HTMLInputElement>;
-      console.log(select)
-      let valorCombobox= select[i].value;
+      let valorCombobox= this.selectedValue;
       console.log(valorCombobox)
       let valoresElejidosHastaElMomento = []
       // me fijo si es la primer seleccion que hago desde q se iniciaron los valores
@@ -227,14 +219,18 @@ export class CardFavoriteComponent implements OnInit {
            for (let x = 0; x < this.skusDelProducto?.length; x++) {
           // let   valorSeleccionado= this.skusDelProducto.filter(sku=> sku.valores[x].valor ==valorCombobox);
           for (let z = 0; z < this.skusDelProducto[x]?.valores.length; z++) {
-             if(this.skusDelProducto[x].valores[z].valor == valorCombobox){
-           /// si no hay ninguno con ese id lo pusheo
-              for (let u = 0; u < this.skusDelProducto[x].valores.length; u++) {
-                if (!this.valoresSkuSleccionado.some(val => val.id == this.skusDelProducto[x].valores[u].id )) {
-                  this.valoresSkuSleccionado.push(this.skusDelProducto[x].valores[u]);
-                }
-              }
-             }
+            for (let j = 0; j < valorCombobox.length; j++) {
+              if(this.skusDelProducto[x].valores[z].valor == valorCombobox[j]){
+                /// si no hay ninguno con ese id lo pusheo
+                   for (let u = 0; u < this.skusDelProducto[x].valores.length; u++) {
+                     if (!this.valoresSkuSleccionado.some(val => val.id == this.skusDelProducto[x].valores[u].id )) {
+                       this.valoresSkuSleccionado.push(this.skusDelProducto[x].valores[u]);
+                     }
+                   }
+                  }
+              
+            }
+            
           }
          };
        
@@ -255,12 +251,15 @@ export class CardFavoriteComponent implements OnInit {
          
       } else{
       /// filtro los valores de los combobx para en esa propiedad solo dejar el valor q elegi   
-      this.propiedadesFiltradas[i].valores= this.propiedadesFiltradas[i].valores.filter((k) => k.valor == valorCombobox );
-      
+      this.propiedadesFiltradas[i].valores= this.propiedadesFiltradas[i].valores.filter((k) => k.valor == valorCombobox[0] );
+      this.propiedadesFiltradas[i].valores= this.propiedadesFiltradas[i].valores.filter((k) => k.valor == valorCombobox[1] );
+      this.propiedadesFiltradas[i].valores= this.propiedadesFiltradas[i].valores.filter((k) => k.valor == valorCombobox[2] );
+      this.propiedadesFiltradas[i].valores= this.propiedadesFiltradas[i].valores.filter((k) => k.valor == valorCombobox[3] );
+
 
       
-      for (let j = 0; j < select.length; j++) {
-       let valorElegido=select[j].value
+      for (let j = 0; j < this.selectedValue.length; j++) {
+       let valorElegido=this.selectedValue[j]
        if(valorElegido !== undefined && valorElegido !== null && valorElegido !== ""){
         valoresElejidosHastaElMomento.push(valorElegido)
        }
@@ -289,23 +288,24 @@ export class CardFavoriteComponent implements OnInit {
      
   }
   identificarSkuSeleccionado(){
-    //guardo en un array vacio los objetos completos de propiedadque coincidadn con los valores elegidos en los select
-    let select = document.getElementsByClassName("select-prop") as HTMLCollectionOf<HTMLSelectElement>;
-    console.log(select)
-    let valoresAEnviar:ValorPropiedadProducto []=[]
-    for (let i = 0; i < select.length; i++) {
-      let valorCombobox= select[i].value;
+    let valoresAEnviar:ValorPropiedadProducto []=[];
+    for (let i = 0; i < this.selectedValue.length; i++) {
+      let valorCombobox= this.selectedValue[i];
+      // console.log(valorCombobox)
       for (let x = 0; x < this.valoresSkus.length; x++) {
-        if (valorCombobox == this.valoresSkus[x].valor) {
+        if (valorCombobox === this.valoresSkus[x].valor) {
           valoresAEnviar.push(this.valoresSkus[x] as ValorPropiedadProducto); 
         }
       }
     }
     // recommo mi array de skus del producto y si algun sku tiene los mismos valores seleccionados, obtengo su id
+    
+    let b = valoresAEnviar
+    console.log(b)
     for (let x = 0; x < this.skusDelProducto.length; x++) {
       let a = this.skusDelProducto[x].valores;
-      let b = valoresAEnviar
         if ( JSON.stringify(a) == JSON.stringify(b)) {
+          console.log(a)
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
               // con el id llamo a ese sku para luego enviarlo al servicio
@@ -313,15 +313,15 @@ export class CardFavoriteComponent implements OnInit {
             this.skuAEnviar=response;
             this.cantidad();
             console.log(this.skuAEnviar)  
-                
             })
             break;
          }      
-        }
-      
+    }
+   
        
    }
   ///////
+ 
   //// agregar al carrito y mostrar snackbar 
   agregarCarrito(sku:Sku): void {
     // if localStorage.getItem("carrito")

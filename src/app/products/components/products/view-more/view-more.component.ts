@@ -96,7 +96,6 @@ modalInicio:boolean;
     this.getProduct();
     this.getPropiedadesProducto();
    
-   
     // cambio de muestra de imagenes
     // let img2= document.getElementById("img-dos");
     // img2.addEventListener("click",this.changeImg2);
@@ -327,6 +326,8 @@ modalInicio:boolean;
     for (let x = 0; x < this.skusDelProducto.length; x++) {
       let a = this.skusDelProducto[x].valores;
       let b = valoresAEnviar
+      console.log(a);
+      console.log(b)
         if ( JSON.stringify(a) == JSON.stringify(b)) {
             //identifico el sku
             this.idSkuAEnviar=this.skusDelProducto[x].id
