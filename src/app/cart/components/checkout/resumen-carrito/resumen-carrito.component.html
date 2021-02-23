@@ -23,9 +23,9 @@
                 </div>
 
             </div>
-            <span *ngIf="!item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.precio | number:
+            <span *ngIf="!item.sku.promocion?.estaVigente" class="item-price">${{item?.sku.precio | number:
                 '.0-2'}}</span>
-            <span *ngIf="item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.promocion.precioOferta |
+            <span *ngIf="item.sku.promocion?.estaVigente" class="item-price">${{item?.sku.promocion.precioOferta |
                 number:
                 '.0-2'}}</span>
         </div>

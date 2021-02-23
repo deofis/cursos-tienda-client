@@ -47,11 +47,11 @@
                     <div>
                         <!-- contenedor del precio sku -->
                         <div class="precio" *ngIf="!mostrarPrecioProducto()">
-                            <h3 *ngIf="!mostrarPrecioOferta()" class="pcio-sin-oferta">€{{skuAEnviar?.precio | currency}}</h3>
-                            <h3 *ngIf="mostrarPrecioOferta() " class="pcio-oferta">€{{skuAEnviar?.promocion.precioOferta
+                            <h3 *ngIf="!mostrarPrecioOferta()" class="pcio-sin-oferta">{{skuAEnviar?.precio | currency}}</h3>
+                            <h3 *ngIf="mostrarPrecioOferta() " class="pcio-oferta">{{skuAEnviar?.promocion.precioOferta
                                 | currency}}</h3>
                             <div *ngIf="mostrarPrecioOferta()" class="row-oferta">
-                                <span>€{{skuAEnviar?.precio | currency}} </span>
+                                <span>{{skuAEnviar?.precio | currency}} </span>
                                 <p class="off ">{{skuAEnviar.promocion?.porcentaje * 100 | number: '2.0-0'}}% 0FF</p>
                             </div>
                         </div>

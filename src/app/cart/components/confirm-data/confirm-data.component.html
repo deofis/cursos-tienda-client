@@ -20,8 +20,8 @@
                     {{clienteDireccion?.pais.nombre}} 
                     -  CP: {{clienteDireccion?.codigoPostal}} </span></p>
            <!-- <p class="campo" *>Dirección de Entrega: <span> Av. Calle XXXX, Barcelona,Cataluña.</span></p> -->
-            <p class="total" *ngIf="skuComprarAhora==undefined">Total : <span> €{{carrito?.total + costoDeEnvio | currency}}</span></p>
-            <p class="total" *ngIf="skuComprarAhora!==undefined">Total : <span> €{{subtotal | currency}}</span></p>
+            <p class="total" *ngIf="skuComprarAhora==undefined">Total : <span> {{carrito?.total + costoDeEnvio | currency}}</span></p>
+            <p class="total" *ngIf="skuComprarAhora!==undefined">Total : <span> {{subtotal | currency}}</span></p>
 
         </div>
        

@@ -17,9 +17,9 @@
         <span>{{producto.precio | currency:'EUR':'symbol'}}</span>
         <p class="off ">{{producto.promocion?.porcentaje * 100 | number:'2.0-0'}}% 0FF</p>
       </div>
-      <p class="precio" *ngIf="!mostrarPrecioOferta(producto)">{{producto.precio | currency:'EUR':'symbol'}}</p>
+      <p class="precio" *ngIf="!mostrarPrecioOferta(producto)">{{producto.precio | currency:'AR':'symbol'}}</p>
       <p class="precioOferta" *ngIf="mostrarPrecioOferta(producto)">{{producto.promocion?.precioOferta |
-        currency:'EUR':'symbol'}}</p>
+        currency:'AR':'symbol'}}</p>
     </div>
 
 
