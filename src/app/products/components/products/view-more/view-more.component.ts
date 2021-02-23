@@ -90,6 +90,7 @@ modalInicio:boolean;
     this.skusCarritoLS= new Array();
     this.skusCombobox = new Array();
     this.totalItemsCarrito = 0;
+    this.cantidadSeleccionada = 1;
   }
 
   ngOnInit(): void {
