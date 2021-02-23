@@ -4,7 +4,7 @@
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Producto</a>
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Curso</a>
     </li>
     <li class="nav-item" role="presentation">
         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#prop" role="tab" aria-controls="prop" aria-selected="false">Propiedades</a>
@@ -33,7 +33,7 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <label class="ml-1">Producto activo</label>
+                                    <label class="ml-1">Curso activo</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -46,7 +46,7 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <label class="ml-1">Producto destacado</label>
+                                    <label class="ml-1">Curso destacado</label>
                                 </div>                                
                             </div>
                             <div class="row">
@@ -102,7 +102,7 @@
                                     <div class="col-md-6">
                                         <div class="card-body">
                                             <h5 class="card-title">Imagen principal</h5>
-                                            <p class="card-text"><small>Los formatos admitidos son .PNG, .JPG. El tamaño máximo de la imagen del producto es
+                                            <p class="card-text"><small>Los formatos admitidos son .PNG, .JPG. El tamaño máximo de la imagen es
                                                 de 1MB.</small></p>
                                             
                                             <div class="input-group" [formGroup]="formEditarImagenPrincipal">
@@ -168,7 +168,7 @@
                             <small *ngIf="precioInvalido" class="text-danger">Ingrese precio válido.</small>                        
                         </div>
                         <div class="col">
-                            <label>Disponibilidad</label>
+                            <label>Cupos</label>
                             <div class="input-group flex-nowrap" [formGroup]="formEditarDisponibilidad">
                                 <input [class.is-invalid]="disponibilidadInvalida" formControlName="disponibilidad" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="addon-wrapping">
                                 <div class="input-group-append">

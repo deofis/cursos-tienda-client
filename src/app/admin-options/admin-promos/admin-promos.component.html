@@ -30,7 +30,7 @@
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Subcategoría</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Producto</a>
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Curso</a>
                             </li>
 
                         </ul>
@@ -69,7 +69,7 @@
                     <div class="col-md-3 col-xs-3">
                         <select class="form-control form-control-sm">
                             <option value="" hidden selected>Ordene por:</option>
-                            <option value="">Producto</option>
+                            <option value="">Curso</option>
                             <option value="">Subcategoría</option>
                         </select>
                     </div>
@@ -99,8 +99,8 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <h4>Precio: {{producto.precio | currency:"EUR":"symbol"}}</h4>
-                                    <h4>Precio oferta: {{producto.promocion.precioOferta | currency:"EUR":"symbol"}}</h4>
+                                    <h4>Precio: {{producto.precio | currency}}</h4>
+                                    <h4>Precio oferta: {{producto.promocion.precioOferta | currency}}</h4>
                                     <h4>Porcentaje oferta: {{(producto.promocion.porcentaje * 100) | number:'2.0-0'}}%</h4>
                                     
                                     
@@ -167,13 +167,13 @@
     
                       <ng-container matColumnDef="precio">
                           <th mat-header-cell *matHeaderCellDef class="headerTable"> Precio </th>
-                          <td mat-cell *matCellDef="let element"> {{element.precio | currency:"EUR":"symbol"}} </td>
+                          <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
                         </ng-container>
                     
                       <!-- Weight Column -->
                       <ng-container matColumnDef="precioOf">
                         <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Precio Oferta</th>
-                        <td mat-cell *matCellDef="let element"> {{element.promocion.precioOferta | currency:"EUR":"symbol"}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.promocion.precioOferta | currency}} </td>
                       </ng-container>
     
     

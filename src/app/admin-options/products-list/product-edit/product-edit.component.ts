@@ -123,7 +123,7 @@ export class ProductEditComponent implements OnInit {
     //Llamada al endpoint para editar atributos básicos del producto base
     this.productoService.actualizarDatosProducto(this.producto).subscribe(resp => {
       console.log(resp);
-      this.openSnackBar('El prducto fue actualizado con éxito', null)
+      this.openSnackBar('El curso fue actualizado con éxito', null)
       
     });
 
@@ -206,7 +206,7 @@ export class ProductEditComponent implements OnInit {
     //Llamada al endpoint para realizar la edición del precio de un producto base
     this.productoService.actualizarPrecioBaseProducto(this.producto.id, this.producto.precio).subscribe(resp => {
       console.log(resp);
-      this.openSnackBar('El precio del prodcuto fue actualizado con éxito', null)
+      this.openSnackBar('El precio del curso fue actualizado con éxito', null)
       
     })
     
@@ -258,7 +258,7 @@ export class ProductEditComponent implements OnInit {
     //Llamada al endpoint para realiazar la edición de la disponibilidad de un producto base
     this.productoService.actualizarDisponibilidadProducto(this.producto.id, this.producto.disponibilidadGeneral).subscribe(resp => {
       console.log(resp);
-      this.openSnackBar('El stock del producto fue actualizado con éxito', null)
+      this.openSnackBar('Los cupos del curso fueron actualizados con éxito', null)
       
     })
 
@@ -319,7 +319,7 @@ export class ProductEditComponent implements OnInit {
     this.productoService.uploadPhoto(this.formEditarImagenPrincipal.controls.fileSource.value, this.producto.id).subscribe(resp => {
       console.log(resp);
       this.producto.foto = resp.foto;
-      this.openSnackBar('La imagen principal del producto fue actualizada con éxito', null)
+      this.openSnackBar('La imagen principal fue actualizada con éxito', null)
       
     })
   };

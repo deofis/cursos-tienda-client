@@ -22,10 +22,10 @@
             </div>
             <div class="row info">
                 <p class="nombre-prod">{{newProduct?.nombre}}</p>
-                <p class="items">Precio: <span>{{newProduct?.precio | currency:'EUR':'symbol'}}</span></p>
+                <p class="items">Precio: <span>{{newProduct?.precio | currency}}</span></p>
                 <p class="items oferta" *ngIf="newProduct?.promocion">Precio de Oferta:
-                    <span>{{newProduct?.promocion.precioOferta | currency:'EUR':'symbol'}}</span></p>
-                <p *ngIf="newProduct?.disponibilidadGeneral!==0" class="items">Disponibilidad Gral.: <span>{{newProduct?.disponibilidadGeneral}}
+                    <span>{{newProduct?.promocion.precioOferta | currency}}</span></p>
+                <p *ngIf="newProduct?.disponibilidadGeneral!==0" class="items">Cupos: <span>{{newProduct?.disponibilidadGeneral}}
                         {{newProduct.unidadMedida?.codigo}}.</span></p>
                 <p class="items">Marca: <span>{{newProduct?.marca.nombre}}</span></p>
                 <p class="items">Subcategoria: <span>{{newProduct?.subcategoria.nombre}}</span></p>
@@ -41,9 +41,9 @@
         <div class="col der">
             <div class="row add-img">
                 <h2>Imágen:</h2>
-                <p>Añada una fotografía principal de su producto.
+                <p>Añada una fotografía principal de su curso.
                     <br>
-                    <span>- Recomentamos utilizar un tamaño cuadrado , sin fondo o con fondo blanco. -</span>
+                    <span>- Recomendamos utilizar un tamaño cuadrado , sin fondo o con fondo blanco. -</span>
                 </p>
                 <input type="file" id="add-files" (change)="readUrl($event)" accept=".png, .jpg, .jpeg">
 
@@ -52,14 +52,14 @@
                 <h2>General:</h2>
                 <div class="availability-container" *ngIf="listaDePropiedades==null">
                     <span *ngIf="disponibilidadGeneralInvalida" class="text-rojo"><strong>(*)</strong></span>
-                    <label for="availability"> Disponibilidad General:</label>
+                    <label for="availability"> Cupos:</label>
                     <input type="number" min="0" pattern="^[0-9]+" id="availability"
                         [class.is-invalid]="disponibilidadGeneralInvalida" formControlName="disponibilidadGeneral">
                     <span id="unidadElegida">{{newProduct.unidadMedida?.codigo}}</span>
                 </div>
                 
                 <div class="producto-destacado">
-                    <p class="destacado">Producto Destacado</p>
+                    <p class="destacado">Curso Destacado</p>
                     <mat-slide-toggle  (click)="editarDestacadoDisponibilidad()" formControlName="destacado">{{formEdicionProducto.get('destacado').value ? 'Si' : 'No'}}</mat-slide-toggle>
                 </div>
             </div>

@@ -97,7 +97,7 @@ export class SkuEditComponent implements OnInit {
 
     this.productoService.actualizarDatosSku(this.skuEditar).subscribe(resp => {
       console.log(resp);
-      this.openSnackBar('Los datos del producto fueron actualizados con éxito', null)
+      this.openSnackBar('Los datos del curso fueron actualizados con éxito', null)
       
     })
 
@@ -141,7 +141,7 @@ export class SkuEditComponent implements OnInit {
 
     this.productoService.editarPrecioSku(this.skuEditar.id, this.skuEditar.precio).subscribe(resp => {
       console.log(resp);
-      this.openSnackBar('El precio del producto fue actualizado con éxito', null)
+      this.openSnackBar('El precio del curso fue actualizado con éxito', null)
       
     })
 
@@ -183,7 +183,7 @@ export class SkuEditComponent implements OnInit {
 
     this.productoService.editarDisponibilidadSku(this.skuEditar.id, this.skuEditar.disponibilidad).subscribe(resp => {
       console.log(resp);
-      this.openSnackBar('El stock del producto fue actualizado con éxito', null)
+      this.openSnackBar('El cupo del curso fue actualizado con éxito', null)
       
     });
 

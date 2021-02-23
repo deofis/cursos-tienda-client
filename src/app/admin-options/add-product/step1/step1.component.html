@@ -78,7 +78,7 @@
             <form [formGroup]="formPropiedades" class="row elegir-props" *ngIf="estaSubcatSeleccionada">
                 <div class="col contenido" >
                     <div class="row ">
-                        <p class="leyenda">De las siguientes propiedades, seleccione las que son aplicables a su producto.</p>
+                        <p class="leyenda">De las siguientes propiedades, seleccione las que son aplicables a su curso.</p>
                         
                         <button type="button" id="add-p-b" class="btn-add-property " (click)="openCentrado(agregarprop); addProperty()">
                              <p id="add">Agregar propiedades<i class="far fa-plus-square "></i></p>
@@ -130,12 +130,12 @@
             </div>
       
             <div class="textarea">
-                <label for="descripcion">Añada una descripción a su producto: </label>
+                <label for="descripcion">Añada una descripción al curso: </label>
                 <textarea name="descripcion" id="descripcion" rows="4" formControlName="descripcion"></textarea>
             </div>
            
             <span *ngIf="precioInvalido || categoriaInvalida || subcategoriaInvalida || unidadInvalida || nombreInvalido " class="text-rojo"><strong>(*)Los campos señalados son obligatorios.</strong></span>
-            <button    id="btn-end" (click)="mensajeProductoCreado()"> Crear producto</button>
+            <button    id="btn-end" (click)="mensajeProductoCreado()"> Crear curso</button>
         </div>
     </form>
    

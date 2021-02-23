@@ -90,7 +90,7 @@
             <div class="container">
 
                 <div >
-                    <h2 class="titulo">Productos</h2>
+                    <h2 class="titulo">Cursos</h2>
                 </div>
 
                 <div class="row mb-3">
@@ -129,7 +129,7 @@
 
                     <div class="col-md col-xs-12 text-right d-none d-sm-block mt-4">
                         <button class="btn btn-primary" style="background-color: #1f4e84; border: none;" (click)="open(contenido)">
-                            Nuevo producto
+                            Nuevo curso
                         </button>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
     
                       <ng-container matColumnDef="precio">
                           <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Precio </th>
-                          <td mat-cell *matCellDef="let element"> {{element.precio | currency:'EUR':'symbol'}} </td>
+                          <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
                         </ng-container>
                     
                       <!-- Weight Column -->
@@ -166,17 +166,17 @@
                       </ng-container>
     
                       <ng-container matColumnDef="disponibilidadGeneral">
-                          <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Stock</th>
+                          <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Cupos</th>
                           <td mat-cell *matCellDef="let element">{{element.disponibilidadGeneral}}</td>
                       </ng-container>
                     
                       <ng-container matColumnDef="activo">
-                        <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Estado </th>
+                        <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Estado</th>
                         <td mat-cell *matCellDef="let element"> {{element.activo ? 'Activo' : 'Inactivo'}}</td>
                       </ng-container>
       
                       <ng-container matColumnDef="destacado">
-                          <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Destacado </th>
+                          <th mat-header-cell *matHeaderCellDef class="headerTable" mat-sort-header> Destacado</th>
                           <td mat-cell *matCellDef="let element"> {{element.destacado ? 'Si' : 'No'}} </td>
                       </ng-container>
     
@@ -206,7 +206,7 @@
                                                 <th class="text-center">ID</th>
                                                 <th class="">Nombre</th>
                                                 <th class="text-center">Precio</th>
-                                                <th class="text-center">Stock</th>
+                                                <th class="text-center">Cupos</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -214,7 +214,7 @@
                                                 <td ><img [src]="item.foto ? item.foto.imageUrl : '../../../../assets/imagenes/noimage.png'" alt="" style="width: 40px; height: auto"></td>
                                                 <td class="text-center">{{item.id}}</td>
                                                 <td>{{item.nombre}} - <small style="color: #1f4e84;">{{item.valoresData | slice:0:-1}}</small></td>
-                                                <td class="text-center">{{item.precio | currency:"EUR":"symbol"}}</td>
+                                                <td class="text-center">{{item.precio | currency}}</td>
                                                 <td class="text-center">{{item.disponibilidad}}</td>
                                                 </tr>
                                             </tbody>
@@ -258,7 +258,7 @@
 <div class="container">
     <ng-template #contenido let-modal>
         <div class="modal-header">
-            <h1 class="mt-4">Nuevo producto</h1>
+            <h1 class="mt-4">Nuevo curso</h1>
             <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -282,7 +282,7 @@
 <ng-template #content let-modal>
 
     <div class="modal-header">
-        <h1 class="mt-4">Editar producto</h1>
+        <h1 class="mt-4">Editar curso</h1>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>

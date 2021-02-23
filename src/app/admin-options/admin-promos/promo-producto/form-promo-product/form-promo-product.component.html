@@ -1,25 +1,25 @@
 <div class="row mt-5 mt-md-0">
     <div class="col ml-0 ml-md-3">
-        <h3 *ngIf="productoGeneral">Producto seleccionado: &nbsp;
+        <h3 *ngIf="productoGeneral">Curso seleccionado: &nbsp;
             <span *ngIf="accion === 'newPromoProduto'" style="background-color: #1f4e84; cursor: pointer;" class="badge badge-pill badge-primary mr-1">{{productoGeneral?.nombre | titlecase}}</span>
             <span *ngIf="accion === 'newPromoSku'" style="background-color: #1f4e84; cursor: pointer;" class="badge badge-pill badge-primary mr-1">{{productoGeneral?.nombre | titlecase}}</span>
         </h3> 
-        <h3 *ngIf="!productoGeneral">Seleccione producto.</h3>  
+        <h3 *ngIf="!productoGeneral">Seleccione un curso.</h3>  
     </div>
     
     
 </div>
 <div class="row" *ngIf="productoGeneral">
     <div class="col-12 col-md ml-0 ml-md-3 ">
-        Precio del producto: {{productoGeneral?.precio | currency:'EUR':'symbol'}}
+        Precio del curso: {{productoGeneral?.precio | currency}}
     </div>
     <div class="col-12 col-md" *ngIf="formProducto.controls.porcentaje.value !== '' && formProducto.controls.porcentaje.value !== null">
         <h3 class="info"><i class="far fa-question-circle fa-md mb-2" placement="bottom" ngbTooltip="{{infoPrecioOferta}}"></i></h3>
-        <strong class="ofertaColor ml-1">Precio de oferta: {{(productoGeneral.precio - (productoGeneral.precio * (formProducto.controls.porcentaje.value / 100))) | currency:'EUR':'symbol'}}</strong>
+        <strong class="ofertaColor ml-1">Precio de oferta: {{(productoGeneral.precio - (productoGeneral.precio * (formProducto.controls.porcentaje.value / 100))) | currency}}</strong>
     </div>
     <div class="col-12 col-md" *ngIf="formProducto.controls.precio.value !== '' && formProducto.controls.precio.value !== null">
         <h3 class="info"><i class="far fa-question-circle fa-md mb-2" placement="bottom" ngbTooltip="{{infoPrecioOferta}}"></i></h3>
-        <strong class="ofertaColor ml-1">Precio de oferta: {{(formProducto.controls.precio.value) | currency:'EUR':'symbol'}}</strong>
+        <strong class="ofertaColor ml-1">Precio de oferta: {{(formProducto.controls.precio.value) | currency}}</strong>
     </div>
 </div>
 <hr>
