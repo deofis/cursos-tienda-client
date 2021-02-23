@@ -47,12 +47,11 @@
                     <div>
                         <!-- contenedor del precio sku -->
                         <div class="precio" *ngIf="!mostrarPrecioProducto()">
-                            <h3 *ngIf="!mostrarPrecioOferta()" class="pcio-sin-oferta">€{{skuAEnviar?.precio | number:
-                                '.2'}}</h3>
+                            <h3 *ngIf="!mostrarPrecioOferta()" class="pcio-sin-oferta">€{{skuAEnviar?.precio | currency}}</h3>
                             <h3 *ngIf="mostrarPrecioOferta() " class="pcio-oferta">€{{skuAEnviar?.promocion.precioOferta
-                                | number: '.2'}}</h3>
+                                | currency}}</h3>
                             <div *ngIf="mostrarPrecioOferta()" class="row-oferta">
-                                <span>€{{skuAEnviar?.precio | number: '.2'}} </span>
+                                <span>€{{skuAEnviar?.precio | currency}} </span>
                                 <p class="off ">{{skuAEnviar.promocion?.porcentaje * 100 | number: '2.0-0'}}% 0FF</p>
                             </div>
                         </div>
@@ -87,7 +86,7 @@
                         </div>
                     </div>
                     <hr>
-                    <p>Costo de envío se informará al realizar la operación.</p>
+                    <p>Duracion: 60 hrs. - Profesor:Alvarez Mauro.</p>
                     <button mat-button (click)="agregarCarrito(skuAEnviar); openSnackBar();  resetSeleccion()"
                         class="btn" [disabled]="!skuAEnviar || skuAEnviar?.disponibilidad==0" id="btn-carrito">Agregar al
                         Carrito</button>
@@ -116,7 +115,7 @@
                 <p>Marca: {{infoProducto.marca?.nombre}}</p>
                 <p>Modelo:</p>
 
-                <p>Disponible: <span *ngIf="stock">Si</span> <span *ngIf="!stock">No</span> </p>
+                <p>Cupos Disponibles: <span *ngIf="stock">Si</span> <span *ngIf="!stock">No</span> </p>
 
             </div>
             <div id="descripcion-producto">

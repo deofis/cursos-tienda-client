@@ -51,9 +51,8 @@
                                     <div class="row ">
                                         <div class="col-4  price-u">
                                             <span>Precio:</span>
-                                            <span *ngIf="!item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.precio | number: '.0-2'}}</span>
-                                            <span *ngIf="item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.promocion.precioOferta | number:
-                                                '.0-2'}}</span>
+                                            <span *ngIf="!item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.precio | currency}}</span>
+                                            <span *ngIf="item.sku.promocion?.estaVigente" class="item-price">€{{item?.sku.promocion.precioOferta | currency}}</span>
                                         </div>
                                         <div class=" col-4  quantity">
                                             <span>Cantidad:</span>
@@ -65,7 +64,7 @@
                                         </div>
                                         <div class="col-4  subtotal">
                                             <span>Subtotal:</span>
-                                            <span class="item-subtotal">€{{item?.subtotal | number: '.0-2'}}</span>
+                                            <span class="item-subtotal">€{{item?.subtotal | currency}}</span>
                                         </div>
                                         <i id="close" class="fas fa-times" (click)=" eliminarItem(item.sku.id);cerrarComponentes()"></i>
                                     </div>

@@ -19,8 +19,8 @@
                     <td style="width: 20px;"><img [src]="item.sku.producto?.foto?.imageUrl | noimage" alt="" style="width: 60px; height: auto"></td>  <!-- item.sku.producto.foto.imageUrl -->
                     <td class="text-left">{{item.sku.nombre}} - <small style="color: #1f4e84;">{{item.sku.valoresData | slice:0:-1}}</small></td>
                     <td class="text-center">{{item.cantidad}}</td>
-                    <td class="text-center">{{item.precioVenta | currency:"EUR":"symbol"}}</td>
-                    <td class="text-center">{{item.subtotal | currency:"EUR":"symbol"}}</td>
+                    <td class="text-center">{{item.precioVenta | currency}}</td>
+                    <td class="text-center">{{item.subtotal | currency}}</td>
                 </tr>
             </tbody>
             </table>
@@ -30,8 +30,7 @@
 
 <div class="row" >
     <div class="col">
-        <strong>Costo de envío:</strong> {{21 | currency:"EUR":"symbol"}} 
-    </div>
+    
     <div class="col">
         <strong>Código de promoción:</strong> A32BC
     </div>

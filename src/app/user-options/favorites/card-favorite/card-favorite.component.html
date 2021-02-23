@@ -6,7 +6,7 @@
         <span [routerLink]="['/viewmore',infoProducto.id]" class="item-name">{{infoProducto.nombre}}</span>
         
         <div class="row-oferta" *ngIf="skuAEnviar?.promocion!==null && skuAEnviar?.promocion.estaVigente">
-            <span>{{skuAEnviar?.precio| currency:'EUR':'symbol'}}</span>
+            <span>{{skuAEnviar?.precio| currency}}</span>
             <p class="off">{{skuAEnviar?.promocion.porcentaje * 100 | number:'2.0-0'}}%0FF</p>
         </div>
         <div class="row-oferta" *ngIf="skuAEnviar?.promocion==null || !skuAEnviar?.promocion.estaVigente">
@@ -15,13 +15,13 @@
         <div class="price-quatity">
             <span class="item-price"
                 *ngIf="skuAEnviar?.promocion!==null && skuAEnviar?.promocion.estaVigente">{{skuAEnviar?.promocion.precioOferta|
-                currency:'EUR':'symbol'}}</span>
+                currency}}</span>
 
             <span class="item-price" style="color: rgb(87, 83, 83);"
                 *ngIf="skuAEnviar?.promocion==null || !skuAEnviar?.promocion.estaVigente">{{skuAEnviar?.precio|
-                currency:'EUR':'symbol'}}</span>
+                currency}}</span>
             <span class="item-price" style="color: rgb(87, 83, 83);margin-right: 200px;" *ngIf="skuAEnviar===null">{{infoProducto?.precio |
-                currency:'EUR':'symbol'}}</span>
+                currency}}</span>
             <div class="modify-quantity" id="cantidad" *ngIf="skuAEnviar">
                 <i class="fas fa-minus-circle" id="restar" (click)="restarUnidad()"></i>
                 <span class="item-quantity"> {{cantidadSeleccionada}}</span>
